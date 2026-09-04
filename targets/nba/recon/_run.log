@@ -1,0 +1,9 @@
+[2m[*][0m alvo: nba.com  |  rate: 3/s  |  tools: subfinder, dnsx, httpx, gau, waybackurls, katana, nuclei, ffuf
+[32m[+][0m subfinder: 1522
+[33m[skip][0m amass [2m(rode setup.sh)[0m
+[32m[+][0m crt.sh: 669
+[2m[*][0m subdomínios candidatos: 1582
+[32m[+][0m resolvem DNS: 449
+
+[1m── Recon nba.com ──[0m  subs:449  vivos:0  urls:0
+[32mSalvo em targets/nba/recon/[0m

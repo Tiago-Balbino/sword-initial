@@ -1,0 +1,28 @@
+
+[1m══ https://www.coinspot.com.au[0m
+  [2mstatus 200  →  https://www.coinspot.com.au/[0m
+  [36m[BAIXO][0m [1mhsts-subdomains[0m — HSTS sem includeSubDomains.
+  [2m[INFO][0m [1mpermissions-policy[0m — Permissions-Policy ausente — sem restrição de APIs do navegador.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudflare
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mcors[0m
+
+[1m══ https://coinspot.com.au[0m
+  [2mstatus 200  →  https://www.coinspot.com.au/[0m
+  [36m[BAIXO][0m [1mhsts-subdomains[0m — HSTS sem includeSubDomains.
+  [2m[INFO][0m [1mpermissions-policy[0m — Permissions-Policy ausente — sem restrição de APIs do navegador.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudflare
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mcors[0m
+
+[1m── Resumo ──[0m  [31mALTO: 0[0m  [33mMÉDIO: 0[0m  [36mBAIXO: 2[0m  (2 alvo(s))
+
+[32mRelatório salvo em targets/coinspot/recon/cors.json[0m

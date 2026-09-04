@@ -1,0 +1,179 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+4 0 obj
+<< /Length 3572 >>
+stream
+BT /F2 16 Tf 56 775.9 Td (Dangling DNS on courtside.gleague.nba.com -> Firebase) Tj ET
+BT /F2 16 Tf 56 755.9 Td (Hosting with no associated site \(potential subdomain) Tj ET
+BT /F2 16 Tf 56 735.9 Td (takeover\)) Tj ET
+0.6 G 0.8 w 56 709.9 m 539.28 709.9 l S 0 G
+BT /F1 9.7 Tf 56 695.9 Td (Target: https://courtside.gleague.nba.com/) Tj ET
+BT /F1 9.7 Tf 56 682.4 Td (Program: NBA Public Bug Bounty \(HackerOne - nba-public\)) Tj ET
+BT /F1 9.7 Tf 56 668.9 Td (Severity \(proposed\): Medium - subdomain takeover candidate on a legitimate *.nba.com property.) Tj ET
+BT /F1 9.7 Tf 56 655.4 Td (Exploitation \(the actual domain claim\) was not performed; see *Caveats*.) Tj ET
+BT /F1 9.7 Tf 56 641.9 Td (Date: 2026-09-03) Tj ET
+BT /F1 9.7 Tf 56 628.4 Td (Reporter test account: N/A - issue is fully unauthenticated.) Tj ET
+0.3 G 0.8 w 56 602.9 m 539.28 602.9 l S 0 G
+BT /F2 12.5 Tf 56 582.9 Td (Summary) Tj ET
+0.6 G 0.8 w 56 560.4 m 539.28 560.4 l S 0 G
+BT /F1 9.7 Tf 56 546.4 Td (courtside.gleague.nba.com is an NBA G League subdomain whose DNS A records point to Firebase) Tj ET
+BT /F1 9.7 Tf 56 532.9 Td (Hosting's published IP addresses, but no Firebase Hosting site is associated with the domain.) Tj ET
+BT /F1 9.7 Tf 56 519.4 Td (Firebase therefore serves its default "Site Not Found" page for every request.) Tj ET
+BT /F1 9.7 Tf 56 499.9 Td (If the domain's association with Firebase Hosting is in a stale/orphaned state \(e.g. it was) Tj ET
+BT /F1 9.7 Tf 56 486.4 Td (previously connected to a now-deleted Firebase project\), an attacker who adds) Tj ET
+BT /F1 9.7 Tf 56 472.9 Td (courtside.gleague.nba.com as a custom domain to a Firebase project they control would be able to) Tj ET
+BT /F1 9.7 Tf 56 459.4 Td (serve arbitrary content from a legitimate nba.com subdomain.) Tj ET
+0.3 G 0.8 w 56 433.9 m 539.28 433.9 l S 0 G
+BT /F2 12.5 Tf 56 413.9 Td (Steps to reproduce) Tj ET
+0.6 G 0.8 w 56 391.4 m 539.28 391.4 l S 0 G
+BT /F1 9.7 Tf 56 377.4 Td (1. Resolve the host:) Tj ET
+BT /F3 8.3 Tf 56 351.9 Td (   $ dig +short courtside.gleague.nba.com) Tj ET
+BT /F3 8.3 Tf 56 340.9 Td (   151.101.65.195) Tj ET
+BT /F3 8.3 Tf 56 329.9 Td (   151.101.1.195) Tj ET
+BT /F1 9.7 Tf 56 306.9 Td (   151.101.1.195 and 151.101.65.195 are the A records Firebase Hosting instructs customers to use) Tj ET
+BT /F1 9.7 Tf 56 293.4 Td (for custom domains \(see Firebase Hosting docs -> "Connect a custom domain"\).) Tj ET
+BT /F1 9.7 Tf 56 273.9 Td (2. Request the site:) Tj ET
+BT /F3 8.3 Tf 56 248.4 Td (   $ curl -sI https://courtside.gleague.nba.com/) Tj ET
+BT /F3 8.3 Tf 56 237.4 Td (   HTTP/2 404) Tj ET
+BT /F3 8.3 Tf 56 226.4 Td (   content-type: text/html; charset=utf-8) Tj ET
+BT /F3 8.3 Tf 56 215.4 Td (   x-served-by: cache-bsb500031-BSB        # Fastly = Firebase Hosting's CDN) Tj ET
+BT /F3 8.3 Tf 56 204.4 Td (   x-cache: MISS) Tj ET
+BT /F3 8.3 Tf 56 193.4 Td () Tj ET
+BT /F3 8.3 Tf 56 182.4 Td (   $ curl -s https://courtside.gleague.nba.com/ | grep -iE '<h1>|<h2>') Tj ET
+BT /F3 8.3 Tf 56 171.4 Td (   <h1>Site Not Found</h1>) Tj ET
+BT /F3 8.3 Tf 56 160.4 Td (   <h2>Why am I seeing this?</h2>) Tj ET
+BT /F3 8.3 Tf 56 149.4 Td (   <h2>How can I deploy my first app?</h2>) Tj ET
+BT /F1 9.7 Tf 56 126.4 Td (   This is the verbatim Firebase Hosting "Site Not Found" page - it is returned when a request) Tj ET
+BT /F1 9.7 Tf 56 112.9 Td (reaches Firebase Hosting for a hostname that is not attached to any active site.) Tj ET
+BT /F1 9.7 Tf 56 93.4 Td (3. \(Not performed - see *Caveats*\) An attacker would then:) Tj ET
+BT /F1 9.5 Tf 56 79.9 Td (- create a Firebase project,) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Length 4169 >>
+stream
+BT /F1 9.5 Tf 56 781.9 Td (- firebase hosting:sites:create <attacker-site>,) Tj ET
+BT /F1 9.5 Tf 56 768.4 Td (- in the Firebase console -> Hosting -> "Add custom domain", enter courtside.gleague.nba.com.) Tj ET
+BT /F1 9.5 Tf 56 754.9 Td (- If Firebase associates the domain without requiring a fresh TXT ownership record on nba.com \(which) Tj ET
+BT /F1 9.5 Tf 56 741.4 Td (  can happen when a prior verification/connection was not cleaned up\), the attacker now controls all) Tj ET
+BT /F1 9.5 Tf 56 727.9 Td (  content at https://courtside.gleague.nba.com/.) Tj ET
+0.3 G 0.8 w 56 702.4 m 539.28 702.4 l S 0 G
+BT /F2 12.5 Tf 56 682.4 Td (Proof of concept \(evidence\)) Tj ET
+0.6 G 0.8 w 56 659.9 m 539.28 659.9 l S 0 G
+BT /F3 8.3 Tf 56 639.9 Td (Request:) Tj ET
+BT /F3 8.3 Tf 56 628.9 Td (  GET / HTTP/2) Tj ET
+BT /F3 8.3 Tf 56 617.9 Td (  Host: courtside.gleague.nba.com) Tj ET
+BT /F3 8.3 Tf 56 606.9 Td () Tj ET
+BT /F3 8.3 Tf 56 595.9 Td (Response:) Tj ET
+BT /F3 8.3 Tf 56 584.9 Td (  HTTP/2 404 Not Found) Tj ET
+BT /F3 8.3 Tf 56 573.9 Td (  content-type: text/html; charset=utf-8) Tj ET
+BT /F3 8.3 Tf 56 562.9 Td (  <!doctype html><html><head><title>Site Not Found</title> ...) Tj ET
+BT /F3 8.3 Tf 56 551.9 Td (  <h1>Site Not Found</h1>) Tj ET
+BT /F3 8.3 Tf 56 540.9 Td (  <h2>Why am I seeing this?</h2>) Tj ET
+BT /F3 8.3 Tf 56 529.9 Td (  ... "How can I deploy my first app?" ...) Tj ET
+BT /F1 9.5 Tf 56 506.9 Td (- DNS: courtside.gleague.nba.com -> A 151.101.1.195, 151.101.65.195 \(Firebase Hosting\).) Tj ET
+BT /F1 9.5 Tf 56 493.4 Td (- HTTP: 404 + Firebase Hosting "Site Not Found" default page.) Tj ET
+BT /F1 9.5 Tf 56 479.9 Td (- No NBA / G League content is served; the hostname is orphaned at the hosting layer.) Tj ET
+0.3 G 0.8 w 56 454.4 m 539.28 454.4 l S 0 G
+BT /F2 12.5 Tf 56 434.4 Td (Impact) Tj ET
+0.6 G 0.8 w 56 411.9 m 539.28 411.9 l S 0 G
+BT /F1 9.7 Tf 56 397.9 Td (Demonstrated: A valid NBA G League subdomain \(courtside.gleague.nba.com\) resolves to Firebase) Tj ET
+BT /F1 9.7 Tf 56 384.4 Td (Hosting but is not attached to any site - a dangling-DNS condition.) Tj ET
+BT /F1 9.7 Tf 56 364.9 Td (Worst case \(if the domain is claimable\): full control of content served from) Tj ET
+BT /F1 9.7 Tf 56 351.4 Td (https://courtside.gleague.nba.com/, enabling:) Tj ET
+BT /F1 9.5 Tf 56 331.9 Td (- Phishing / brand abuse under a trusted nba.com domain with a valid TLS certificate \(Firebase) Tj ET
+BT /F1 9.5 Tf 56 318.4 Td (  auto-provisions one\).) Tj ET
+BT /F1 9.5 Tf 56 304.9 Td (- Cookie attacks against other *.nba.com properties. NBA sets cookies with Domain=.nba.com - observed) Tj ET
+BT /F1 9.5 Tf 56 291.4 Td (  on *.gleague.nba.com responses, e.g. Akamai Bot Manager cookies _abck and bm_sz \(Set-Cookie:) Tj ET
+BT /F1 9.5 Tf 56 277.9 Td (  _abck=...; Domain=.nba.com\). Content the attacker serves from courtside.gleague.nba.com can) Tj ET
+BT /F1 9.5 Tf 56 264.4 Td (  set/overwrite Domain=.nba.com cookies, enabling session fixation or bot-management bypass against) Tj ET
+BT /F1 9.5 Tf 56 250.9 Td (  users of unrelated NBA sites.) Tj ET
+BT /F1 9.5 Tf 56 237.4 Td (- Malware / scam distribution with the credibility of an official NBA domain.) Tj ET
+BT /F1 9.5 Tf 56 223.9 Td (- OAuth redirect_uri abuse if any NBA SSO client \(PingFederate / Azure AD are both in use across) Tj ET
+BT /F1 9.5 Tf 56 210.4 Td (  *.nba.com\) allows a *.nba.com or *.gleague.nba.com redirect target.) Tj ET
+0.3 G 0.8 w 56 184.9 m 539.28 184.9 l S 0 G
+BT /F2 12.5 Tf 56 164.9 Td (Remediation) Tj ET
+0.6 G 0.8 w 56 142.4 m 539.28 142.4 l S 0 G
+BT /F1 9.5 Tf 56 128.4 Td (- If courtside.gleague.nba.com is no longer used: remove its DNS records.) Tj ET
+BT /F1 9.5 Tf 56 114.9 Td (- If it is used: re-attach it to the correct Firebase Hosting site under NBA's Firebase project.) Tj ET
+BT /F1 9.5 Tf 56 101.4 Td (- Audit related records for the same class of issue - during testing, *.dleague.nba.com \(austin,) Tj ET
+BT /F1 9.5 Tf 56 87.9 Td (  bakersfield, canton, grandrapids, greensboro\) were found with CNAME ->) Tj ET
+BT /F1 9.5 Tf 56 74.4 Td (  vpc-lb-1679823851.us-east-1.elb.amazonaws.com, which resolves \(3.212.84.195\) but does not respond on) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Length 2705 >>
+stream
+BT /F1 9.5 Tf 56 781.9 Td (  80/443. Confirm that ELB still exists and is intended.) Tj ET
+BT /F1 9.5 Tf 56 768.4 Td (- Consider a periodic dangling-DNS sweep across *.nba.com.) Tj ET
+0.3 G 0.8 w 56 742.9 m 539.28 742.9 l S 0 G
+BT /F2 12.5 Tf 56 722.9 Td (Caveats \(read before triage\)) Tj ET
+0.6 G 0.8 w 56 700.4 m 539.28 700.4 l S 0 G
+BT /F1 9.5 Tf 56 686.4 Td (- The takeover itself was not attempted. This report documents \(1\) the dangling-DNS condition and \(2\)) Tj ET
+BT /F1 9.5 Tf 56 672.9 Td (  the Firebase Hosting "Site Not Found" fingerprint, which is the standard precondition for a Firebase) Tj ET
+BT /F1 9.5 Tf 56 659.4 Td (  subdomain takeover. Whether the domain is actually claimable depends on internal state you can verify) Tj ET
+BT /F1 9.5 Tf 56 645.9 Td (  directly: is there a Firebase project that still "owns"/half-owns this custom domain, and does) Tj ET
+BT /F1 9.5 Tf 56 632.4 Td (  re-adding it bypass fresh TXT verification? Modern Firebase requires a TXT ownership record for new) Tj ET
+BT /F1 9.5 Tf 56 618.9 Td (  custom-domain connections; this is exploitable primarily when a prior connection/verification was) Tj ET
+BT /F1 9.5 Tf 56 605.4 Td (  left in place.) Tj ET
+BT /F1 9.5 Tf 56 591.9 Td (- Scope confirmation needed. courtside.gleague.nba.com matches the in-scope pattern *.gleague.nba.com) Tj ET
+BT /F1 9.5 Tf 56 578.4 Td (  \(the program's scoped sample includes wisconsin/windycity/westchester.gleague.nba.com\). Please) Tj ET
+BT /F1 9.5 Tf 56 564.9 Td (  confirm it is covered by nba-public before rewarding.) Tj ET
+BT /F1 9.5 Tf 56 551.4 Td (- Cookie values in the evidence above are illustrative and should be treated as sensitive.) Tj ET
+0.3 G 0.8 w 56 525.9 m 539.28 525.9 l S 0 G
+BT /F2 12.5 Tf 56 505.9 Td (Submission checklist) Tj ET
+0.6 G 0.8 w 56 483.4 m 539.28 483.4 l S 0 G
+BT /F1 9.5 Tf 56 469.4 Td (- [x] Scope: matches *.gleague.nba.com pattern - confirm courtside in nba-public CSV) Tj ET
+BT /F1 9.5 Tf 56 455.9 Td (- [x] Reproducible without reporter session state \(fully unauthenticated\)) Tj ET
+BT /F1 9.5 Tf 56 442.4 Td (- [x] No reporter test account required) Tj ET
+BT /F1 9.5 Tf 56 428.9 Td (- [x] No third-party PII; cookie values flagged as sensitive) Tj ET
+BT /F1 9.5 Tf 56 415.4 Td (- [x] Request + response of the key step included) Tj ET
+BT /F1 9.5 Tf 56 401.9 Td (- [x] Minimal PoC - no takeover performed) Tj ET
+BT /F1 9.5 Tf 56 388.4 Td (- [x] Severity calibrated \(Medium; exploitation not performed\)) Tj ET
+BT /F1 9.5 Tf 56 374.9 Td (- [ ] Duplicate check - verify against NBA known issues / recent gleague.nba.com DNS disclosures) Tj ET
+BT /F1 9.7 Tf 56 355.4 Td (Human reviews and submits. Claude does not submit.) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 1 0 R /F2 2 0 R /F3 3 0 R >> >> /Contents 4 0 R >>
+endobj
+8 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 1 0 R /F2 2 0 R /F3 3 0 R >> >> /Contents 5 0 R >>
+endobj
+9 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 1 0 R /F2 2 0 R /F3 3 0 R >> >> /Contents 6 0 R >>
+endobj
+10 0 obj
+<< /Type /Pages /Count 3 /Kids [7 0 R 8 0 R 9 0 R] >>
+endobj
+11 0 obj
+<< /Type /Catalog /Pages 10 0 R >>
+endobj
+xref
+0 12
+0000000000 65535 f 
+0000000015 00000 n 
+0000000085 00000 n 
+0000000160 00000 n 
+0000000228 00000 n 
+0000003852 00000 n 
+0000008073 00000 n 
+0000010830 00000 n 
+0000010983 00000 n 
+0000011136 00000 n 
+0000011289 00000 n 
+0000011359 00000 n 
+trailer
+<< /Size 12 /Root 11 0 R >>
+startxref
+11410
+%%EOF

@@ -1,0 +1,148 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@page { margin: 1.6cm; }
+body { font-family: -apple-system, Helvetica, Arial, sans-serif; font-size: 10.5pt; line-height: 1.45; color:#111; }
+h1 { font-size: 17pt; border-bottom: 2px solid #333; padding-bottom: 4pt; }
+h2 { font-size: 13pt; margin-top: 18pt; border-bottom: 1px solid #ccc; padding-bottom: 2pt; }
+h3 { font-size: 11pt; margin-top: 12pt; }
+code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 9pt; background:#f2f2f2; padding: 0 2px; }
+pre { background:#f6f6f6; border:1px solid #ddd; padding: 8pt; overflow-x: auto; }
+pre code { background: none; padding: 0; font-size: 8.5pt; line-height: 1.35; }
+hr { border: none; border-top: 1px solid #ddd; margin: 14pt 0; }
+ul { margin: 4pt 0 4pt 0; padding-left: 18pt; }
+li { margin: 2pt 0; }
+strong { color:#000; }
+p { margin: 5pt 0; }
+</style></head><body>
+<h1>Dangling DNS on <code>courtside.gleague.nba.com</code> → Firebase Hosting with no associated site (potential subdomain takeover)</h1>
+
+<p><strong>Target:</strong> <code>https://courtside.gleague.nba.com/</code></p>
+<p><strong>Program:</strong> NBA Public Bug Bounty (HackerOne — <code>nba-public</code>)</p>
+<p><strong>Severity (proposed):</strong> Medium — subdomain takeover candidate on a legitimate <code>*.nba.com</code> property. Exploitation (the actual domain claim) was <strong>not</strong> performed; see *Caveats*.</p>
+<p><strong>Date:</strong> 2026-09-03</p>
+<p><strong>Reporter test account:</strong> N/A — issue is fully unauthenticated.</p>
+
+<hr>
+
+<h2>Summary</h2>
+
+<p><code>courtside.gleague.nba.com</code> is an NBA G League subdomain whose DNS <strong>A</strong> records point to Firebase Hosting&#x27;s published IP addresses, but <strong>no Firebase Hosting site is associated with the domain</strong>. Firebase therefore serves its default <strong>&quot;Site Not Found&quot;</strong> page for every request.</p>
+
+<p>If the domain&#x27;s association with Firebase Hosting is in a stale/orphaned state (e.g. it was previously connected to a now-deleted Firebase project), an attacker who adds <code>courtside.gleague.nba.com</code> as a custom domain to a Firebase project they control would be able to serve <strong>arbitrary content from a legitimate <code>nba.com</code> subdomain</strong>.</p>
+
+<hr>
+
+<h2>Steps to reproduce</h2>
+
+<p>1. Resolve the host:</p>
+
+<pre><code>
+   $ dig +short courtside.gleague.nba.com
+   151.101.65.195
+   151.101.1.195
+</code></pre>
+
+<p>   <code>151.101.1.195</code> and <code>151.101.65.195</code> are the <strong>A records Firebase Hosting instructs customers to use</strong> for custom domains (see Firebase Hosting docs → &quot;Connect a custom domain&quot;).</p>
+
+<p>2. Request the site:</p>
+
+<pre><code>
+   $ curl -sI https://courtside.gleague.nba.com/
+   HTTP/2 404
+   content-type: text/html; charset=utf-8
+   x-served-by: cache-bsb500031-BSB        # Fastly = Firebase Hosting&#x27;s CDN
+   x-cache: MISS
+
+   $ curl -s https://courtside.gleague.nba.com/ | grep -iE &#x27;&lt;h1&gt;|&lt;h2&gt;&#x27;
+   &lt;h1&gt;Site Not Found&lt;/h1&gt;
+   &lt;h2&gt;Why am I seeing this?&lt;/h2&gt;
+   &lt;h2&gt;How can I deploy my first app?&lt;/h2&gt;
+</code></pre>
+
+<p>   This is the <strong>verbatim Firebase Hosting &quot;Site Not Found&quot; page</strong> — it is returned when a request reaches Firebase Hosting for a hostname that is not attached to any active site.</p>
+
+<p>3. (Not performed — see *Caveats*) An attacker would then:</p>
+<ul>
+<li>create a Firebase project,</li>
+<li><code>firebase hosting:sites:create &lt;attacker-site&gt;</code>,</li>
+<li>in the Firebase console → Hosting → &quot;Add custom domain&quot;, enter <code>courtside.gleague.nba.com</code>.</li>
+<li>If Firebase associates the domain without requiring a fresh <code>TXT</code> ownership record on <code>nba.com</code> (which can happen when a prior verification/connection was not cleaned up), the attacker now controls all content at <code>https://courtside.gleague.nba.com/</code>.</li>
+</ul>
+
+<hr>
+
+<h2>Proof of concept (evidence)</h2>
+
+<pre><code>
+Request:
+  GET / HTTP/2
+  Host: courtside.gleague.nba.com
+
+Response:
+  HTTP/2 404 Not Found
+  content-type: text/html; charset=utf-8
+  &lt;!doctype html&gt;&lt;html&gt;&lt;head&gt;&lt;title&gt;Site Not Found&lt;/title&gt; ...
+  &lt;h1&gt;Site Not Found&lt;/h1&gt;
+  &lt;h2&gt;Why am I seeing this?&lt;/h2&gt;
+  ... &quot;How can I deploy my first app?&quot; ...
+</code></pre>
+
+<ul>
+<li>DNS: <code>courtside.gleague.nba.com</code> → A <code>151.101.1.195</code>, <code>151.101.65.195</code> (Firebase Hosting).</li>
+<li>HTTP: 404 + Firebase Hosting &quot;Site Not Found&quot; default page.</li>
+<li>No NBA / G League content is served; the hostname is orphaned at the hosting layer.</li>
+</ul>
+
+<hr>
+
+<h2>Impact</h2>
+
+<p><strong>Demonstrated:</strong> A valid NBA G League subdomain (<code>courtside.gleague.nba.com</code>) resolves to Firebase Hosting but is not attached to any site — a dangling-DNS condition.</p>
+
+<p><strong>Worst case (if the domain is claimable):</strong> full control of content served from <code>https://courtside.gleague.nba.com/</code>, enabling:</p>
+
+<ul>
+<li><strong>Phishing / brand abuse</strong> under a trusted <code>nba.com</code> domain with a valid TLS certificate (Firebase auto-provisions one).</li>
+<li><strong>Cookie attacks against other <code>*.nba.com</code> properties.</strong> NBA sets cookies with <code>Domain=.nba.com</code> — observed on <code>*.gleague.nba.com</code> responses, e.g. Akamai Bot Manager cookies <code>_abck</code> and <code>bm_sz</code> (<code>Set-Cookie: _abck=...; Domain=.nba.com</code>). Content the attacker serves from <code>courtside.gleague.nba.com</code> can set/overwrite <code>Domain=.nba.com</code> cookies, enabling session fixation or bot-management bypass against users of unrelated NBA sites.</li>
+<li><strong>Malware / scam distribution</strong> with the credibility of an official NBA domain.</li>
+<li><strong>OAuth <code>redirect_uri</code> abuse</strong> if any NBA SSO client (PingFederate / Azure AD are both in use across <code>*.nba.com</code>) allows a <code>*.nba.com</code> or <code>*.gleague.nba.com</code> redirect target.</li>
+</ul>
+
+<hr>
+
+<h2>Remediation</h2>
+
+<ul>
+<li>If <code>courtside.gleague.nba.com</code> is no longer used: <strong>remove its DNS records</strong>.</li>
+<li>If it is used: <strong>re-attach it to the correct Firebase Hosting site</strong> under NBA&#x27;s Firebase project.</li>
+<li>Audit related records for the same class of issue — during testing, <code>*.dleague.nba.com</code> (<code>austin</code>, <code>bakersfield</code>, <code>canton</code>, <code>grandrapids</code>, <code>greensboro</code>) were found with <code>CNAME → vpc-lb-1679823851.us-east-1.elb.amazonaws.com</code>, which resolves (<code>3.212.84.195</code>) but does not respond on 80/443. Confirm that ELB still exists and is intended.</li>
+<li>Consider a periodic dangling-DNS sweep across <code>*.nba.com</code>.</li>
+</ul>
+
+<hr>
+
+<h2>Caveats (read before triage)</h2>
+
+<ul>
+<li><strong>The takeover itself was not attempted.</strong> This report documents (1) the dangling-DNS condition and (2) the Firebase Hosting &quot;Site Not Found&quot; fingerprint, which is the standard precondition for a Firebase subdomain takeover. Whether the domain is actually <strong>claimable</strong> depends on internal state you can verify directly: is there a Firebase project that still &quot;owns&quot;/half-owns this custom domain, and does re-adding it bypass fresh TXT verification? Modern Firebase requires a <code>TXT</code> ownership record for new custom-domain connections; this is exploitable primarily when a prior connection/verification was left in place.</li>
+<li><strong>Scope confirmation needed.</strong> <code>courtside.gleague.nba.com</code> matches the in-scope pattern <code>*.gleague.nba.com</code> (the program&#x27;s scoped sample includes <code>wisconsin/windycity/westchester.gleague.nba.com</code>). Please confirm it is covered by <code>nba-public</code> before rewarding.</li>
+<li>Cookie values in the evidence above are illustrative and should be treated as sensitive.</li>
+</ul>
+
+<hr>
+
+<h2>Submission checklist</h2>
+
+<ul>
+<li>&#9745; Scope: matches <code>*.gleague.nba.com</code> pattern — <strong>confirm <code>courtside</code> in <code>nba-public</code> CSV</strong></li>
+<li>&#9745; Reproducible without reporter session state (fully unauthenticated)</li>
+<li>&#9745; No reporter test account required</li>
+<li>&#9745; No third-party PII; cookie values flagged as sensitive</li>
+<li>&#9745; Request + response of the key step included</li>
+<li>&#9745; Minimal PoC — <strong>no takeover performed</strong></li>
+<li>&#9745; Severity calibrated (Medium; exploitation not performed)</li>
+<li>&#9744; Duplicate check — verify against NBA known issues / recent <code>gleague.nba.com</code> DNS disclosures</li>
+</ul>
+
+<p><strong>Human reviews and submits. Claude does not submit.</strong></p>
+
+</body></html>

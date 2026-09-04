@@ -1,0 +1,21 @@
+HTTP/2 200 
+date: Wed, 02 Sep 2026 23:13:38 GMT
+content-type: text/html; charset=utf-8
+x-frame-options: SAMEORIGIN
+x-content-type-options: nosniff
+x-xss-protection: 1; mode=block
+strict-transport-security: max-age=63072000
+referrer-policy: same-origin
+cross-origin-opener-policy: same-origin
+content-security-policy: base-uri 'none'; object-src 'none'; connect-src 'self'; img-src *; style-src 'unsafe-inline' 'self'; script-src https: 'nonce-a99e53ae34fe4205b574f762f47a95ca' 'strict-dynamic' 'unsafe-inline';
+set-cookie: _csrf=atfGhLnwVTiIkW7YDfX59Wy4; Path=/; HttpOnly; Secure; SameSite=Strict
+set-cookie: rt3=8f1adfba-6b3d-47c2-86e7-2a116747b0fe; Max-Age=604800; Path=/; Expires=Wed, 09 Sep 2026 23:13:38 GMT; HttpOnly; Secure; SameSite=Strict
+set-cookie: __cf_bm=gaBLxadbmPRZXHOuaHLv9zJFw9HqIXOnOzWeq0T_eZI-1788390818.007749-1.0.1.1-6DCxeFLYDh.eYUIU415hw4AVFSJ2nCMYp59fiyXKn3AMGYj4m1XoifYSLLX2_h5BtG4E0v5K_gmi0UjTDqjz4kpfLc.noaOMhLEvvPZO9Ui.cofGEvFrqCNo_EgTBIhk; HttpOnly; SameSite=None; Secure; Path=/; Domain=coinspot.com.au; Expires=Wed, 02 Sep 2026 23:43:38 GMT
+cache-control: no-cache, no-store, must-revalidate, private
+pragma: no-cache
+expires: 0
+vary: Accept-Encoding
+cf-cache-status: DYNAMIC
+server: cloudflare
+cf-ray: a35034d48d5950ef-GIG
+

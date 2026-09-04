@@ -1,0 +1,20 @@
+[2m[*][0m alvo: arkoselabs.com  |  rate: 5/s  |  tools: subfinder, dnsx, httpx, gau, waybackurls, katana, nuclei, ffuf
+[32m[+][0m subfinder: 466
+[33m[skip][0m amass [2m(rode setup.sh)[0m
+[32m[+][0m crt.sh: 0
+[2m[*][0m subdomínios candidatos: 467
+[32m[+][0m resolvem DNS: 129
+[32m[+][0m httpx: 83 vivos
+[2m[*][0m gau estourou timeout (300s)
+[32m[+][0m gau: 0 URLs
+[32m[+][0m waybackurls: 0 URLs
+[32m[+][0m katana: 2390 URLs (crawl)
+[33m[skip][0m gospider [2m(rode setup.sh)[0m
+[33m[skip][0m gf [2m(rode setup.sh)[0m
+[2m[*][0m nuclei rodando (pode demorar)...
+[2m[*][0m nuclei rc=1: WARNING: sonic/ast only supports (go1.17~1.26 and amd64 CPU) or (go1.20~1.26 and arm64 CPU), but your environment is not suitable and will fallback to encoding/
+[32m[+][0m nuclei: 0 achados -> targets/arkose-labs/recon/nuclei.txt
+
+[1m── Recon arkoselabs.com ──[0m  subs:129  vivos:83  urls:2390
+[32mSalvo em targets/arkose-labs/recon/[0m
+[2m→ python3 cors_headers_scan.py -f targets/arkose-labs/recon/live-hosts.txt --json targets/arkose-labs/recon/cors.json[0m

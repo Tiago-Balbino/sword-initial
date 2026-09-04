@@ -1,0 +1,1003 @@
+
+[1m══ https://admin.arkoselabs.com[0m
+  [2mstatus 403  →  https://admin.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcontent-security-policy[0m — CSP ausente — sem mitigação de XSS/injeção de conteúdo.
+  [33m[MÉDIO][0m [1mx-frame-options[0m — X-Frame-Options ausente — risco de clickjacking (checar se CSP frame-ancestors cobre).
+  [2m[INFO][0m [1mpermissions-policy[0m — Permissions-Policy ausente — sem restrição de APIs do navegador.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mcors[0m
+
+[1m══ https://amazon-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://amazon-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.amazon-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://adobe-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://adobe-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.adobe-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://airbnb-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://airbnb-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.airbnb-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ http://autodiscover.arkoselabs.com[0m
+  [31merro:[0m HTTPSConnectionPool(host='autodiscover.arkoselabs.com', port=443): Max retries exceeded with url: / (Caused by NewConnectionError("HTTPSConnection(host='autodiscover.arkoselabs.com', port=443): Failed to establish a new connection: [Errno 61] Connection refused"))
+
+[1m══ https://abdata-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://abdata-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.abdata-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://api.arkoselabs.com[0m
+  [2mstatus 404  →  https://api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://aircanada-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://aircanada-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.aircanada-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://audio-ap-southeast-2.arkoselabs.com[0m
+  [31merro:[0m HTTPSConnectionPool(host='audio-ap-southeast-2.arkoselabs.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1081)')))
+
+[1m══ https://audio-eu-west-1.arkoselabs.com[0m
+  [31merro:[0m HTTPSConnectionPool(host='audio-eu-west-1.arkoselabs.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1081)')))
+
+[1m══ https://audio-us-west-2.arkoselabs.com[0m
+  [31merro:[0m HTTPSConnectionPool(host='audio-us-west-2.arkoselabs.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1081)')))
+
+[1m══ https://audio-us-east-1.arkoselabs.com[0m
+  [31merro:[0m HTTPSConnectionPool(host='audio-us-east-1.arkoselabs.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1081)')))
+
+[1m══ https://audio-ap-southeast-1.arkoselabs.com[0m
+  [31merro:[0m HTTPSConnectionPool(host='audio-ap-southeast-1.arkoselabs.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1081)')))
+
+[1m══ https://asurion-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://asurion-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.asurion-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://att-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://att-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.att-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://badoo-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://badoo-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.badoo-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://bhn-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://bhn-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.bhn-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://cdn.arkoselabs.com[0m
+  [2mstatus 404  →  https://cdn.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.cdn.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://bumble-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://bumble-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.bumble-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://citizensbank-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://citizensbank-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.citizensbank-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://chime-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://chime-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.chime-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://blizzard-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://blizzard-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.blizzard-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://boa-verify.arkoselabs.com[0m
+  [2mstatus 404  →  https://boa-verify.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.boa-verify.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://boa-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://boa-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.boa-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://cdntransfertest.arkoselabs.com[0m
+  [2mstatus 502  →  https://cdntransfertest.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mstrict-transport-security[0m — HSTS ausente — permite downgrade p/ HTTP e ataques MITM.
+  [33m[MÉDIO][0m [1mcontent-security-policy[0m — CSP ausente — sem mitigação de XSS/injeção de conteúdo.
+  [33m[MÉDIO][0m [1mx-frame-options[0m — X-Frame-Options ausente — risco de clickjacking (checar se CSP frame-ancestors cobre).
+  [36m[BAIXO][0m [1mx-content-type-options[0m — X-Content-Type-Options ausente — navegador pode fazer MIME sniffing.
+  [36m[BAIXO][0m [1mreferrer-policy[0m — Referrer-Policy ausente — pode vazar URLs em requisições cross-origin.
+  [2m[INFO][0m [1mpermissions-policy[0m — Permissions-Policy ausente — sem restrição de APIs do navegador.
+  [32m[OK][0m [2mcors[0m
+
+[1m══ https://client-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://client-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.client-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://client.arkoselabs.com[0m
+  [2mstatus 404  →  https://client.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.client.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://coursera-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://coursera-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.coursera-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://customer-staging.arkoselabs.com[0m
+  [31merro:[0m HTTPSConnectionPool(host='customer-staging.arkoselabs.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1081)')))
+
+[1m══ https://ctm-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://ctm-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.ctm-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://customer-sessions.arkoselabs.com[0m
+  [2mstatus 404  →  https://customer-sessions.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.customer-sessions.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://discovery-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://discovery-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.discovery-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://docusign-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://docusign-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.docusign-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://client-api.azure.arkoselabs.com[0m
+  [2mstatus 403  →  https://client-api.azure.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mstrict-transport-security[0m — HSTS ausente — permite downgrade p/ HTTP e ataques MITM.
+  [33m[MÉDIO][0m [1mcontent-security-policy[0m — CSP ausente — sem mitigação de XSS/injeção de conteúdo.
+  [33m[MÉDIO][0m [1mx-frame-options[0m — X-Frame-Options ausente — risco de clickjacking (checar se CSP frame-ancestors cobre).
+  [36m[BAIXO][0m [1mx-content-type-options[0m — X-Content-Type-Options ausente — navegador pode fazer MIME sniffing.
+  [36m[BAIXO][0m [1mreferrer-policy[0m — Referrer-Policy ausente — pode vazar URLs em requisições cross-origin.
+  [2m[INFO][0m [1mpermissions-policy[0m — Permissions-Policy ausente — sem restrição de APIs do navegador.
+  [32m[OK][0m [2mcors[0m
+
+[1m══ https://client-api-secondary.azure.arkoselabs.com[0m
+  [2mstatus 403  →  https://client-api-secondary.azure.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mstrict-transport-security[0m — HSTS ausente — permite downgrade p/ HTTP e ataques MITM.
+  [33m[MÉDIO][0m [1mcontent-security-policy[0m — CSP ausente — sem mitigação de XSS/injeção de conteúdo.
+  [33m[MÉDIO][0m [1mx-frame-options[0m — X-Frame-Options ausente — risco de clickjacking (checar se CSP frame-ancestors cobre).
+  [36m[BAIXO][0m [1mx-content-type-options[0m — X-Content-Type-Options ausente — navegador pode fazer MIME sniffing.
+  [36m[BAIXO][0m [1mreferrer-policy[0m — Referrer-Policy ausente — pode vazar URLs em requisições cross-origin.
+  [2m[INFO][0m [1mpermissions-policy[0m — Permissions-Policy ausente — sem restrição de APIs do navegador.
+  [32m[OK][0m [2mcors[0m
+
+[1m══ https://demo.arkoselabs.com[0m
+  [2mstatus 200  →  https://demo.arkoselabs.com/[0m
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+  [32m[OK][0m [2mcors[0m
+
+[1m══ https://dropbox-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://dropbox-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.dropbox-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://enterpriseregistration.arkoselabs.com[0m
+  [31merro:[0m HTTPSConnectionPool(host='enterpriseregistration.arkoselabs.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'enterpriseregistration.arkoselabs.com'. (_ssl.c:1081)")))
+
+[1m══ https://epic-games-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://epic-games-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.epic-games-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://expedia-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://expedia-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.expedia-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://figma-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://figma-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.figma-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://github-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://github-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.github-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://gitlab-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://gitlab-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.gitlab-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://groupme-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://groupme-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.groupme-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://hp-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://hp-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.hp-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://arkoselabs.com[0m
+  [2mstatus 200  →  https://www.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcontent-security-policy[0m — CSP ausente — sem mitigação de XSS/injeção de conteúdo.
+  [2m[INFO][0m [1mpermissions-policy[0m — Permissions-Policy ausente — sem restrição de APIs do navegador.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudflare
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mcors[0m
+
+[1m══ https://iframe.arkoselabs.com[0m
+  [2mstatus 200  →  https://iframe.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mx-frame-options[0m — X-Frame-Options ausente — risco de clickjacking (checar se CSP frame-ancestors cobre).
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+  [32m[OK][0m [2mcors[0m
+
+[1m══ https://em.arkoselabs.com[0m
+  [2mstatus 200  →  https://em.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mstrict-transport-security[0m — HSTS ausente — permite downgrade p/ HTTP e ataques MITM.
+  [2m[INFO][0m [1mpermissions-policy[0m — Permissions-Policy ausente — sem restrição de APIs do navegador.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudflare
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mcors[0m
+
+[1m══ https://image-ap-southeast-1.arkoselabs.com[0m
+  [31merro:[0m HTTPSConnectionPool(host='image-ap-southeast-1.arkoselabs.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1081)')))
+
+[1m══ https://image-ap-southeast-2.arkoselabs.com[0m
+  [31merro:[0m HTTPSConnectionPool(host='image-ap-southeast-2.arkoselabs.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1081)')))
+
+[1m══ https://image-prod-ap-southeast-1.arkoselabs.com[0m
+  [31merro:[0m HTTPSConnectionPool(host='image-prod-ap-southeast-1.arkoselabs.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1081)')))
+
+[1m══ https://image-prod-eu-west-1.arkoselabs.com[0m
+  [31merro:[0m HTTPSConnectionPool(host='image-prod-eu-west-1.arkoselabs.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1081)')))
+
+[1m══ https://image-prod-us-east-1.arkoselabs.com[0m
+  [31merro:[0m HTTPSConnectionPool(host='image-prod-us-east-1.arkoselabs.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1081)')))
+
+[1m══ https://connect.arkoselabs.com[0m
+  [2mstatus 200  →  https://www.arkoselabs.com[0m
+  [33m[MÉDIO][0m [1mcontent-security-policy[0m — CSP ausente — sem mitigação de XSS/injeção de conteúdo.
+  [2m[INFO][0m [1mpermissions-policy[0m — Permissions-Policy ausente — sem restrição de APIs do navegador.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudflare
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mcors[0m
+
+[1m══ https://linkedin-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://linkedin-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.linkedin-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://linktree-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://linktree-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.linktree-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://lively-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://lively-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.lively-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://match-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://match-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.match-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://meta-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://meta-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.meta-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://microsoft-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://microsoft-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.microsoft-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://olo-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://olo-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.olo-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://go.arkoselabs.com[0m
+  [2mstatus 404  →  https://go.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mstrict-transport-security[0m — HSTS ausente — permite downgrade p/ HTTP e ataques MITM.
+  [33m[MÉDIO][0m [1mcontent-security-policy[0m — CSP ausente — sem mitigação de XSS/injeção de conteúdo.
+  [33m[MÉDIO][0m [1mx-frame-options[0m — X-Frame-Options ausente — risco de clickjacking (checar se CSP frame-ancestors cobre).
+  [36m[BAIXO][0m [1mx-content-type-options[0m — X-Content-Type-Options ausente — navegador pode fazer MIME sniffing.
+  [36m[BAIXO][0m [1mreferrer-policy[0m — Referrer-Policy ausente — pode vazar URLs em requisições cross-origin.
+  [2m[INFO][0m [1mpermissions-policy[0m — Permissions-Policy ausente — sem restrição de APIs do navegador.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudflare
+  [32m[OK][0m [2mcors[0m
+
+[1m══ https://info.arkoselabs.com[0m
+  [2mstatus 200  →  https://info.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mstrict-transport-security[0m — HSTS ausente — permite downgrade p/ HTTP e ataques MITM.
+  [2m[INFO][0m [1mpermissions-policy[0m — Permissions-Policy ausente — sem restrição de APIs do navegador.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudflare
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mcors[0m
+
+[1m══ https://enhancedstatus.arkoselabs.com[0m
+  [2mstatus 200  →  https://enhancedstatus.arkoselabs.com/access/login[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.enhancedstatus.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [36m[BAIXO][0m [1mhsts-subdomains[0m — HSTS sem includeSubDomains.
+  [2m[INFO][0m [1mpermissions-policy[0m — Permissions-Policy ausente — sem restrição de APIs do navegador.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: AtlassianEdge
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+
+[1m══ https://rightmove-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://rightmove-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.rightmove-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://roblox-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://roblox-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.roblox-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://rockstar-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://rockstar-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.rockstar-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://snap-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://snap-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.snap-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://tiaa-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://tiaa-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.tiaa-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://status.arkoselabs.com[0m
+  [2mstatus 200  →  https://status.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcontent-security-policy[0m — CSP ausente — sem mitigação de XSS/injeção de conteúdo.
+  [33m[MÉDIO][0m [1mx-frame-options[0m — X-Frame-Options ausente — risco de clickjacking (checar se CSP frame-ancestors cobre).
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.status.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [36m[BAIXO][0m [1mhsts-subdomains[0m — HSTS sem includeSubDomains.
+  [2m[INFO][0m [1mpermissions-policy[0m — Permissions-Policy ausente — sem restrição de APIs do navegador.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: AtlassianEdge
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+
+[1m══ https://portal.arkoselabs.com[0m
+  [2mstatus 200  →  https://portal.arkoselabs.com/[0m
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+  [32m[OK][0m [2mcors[0m
+
+[1m══ https://tinder-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://tinder-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.tinder-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://tlc-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://tlc-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.tlc-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://us.auth0.arkoselabs.com[0m
+  [31merro:[0m HTTPSConnectionPool(host='auth0.arkoselabs.com', port=443): Max retries exceeded with url: / (Caused by NameResolutionError("HTTPSConnection(host='auth0.arkoselabs.com', port=443): Failed to resolve 'auth0.arkoselabs.com' ([Errno 8] nodename nor servname provided, or not known)"))
+
+[1m══ https://wbd-api.arkoselabs.com[0m
+  [2mstatus 404  →  https://wbd-api.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.wbd-api.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+
+[1m══ https://verify.azure.arkoselabs.com[0m
+  [2mstatus 403  →  https://verify.azure.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mstrict-transport-security[0m — HSTS ausente — permite downgrade p/ HTTP e ataques MITM.
+  [33m[MÉDIO][0m [1mcontent-security-policy[0m — CSP ausente — sem mitigação de XSS/injeção de conteúdo.
+  [33m[MÉDIO][0m [1mx-frame-options[0m — X-Frame-Options ausente — risco de clickjacking (checar se CSP frame-ancestors cobre).
+  [36m[BAIXO][0m [1mx-content-type-options[0m — X-Content-Type-Options ausente — navegador pode fazer MIME sniffing.
+  [36m[BAIXO][0m [1mreferrer-policy[0m — Referrer-Policy ausente — pode vazar URLs em requisições cross-origin.
+  [2m[INFO][0m [1mpermissions-policy[0m — Permissions-Policy ausente — sem restrição de APIs do navegador.
+  [32m[OK][0m [2mcors[0m
+
+[1m══ https://verify-secondary.azure.arkoselabs.com[0m
+  [2mstatus 403  →  https://verify-secondary.azure.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mstrict-transport-security[0m — HSTS ausente — permite downgrade p/ HTTP e ataques MITM.
+  [33m[MÉDIO][0m [1mcontent-security-policy[0m — CSP ausente — sem mitigação de XSS/injeção de conteúdo.
+  [33m[MÉDIO][0m [1mx-frame-options[0m — X-Frame-Options ausente — risco de clickjacking (checar se CSP frame-ancestors cobre).
+  [36m[BAIXO][0m [1mx-content-type-options[0m — X-Content-Type-Options ausente — navegador pode fazer MIME sniffing.
+  [36m[BAIXO][0m [1mreferrer-policy[0m — Referrer-Policy ausente — pode vazar URLs em requisições cross-origin.
+  [2m[INFO][0m [1mpermissions-policy[0m — Permissions-Policy ausente — sem restrição de APIs do navegador.
+  [32m[OK][0m [2mcors[0m
+
+[1m══ https://developer.arkoselabs.com[0m
+  [2mstatus 200  →  https://developer.arkoselabs.com/docs/what-is-titan[0m
+  [33m[MÉDIO][0m [1mcontent-security-policy[0m — CSP ausente — sem mitigação de XSS/injeção de conteúdo.
+  [36m[BAIXO][0m [1mreferrer-policy[0m — Referrer-Policy ausente — pode vazar URLs em requisições cross-origin.
+  [36m[BAIXO][0m [1mhsts-subdomains[0m — HSTS sem includeSubDomains.
+  [2m[INFO][0m [1mpermissions-policy[0m — Permissions-Policy ausente — sem restrição de APIs do navegador.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudflare
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mcors[0m
+
+[1m══ https://www.arkoselabs.com[0m
+  [2mstatus 200  →  https://www.arkoselabs.com/[0m
+  [33m[MÉDIO][0m [1mcontent-security-policy[0m — CSP ausente — sem mitigação de XSS/injeção de conteúdo.
+  [2m[INFO][0m [1mpermissions-policy[0m — Permissions-Policy ausente — sem restrição de APIs do navegador.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudflare
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mcors[0m
+
+[1m══ https://status-priv-1.arkoselabs.com[0m
+  [2mstatus 200  →  https://arkoselabs-priv-1.statuspage.io/inactive[0m
+  [33m[MÉDIO][0m [1mcontent-security-policy[0m — CSP ausente — sem mitigação de XSS/injeção de conteúdo.
+  [33m[MÉDIO][0m [1mx-frame-options[0m — X-Frame-Options ausente — risco de clickjacking (checar se CSP frame-ancestors cobre).
+  [33m[MÉDIO][0m [1mcors:origin-refletido[0m — ACAO='*' (wildcard). Origin testado='https://evil-sword-test.example'.
+  [33m[MÉDIO][0m [1mcors:null-origin[0m — ACAO='*' (wildcard). Origin testado='null'.
+  [33m[MÉDIO][0m [1mcors:subdominio-forjado[0m — ACAO='*' (wildcard). Origin testado='https://sword-attacker.status-priv-1.arkoselabs.com'.
+  [33m[MÉDIO][0m [1mcors:sufixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://arkoselabs.com.evil-sword.example'.
+  [33m[MÉDIO][0m [1mcors:prefixo-bypass[0m — ACAO='*' (wildcard). Origin testado='https://evilarkoselabs.com'.
+  [36m[BAIXO][0m [1mhsts-subdomains[0m — HSTS sem includeSubDomains.
+  [2m[INFO][0m [1mpermissions-policy[0m — Permissions-Policy ausente — sem restrição de APIs do navegador.
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: AtlassianEdge
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+
+[1m══ https://help.arkoselabs.com[0m
+  [2mstatus 200  →  https://portal.arkoselabs.com/sso/zendesk?brand_id=1500000557621&locale_id=1&return_to=https%3A%2F%2Fhelp.arkoselabs.com%2Fhc&timestamp=1788323577[0m
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+  [32m[OK][0m [2mcors[0m
+
+[1m══ https://jobs.arkoselabs.com[0m
+  [2mstatus 200  →  https://job-boards.greenhouse.io/arkoselabs[0m
+  [33m[MÉDIO][0m [1mx-frame-options[0m — X-Frame-Options ausente — risco de clickjacking (checar se CSP frame-ancestors cobre).
+  [36m[BAIXO][0m [1mreferrer-policy[0m — Referrer-Policy ausente — pode vazar URLs em requisições cross-origin.
+  [2m[INFO][0m [1mpermissions-policy[0m — Permissions-Policy ausente — sem restrição de APIs do navegador.
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mcors[0m
+
+[1m══ https://support.arkoselabs.com[0m
+  [2mstatus 200  →  https://portal.arkoselabs.com/sso/zendesk?brand_id=360007015833&locale_id=1&return_to=https%3A%2F%2Fsupport.arkoselabs.com%2Fhc%2Fen-us&timestamp=1788323581[0m
+  [2m[INFO][0m [1minfo-leak:server[0m — expõe versão/stack: cloudfront
+  [32m[OK][0m [2mstrict-transport-security[0m
+  [32m[OK][0m [2mcontent-security-policy[0m
+  [32m[OK][0m [2mx-frame-options[0m
+  [32m[OK][0m [2mx-content-type-options[0m
+  [32m[OK][0m [2mreferrer-policy[0m
+  [32m[OK][0m [2mpermissions-policy[0m
+  [32m[OK][0m [2mcors[0m
+
+[1m── Resumo ──[0m  [31mALTO: 0[0m  [33mMÉDIO: 282[0m  [36mBAIXO: 18[0m  (83 alvo(s))
+
+[32mRelatório salvo em targets/arkose-labs/recon/cors.json[0m
