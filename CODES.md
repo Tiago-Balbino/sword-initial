@@ -324,5 +324,35 @@ Postura: em vez de só propor, o Claude **conduz o ataque de ponta a ponta** em 
 
 Saída por lead: `[VEREDITO|SIMULADO] lead · request enviada (ou simulada) · resposta · casa com patterns/arsenal? · próximo passo`.
 
+### `formação tridente` — teste diferencial em 3 navegadores (o irmão observacional da lança) 🔱
+Ativação: **"formação tridente"** / **"forma o tridente"** / **"tridente"**. Desliga: **"recolhe o tridente"** / **"baixa o tridente"**.
+Pré-requisito: alvo **autorizado** com ficha. **Compatível com a `postura escudo`** (roda junto — ≠ da lança) e com o `modo hunter`.
+Postura: rodar **todos os fluxos** interessantes através de **3 engines de navegador** em paralelo e **diffar o comportamento**. Onde os navegadores discordam, mora o bug — é **P5 (parser A ≠ parser B) na camada do cliente**.
+
+**As 3 pontas (engines — não marcas):**
+1. **Blink** (Chrome/Edge/Brave · V8) — dirigível de verdade pela skill `claude-in-chrome`.
+2. **Gecko** (Firefox · SpiderMonkey).
+3. **WebKit** (Safari · JavaScriptCore).
+- *Ponta 0 opcional:* cliente **sem-JS** (curl) como baseline "o que o servidor manda cru".
+
+**Por que convive com o escudo:** dirigir navegadores reais por fluxos **legítimos** = tráfego de usuário normal, baixo volume, serial → **não dispara flag**. É observação, não ataque. O que sair do comportamento de usuário (fuzz, payload de injeção) continua 🔴 vitrine `[REQUER AUTORIZAÇÃO]` no escudo.
+
+**O catálogo de divergências (onde 3-navegadores-vira-bug):**
+- **CSP** — um engine bloqueia, outro não (`unsafe-eval`, nonce, `strict-dynamic`, `script-src` variam) → XSS que só executa num.
+- **Cookies / SameSite** — default SameSite, `__Host-`/`__Secure-`, partitioning (CHIPS) diferem → CSRF/vazamento de sessão.
+- **Redirect & parsing de URL** — `\`↔`/`, unicode, `javascript:`/`data:` handling, `@`/`//` → open redirect / XSS num engine só.
+- **Normalização de path** — `%2e`, `..`, encoding duplo → traversal / **WCD cache-key differential**.
+- **DOM / sanitização** — parsing de HTML, `innerHTML`, mutation-XSS variam por engine.
+- **Charset/encoding** — sniffing, UTF-7 legado → XSS.
+- **Service Worker · storage · CORS preflight · autofill** — comportamento por engine.
+
+**Registro (múltiplas informações — o coração do tridente):** por fluxo, uma **matriz** em `targets/<alvo>/tridente.md` (criar se não existe): `fluxo · engine · status · headers-chave (CSP/Set-Cookie/Location) · cadeia de redirect · cookies setados · resultado no DOM · erros de console · storage`. **Cada linha divergente entre engines = lead** → entra no fluxo normal (`contra-prova`/`arapuca`). Casar com [[patterns]] P5 e `arsenal.md` (WCD+CSPT, browser-powered desync, CSP bypass).
+
+**Como opero:** ponta **Blink** eu conduzo via `claude-in-chrome` (executo o fluxo, capturo headers/console/DOM). Pontas **Gecko/WebKit**: te oriento o mesmo fluxo (passos exatos + o que capturar) e você cola o resultado; eu consolido a matriz e aponto as divergências.
+
+**Guardrails:** herda escopo + (se ligada) a `postura escudo`. **Se o programa exige header** (ex.: eToro `X-Bug-Bounty:<user>`), o header vai em **todos** os navegadores (extensão tipo ModHeader / proxy) — sem isso, não roda o fluxo naquele engine. Sem tooling de volume; um fluxo por vez.
+
+Saída por fluxo: `[TRIDENTE] fluxo · Blink=X · Gecko=Y · WebKit=Z · divergência? → lead + pattern`.
+
 ---
 _Novos comandos: copie o formato acima. Mantenha números (códigos) e nomes (protocolos/modos) estáveis — o Tiago decora._

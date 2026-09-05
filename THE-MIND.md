@@ -45,6 +45,7 @@ Ligam direto aos 8 padrões meta em `memory/patterns.md` e às classes do `memor
 | Aprendi técnica nova numa caçada | `modo hunter` persiste em `memory/arsenal.md` |
 | Quero ser guiado passo a passo | `modo bicicleta com rodinhas` |
 | Quero que o Claude conduza os ataques (constrói + executa + simula + cruza com o banco) | `formação de lança` (dentro do `modo hunter`) |
+| Quero comparar o mesmo fluxo entre **navegadores** (diferencial de engine = P5 client-side) | `formação tridente` (Blink/Gecko/WebKit; **compatível com o escudo**; matriz em `tridente.md`) |
 | Caçar por camadas de acesso (unauth → 1 conta → 2 contas) | nível 0 = recon/APIs públicas · nível 1 = `protocolo One Piece` · nível 2 = cross-account |
 | Achei um sinal e quero ramificar em profundidade | `seguir o rastro` (árvore de ramificações a partir do sinal) |
 | Estou juntando achados fracos que talvez chainem | `protocolo armar a arapuca` (inventário `targets/<alvo>/arapuca.md` + passo de combinação) |
@@ -140,6 +141,12 @@ Cada decisão: **Data · Decisão · Por quê · Validação/Status**. Não apag
 - **Decisão:** adicionado `THE-MIND` §1.6 (os 4 pontos onde a caçada tende a parar cedo e como atravessar) + `memory/metodo-persistir-nos-pontos-de-desistencia.md`. Novo `protocolo descobrir a roda` (síntese: reconstrói o sistema → não-testado → cadeias narrativas).
 - **Por quê:** na NBA, um BAC real (escrita unauth `markContentRead`/`updateContentReadCount`) foi achado **3 pontos de desistência** depois de onde a caçada normal para: (A) `readContent []` = "morto"; (B) contra-prova `PADRÃO` + eu disse "NBA zero achado"; (C) R2 destrutivo/bloqueado. Cada um foi atravessado por re-enquadrar / probe não-destrutivo / `descobrir a roda`.
 - **Status:** registrado. R2 = `ACHADO` (Low→Medium), aguardando `protocolo report`.
+
+### 2026-09-05 — `formação tridente` (teste diferencial multi-navegador)
+- **Decisão:** nova formação **`formação tridente`** — roda todos os fluxos por **3 engines** (Blink/Gecko/WebKit) e diffa o comportamento; divergência entre navegadores = bug **P5 na camada do cliente** (CSP, SameSite, redirect/URL parsing, DOM/mutation-XSS, charset, WCD cache-key). **Compatível com a `postura escudo`** (dirigir navegador real por fluxo legítimo = tráfego de usuário, não dispara flag → ≠ da `formação de lança`, que o escudo baixa). Registra uma **matriz** por fluxo×engine em `targets/<alvo>/tridente.md` (múltiplas informações: status, headers, redirect chain, cookies, DOM, console, storage).
+- **Por quê:** faltava um vetor observacional de diferencial de navegador — muita vuln client-side (CSP bypass, mutation-XSS, WCD, cookie/SameSite) só aparece em UM engine. O tridente institucionaliza rodar tudo nos 3 e comparar, sem sair do silencioso.
+- **Como:** ponta Blink via `claude-in-chrome`; Gecko/WebKit orientados ao Tiago (passos + captura) e consolidados. Header obrigatório do programa (ex.: eToro `X-Bug-Bounty`) vai em todos os engines.
+- **Status:** definido em `CODES.md` › Modos + roteado no §1.2. Falta exercitar num fluxo real (candidato: OAuth do wallet eToro, onde CSP/redirect por-engine importam).
 
 ### 2026-09-04 — `postura escudo` + motor de hipóteses (`signals.md` + `code 6`)
 - **Decisão:** dois acréscimos.
