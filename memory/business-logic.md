@@ -42,3 +42,12 @@ Fonte: https://portswigger.net/web-security/logic-flaws
 - **Padrão:** checar-e-alterar estado em 2 etapas não atômicas (cupom, saldo, gift card, verificação de e-mail). Assume-se que uma request termina antes da próxima começar — falso sob concorrência. Casos: GitLab e-mail verificado via OAuth (CVE-2022-4037), gift card duplicado no nopCommerce (CVE-2024-58248).
 - **Como acharam:** anular jitter — HTTP/1.1 segurando o último byte e soltando junto; HTTP/2 empacotando várias requests num pacote TCP (single-packet). Demo: mesmo cupom repetido derruba item de €1.337 → €37,62.
 - **Gatilho:** endpoint que consome algo de uso único/limitado (cupom, convite, voucher, tentativa, crédito, token de verificação) e responde rápido. Scanner não pega — mapear fluxo multi-etapa e disparar o passo consumidor em paralelo.
+
+---
+## Ingeridos automaticamente — 2026-09-04
+
+### Eclipse on Next.js — race condition "intencional" no batcher
+- **Alvo · Classe · Bounty · Data** — Next.js <14.2.24 e 15.0.0–15.1.6 · race condition / cache poisoning (CVE-2025-32421) · via programas de BB · mai/2025 — [link](https://zhero-web-sec.github.io/research-and-things/eclipse-on-nextjs-conditioned-exploitation-of-an-intended-race-condition)
+- **Padrão:** o patch do CVE-2024-46982 assumiu que validar o header `x-now-route-matches` fechava o caso; mas a deduplicação de promises do batcher continua compartilhando chave de cache. Combinando aquele header com `__nextDataReq`, duas requests simultâneas colidem na mesma chave (`/_error-0`) e uma sequestra a promise da outra — a resposta de um usuário vaza/envenena a do outro.
+- **Como acharam:** ao procurar alvos ainda vulneráveis ao CVE antigo, acharam um app já patchado com comportamento estranho; ao depurar, viram a função interna sendo disparada várias vezes sobre a mesma chave de cache.
+- **Gatilho:** alvo Next.js cujas páginas de erro carregam `pageProps` enriquecidos (típico com Sentry) atrás de CDN que sobrescreve o `cache-control` da origem. Lição transferível: **um patch que só valida entrada não elimina a race** — vale re-testar CVEs "corrigidos" com concorrência.

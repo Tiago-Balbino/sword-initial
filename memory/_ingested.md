@@ -43,3 +43,8 @@ Toda URL já distilada no banco fica listada aqui. A tarefa diária lê este arq
 - https://zhero-web-sec.github.io/research-and-things/nextjs-and-the-corrupt-middleware
 - https://bughunters.google.com/reports/vrp/7EhAw2hur
 - https://www.yeswehack.com/learn-bug-bounty/ultimate-guide-race-condition-vulnerabilities
+
+## Sincronizados 2026-09-04 (do banco cloud)
+- https://github.com/advisories/GHSA-g38m-r43w-p2q7
+- https://zhero-web-sec.github.io/research-and-things/eclipse-on-nextjs-conditioned-exploitation-of-an-intended-race-condition
+- https://slcyber.io/research-center/novel-ssrf-technique-involving-http-redirect-loops/

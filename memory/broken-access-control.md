@@ -120,3 +120,12 @@ Fonte-mãe: https://github.com/xdavidhu/awesome-google-vrp-writeups
 - **Padrão:** só com o file ID dava pra listar editores (e-mails/identidades) mesmo sem compartilhamento. O controle protegia o *conteúdo*, não a *metadata*. Mesma família do `getFormUrl()` ($7.5k).
 - **Como acharam:** partir do file ID que vaza em links e chamar métodos de metadata da camada de **automação (Apps Script)** em vez da UI — API e UI aplicavam checagens diferentes sobre o mesmo objeto.
 - **Gatilho:** produto com duas portas pro mesmo recurso (UI + API/SDK/automação/GraphQL) + ID que circula. Enumerar o que a porta secundária devolve *além* do conteúdo: donos, editores, histórico, timestamps.
+
+---
+## Ingeridos automaticamente — 2026-09-04
+
+### Better Auth — takeover por auto-link de OAuth em e-mail pré-registrado
+- **Alvo · Classe · Bounty · Data** — better-auth (npm, <1.6.11) · BAC / auth (CVE-2026-53516, CVSS 8.3) · N/A (advisory) · mai/2026 — [link](https://github.com/advisories/GHSA-g38m-r43w-p2q7)
+- **Padrão:** o dev assumiu que `email_verified: true` vindo do provedor OAuth basta pra linkar a identidade a uma conta local com o mesmo e-mail; deixou de checar o `emailVerified` da **linha local**. Quem já criou conta com o e-mail da vítima (não verificado) herda a identidade OAuth dela quando ela loga — e ainda ganha o flip pra "verificado" depois do link.
+- **Como acharam:** olharam o caminho de account-linking implícito e viram que a decisão de link só consulta a flag de verificação do lado externo; bastou pré-registrar o e-mail da vítima via `/sign-up/email` antes dela usar o "Sign in with…".
+- **Gatilho:** app que oferece e-mail+senha **e** OAuth/SSO no mesmo pool de contas, com linking implícito por e-mail. Testar: cadastrar (sem verificar) um e-mail que não é seu → logar por OAuth com aquele e-mail → ver se cai na mesma conta. Vale pra qualquer stack, não só better-auth.
