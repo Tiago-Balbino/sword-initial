@@ -30,6 +30,12 @@ Carregue este arquivo no início de toda caçada. Atualize o bloco existente em 
 - **Heurística aprendida:** em stacks com authz por JWT assinado + gateway, mass-assignment de owner tende a FP — o backend recarrega os objetos do dono do token antes de escrever, e valida **cada** item do lote. Teste, mas não crave sem confirmar que o id do body realmente muda o alvo.
 - **Fontes:** owasp.org/www-community/attacks/insecure_direct_object_reference · book.hacktricks.xyz/pentesting-web/idor · intigriti.com/blog IDOR guide.
 
+## FP: header de contexto (AccountType/env/tenant) cliente-controlado ≠ BOLA
+- **Sinal que parece bug:** header tipo `AccountType: Demo|Real` (ou `X-Environment`, `X-Tenant`) é enviado pelo cliente e **obedecido** — trocar o valor muda o `id`/dado retornado (ex.: `Cid` diferente por accountType).
+- **Por que engana:** parece BOLA (id mudou, dado mudou), mas se o app tem um **toggle legítimo** pra esse mesmo contexto (ex.: seletor Demo/Real na UI), o header só está espelhando uma feature real — não um bypass.
+- **Teste decisivo (mata ou confirma em 1 passo):** comparar o resultado do header forjado com o comportamento **nativo da UI** pro mesmo toggle. UI troca igual/sem gate → `PADRÃO DA APLICAÇÃO`, FP. UI **bloqueia** (ex.: exige verificação) mas o header direto passa → **aí sim é achado** (client-side-only enforcement — API permite o que a UI proíbe).
+- **Fonte:** eToro `AccountType` (`logindata/v2/logindata`, 09/2026) — `Cid` diferente por accountType = shell interno Real/Demo da mesma conta, não outro usuário. Liga [[patterns]] P1/P4.
+
 ## Broken Access Control — bypass de controle por variação de request
 _(complementa `broken-access-control.md`)_
 - **Sinais:** endpoint barrado por método/rota/header/referer; rotas admin adivinháveis.
@@ -63,6 +69,15 @@ _(complementa `broken-access-control.md`)_
 - **Sinais:** stack trace, hostnames k8s/`*.svc.cluster.local`, api-key/token de serviço, source maps `.js.map`, comentários, headers de versão.
 - **Triagem:** muito é **público por design / Low**. Vale: segredo reutilizável, path/host que habilita SSRF/IDOR, lógica que revela o backend.
 - **Escalada:** ver **Header Injection** (forjar header vazado) e **SSRF** (host interno vazado). Sempre tentar chainar antes de cravar Low.
+
+## MCP (Model Context Protocol) servers — recon de rota escondida via diff de catálogo
+- **Sinais:** subdomínio/host servindo `POST /` com JSON-RPC 2.0 (`{"jsonrpc":"2.0","id":N,"method":"tools/call","params":{"name":"...","arguments":{}}}`); landing page HTML descrevendo tools; `Accept: application/json, text/event-stream` (streamable HTTP).
+- **Recon inicial (sem credencial, 100% seguro):** tools de catálogo tipo `get-tags`/`get-all-routes`/`list-tools` costumam ser **públicas** (só descrevem metadados). Chamar sem handshake `initialize` primeiro — muitos servers "stateless" aceitam `tools/call` direto.
+- **🔑 Técnica — oráculo de contagem de rotas:** se o MCP é um **proxy/gateway** pra uma API REST documentada em outro lugar (ex.: developer portal com `openapi.json`), o `totalRouteCount`/lista completa do MCP pode ser **maior** que o count de operações do spec público. **Diff = rotas reais existentes que não estão documentadas** (P7 — superfície esquecida), descobertas sem tocar nenhuma delas.
+- **Confirmação de enforcement:** testar `execute-write`/`execute-read` (ou equivalente) **sem credencial** na rota escondida — se `401`/`unauthorized` igual às documentadas, é só disclosure (Low/Info). Se a rota escondida responder diferente (aceitar sem auth, erro de validação em vez de auth-error) → **authz mais fraco no caminho menos testado** = achado real.
+- **Próximo elo:** testar **diferencial de scope** com credencial válida — um token/key com scope restrito às rotas documentadas alcança as escondidas via o MCP? (o MCP pode aplicar seu próprio gate de visibilidade sem replicar o scope-check granular do backend).
+- **FP comum:** "rota escondida" que é só uma variação de nome/versão já coberta (ex.: `v2` vs `v1` do mesmo endpoint) — confirmar que é path genuinamente novo, não sinônimo.
+- **Fonte:** eToro `mcp.public-api.etoro.com` (09/2026) — 191 rotas MCP vs 172 no openapi.json público, 12 rotas de trade reais (open/limit orders) sem doc pública, baseline auth íntegro. Liga [[patterns]] P7.
 
 ## GraphQL
 - **Sinais:** `/graphql`, POST `{"query":...}`.

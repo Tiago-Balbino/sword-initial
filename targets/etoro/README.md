@@ -63,4 +63,34 @@ Fontes: subfinder (passivo) + crt.sh nos 4 domínios in-scope. **574 subdomínio
 8. **[UNTESTED · S-REDIR-01] Open redirect** — Wayback (6000 urls, `recon/urls.txt`) mostra params `TargetURL=` (9×), `url=` (28×), `redirect=` no `etoro.com`. Testar allowlist (`//evil`, `@`, etc.). ⚠️ eToro lista open-redirect isolado como low; vale por chain (OAuth do wallet).
 9. **[UNTESTED · lógica/KYC] ações sensíveis via query** — `?action=autokyc&deepLink=uploadutilitybill`, `?action=copytrader`, `?action=get_pi_list&client_request_id=<uuid>`. O `autokyc` (KYC deep-link) e `copytrader` cheiram a lógica abusável; `client_request_id` = candidato a IDOR.
 
-**Próximo passo:** fase ativa (probe httpx dos ~574 com `X-Bug-Bounty`) pra ver quais estão vivos e o que servem → afunilar os 9 leads. **Bloqueio: username do Bugcrowd.**
+**Próximo passo:** fase ativa (probe httpx dos ~574 com `X-Bug-Bounty`) pra ver quais estão vivos e o que servem → afunilar os 9 leads. ✅ **FEITO abaixo.**
+
+---
+
+## ⚔️ Fase ATIVA — probe httpx (2026-09-05, header `X-Bug-Bounty: moldret`)
+`dnsx` (574→430 resolvem) → httpx fast-fail. **412 hosts respondendo.** Cru em `recon/probe.jsonl` + `resolved.txt`.
+> **⚡ Nota:** o probe pendurou 30 min na 1ª tentativa (hosts internos que resolvem mas não respondem). Otimização (dnsx pré-filtro + `-timeout 5 -retries 1` + pipe/stdout) → 1 min. Registrada no `protocolo ladrão de bancos` § passo 4.
+
+### 🔑 INSIGHT que muda a estratégia: Cloudflare-gating
+Os hosts **mais quentes** (webhooks de custódia, `bo.*`, `apigw`, `argocd`, `consul`, `public-api-int/stg`) respondem **403 "Attention Required! | Cloudflare"** — é **WAF do Cloudflare bloqueando o probe automatizado**, NÃO auth de app. Um **navegador real** (que passa o challenge CF) provavelmente alcança. → **território da `formação tridente`** (dirigir navegador real por eles) OU achar o **origin** atrás do CF.
+
+### 🟢 Vivos e DIRETAMENTE atacáveis (200 — sem CF-gate)
+| Host | Serve | Lead |
+|---|---|---|
+| **`mcp.public-api.etoro.com`** · `agent.public-api` · `mcp-test.delta.app` | **"eToro Public API MCP" / "Delta MCP"** — servidores **MCP vivos** | 🔥 superfície LLM/tool nova, pouquíssimo olhada: enumerar tools, auth do MCP, injeção |
+| **`oauth.wallet.etoro.com`** | **"OpenBanking"** (OAuth vivo) | 🔥 `redirect_uri`/token → ATO (S-OAUTH-01/S-REDIR-01) |
+| **`api-portal.etoro.com`** · `builders.etoro.com` | **eToro API Docs / Builders Portal** | 🗺️ **mapa da API** → alvos de IDOR/BOLA (teu ponto forte) |
+| **`goodwallet.etoro.com`** (Vercel) · `kyc.etoro.com` | wallet app · KYC (casa com `?action=autokyc` do wayback) | IDOR de saldo/posição; lógica de KYC |
+| **`cashier.etoro.com`** (→`/cashiermvc/`) · `billing-pci` (→`/Error`) | **cashier .NET MVC** · billing PCI | lógica de pagamento; MVC = endpoints previsíveis |
+| `push-*.cloud.etoro.com` | **Lightstreamer 7.4.0** (real-time push) | version-specific; auth do stream/subscription |
+
+### 🔒 Quentes mas CF-gated (403 challenge — precisam de navegador/origin)
+`{bitgo,int-bitgo,stg-bitgo,stg-fiatprovider}webhook.*` (webhooks custódia) · `bo.{prod,int,stg}` (back-office) · `apigw(-bff).{dev,int}` · **`argocd-{ne,we}.prod`** (ArgoCD — GitOps!) · **`consul-{ne,we}.prod`** (Consul service-mesh!) · `public-api.{int,stg}`.
+→ `argocd`/`consul` unauth = controle de cluster (Critical-shape) **se** o CF-gate for contornável ou o origin exposto.
+
+### Leads refinados (pós-probe)
+1. **[UNTESTED] MCP servers vivos** (`mcp.public-api`, `agent.public-api`, `mcp-test.delta.app`) — enumerar tools/auth; superfície novíssima. **Topo (baixa saturação).**
+2. **[UNTESTED] `oauth.wallet` OpenBanking** — `redirect_uri`/token (usar a técnica Azure-AD adaptada no `arsenal.md`).
+3. **[UNTESTED] API map via `api-portal`/`builders`** — ler os docs → derivar endpoints de IDOR/BOLA.
+4. **[UNTESTED · tridente/origin] cluster CF-gated** — webhooks + `argocd`/`consul` + `bo.*`: passar o CF (navegador real = tridente) ou achar origin.
+5. **[UNTESTED] `cashier` .NET MVC** — enumerar `/cashiermvc/*`, lógica de pagamento.

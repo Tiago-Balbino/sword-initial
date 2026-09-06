@@ -23,4 +23,4 @@ Onde buscar write-ups novos de qualidade pra distilar no banco. (Curadoria, não
 Ver os logs do projeto: `radar-plataformas-log.md` e `radar-noticias-log.md` (radares diários).
 
 ---
-**Rotina sugerida:** 1×/semana, pegar 2–3 write-ups da classe que você está caçando, distilar no arquivo certo, e promover a `patterns.md` se for transversal.
+**Rotina sugerida:** ligue o **`modo dojo`** (CODES.md) e pegue 2–3 write-ups da classe que está caçando. O dojo não deixa parar na leitura: distila a mecânica no arquivo certo (+ `signals.md` + `_ingested.md`), força **recall** (reconstruir de memória), **aplica** o sinal novo nas fichas vivas, e **agenda revisão espaçada** no `dojo-log.md`. Promova a `patterns.md` se for transversal.

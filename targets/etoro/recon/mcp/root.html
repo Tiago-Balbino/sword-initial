@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>eToro Public API MCP</title>
+    <style>
+        body { font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; background: #0e1116; color: #e6edf3; }
+        .container { max-width: 860px; margin: 0 auto; padding: 48px 24px; }
+        h1 { color: #6fc36f; }
+        code, pre { background: #161b22; border: 1px solid #30363d; border-radius: 6px; }
+        code { padding: 2px 6px; }
+        pre { padding: 16px; overflow-x: auto; }
+        table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+        th, td { border: 1px solid #30363d; padding: 8px 12px; text-align: left; }
+        th { background: #161b22; }
+        a { color: #58a6ff; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>eToro Public API MCP</h1>
+    <p>
+        A Model Context Protocol (MCP) server exposing the <strong>eToro Public API</strong> route catalog.
+        It refreshes the public API OpenAPI (swagger) document every few minutes, serves the route catalog through MCP tools, and proxies route execution to the eToro Public API via the execute tools.
+    </p>
+
+    <h2>Endpoint</h2>
+    <p>The MCP endpoint (streamable HTTP, stateless) is served at the root path: <code>POST /</code></p>
+
+    <h2>Tools</h2>
+    <table>
+        <tr><th>Tool</th><th>Description</th></tr>
+        <tr>
+            <td><code>get-tags</code></td>
+            <td>Returns only the catalog's tag groups — a map of tag to route count, the total route count and the untagged route count — the bounded first call for orienting before <code>get-all-routes</code> with a tag. Counts follow the same partner visibility rules as <code>get-all-routes</code>.</td>
+        </tr>
+        <tr>
+            <td><code>get-all-routes</code></td>
+            <td>Returns all available eToro Public API routes with a short explanation for each. Partner-only routes appear automatically when the MCP connection carries a partner application's <code>x-api-key</code> header.</td>
+        </tr>
+        <tr>
+            <td><code>get-route-spec</code></td>
+            <td>Returns the full OpenAPI specification (parameters, responses, referenced schemas) for a route by its route id. Partner-only routes resolve on a connection carrying a partner <code>x-api-key</code> header.</td>
+        </tr>
+        <tr>
+            <td><code>execute-read</code></td>
+            <td>Executes a read against the eToro Public API and relays the response (status, body, rate-limit info): every GET route, plus the read-semantics POST routes (cost previews, eligibility dry-runs, bulk lookups) via an optional raw-JSON-string body — the server verifies the route is read-only before sending. Credentials travel on the MCP connection's own headers (<code>x-user-key</code> + <code>x-api-key</code>, or <code>Authorization: Bearer</code>), never as tool arguments. The <code>x-request-id</code> header is generated automatically and returned.</td>
+        </tr>
+        <tr>
+            <td><code>execute-write</code></td>
+            <td>Executes a state-changing route (POST/PUT/PATCH/DELETE) with an optional raw-JSON-string body — same connection-header credential rules as <code>execute-read</code>. The returned <code>xRequestId</code> can be passed back to retry the same operation idempotently.</td>
+        </tr>
+        <tr>
+            <td><code>get-my-portfolio-summary</code></td>
+            <td>Returns the connected user's condensed portfolio in one call — totals, holdings sorted by value (with symbols, names and logos), copied traders (with usernames and avatars) and pending orders — aggregated server-side from several Public API calls, so agents need no discover-and-execute back-and-forth. Read-only and idempotent; optional arguments select the account (<code>real</code>/<code>demo</code>) and toggle per-position rows, pending orders and copied traders. Requires credentials on the MCP connection (same header rules as the execute tools); anonymous calls are challenged with <code>401</code> + <code>WWW-Authenticate</code>. All prices and P&amp;L come from one consistent portfolio snapshot; a <code>warnings</code> field flags degraded enrichment while the money numbers remain authoritative.</td>
+        </tr>
+        <tr>
+            <td><code>get-my-balances</code></td>
+            <td>Returns every account the connected user holds in one call — Trading (including sub-accounts), Cash, Crypto, Options, MoneyFarm and Spaceship — by relaying the balance aggregator's response verbatim. The tool derives no figures: it converts nothing, sums nothing and subtotals nothing. Alongside the payload it returns a <code>fieldGuide</code> naming, per account type present, which field carries the spendable figure (<code>equityDetails.available</code>, <code>equityDetails.spendableBalanceInFiat</code>, or none) and which field names that figure's currency, plus <code>notes</code> covering the approved-sub-accounts-only filter and the rule that <code>equityDetails</code> amounts are in each account's own native currency rather than the requested <code>displayCurrency</code>. Optional arguments select the display currency, filter account types, and toggle sub-accounts and zero balances. Read-only and idempotent; requires the <code>etoro-public:money.balance:read</code> scope and credentials on the MCP connection — anonymous calls are challenged with <code>401</code> + <code>WWW-Authenticate</code>.</td>
+        </tr>
+        <tr>
+            <td><code>get-instruments-overview</code></td>
+            <td>Returns a batch overview of 1 to 100 instruments in one call — market identity (symbol, name, logos), live quote (ask/bid/spread), recent performance (previous close plus daily/weekly/monthly change % computed from official closing prices against the live rate) and the connection account's trading-eligibility summary — resolved from symbols and/or instrument ids, or from a free-text <code>query</code> when the exact symbol is unknown. Unknown identifiers are reported in <code>notFoundSymbols</code>/<code>notFoundInstrumentIds</code>; degraded upstream data surfaces as <code>warnings</code> with the matching fields null. Read-only and idempotent. Requires credentials on the MCP connection; anonymous calls are challenged with <code>401</code> + <code>WWW-Authenticate</code>.</td>
+        </tr>
+        <tr>
+            <td><code>get-my-profile-and-scopes</code></td>
+            <td>Returns who is connected in one call. Under <code>profile</code>: the authenticated user's account ids (<code>gcid</code>, and the <code>realCid</code>/<code>demoCid</code> that account-scoped routes take), <code>username</code>, first/middle/last name, <code>playerLevel</code>, <code>gender</code>, <code>language</code>, <code>dateOfBirth</code>, <code>avatarUrl</code> and <code>scopes</code> — the OAuth scopes actually granted to this connection's token or key. Alongside it <code>authChannel</code> (<code>bearer</code>/<code>keys</code>) reports how the connection authenticated. Takes no arguments — the credential on the connection is the input. Read-only and idempotent. Requires credentials on the MCP connection; anonymous calls are challenged with <code>401</code> + <code>WWW-Authenticate</code>.</td>
+        </tr>
+        <tr>
+            <td><code>get-my-watchlists</code></td>
+            <td>Returns the connected user's watchlists in one call (Public API / watchlist BFF V2). Under <code>watchlists</code>: the upstream document relayed verbatim — watchlist metadata, items and pagination <code>meta</code>. Alongside it <code>authChannel</code> (<code>bearer</code>/<code>keys</code>) reports how the connection authenticated. Takes no arguments — the credential on the connection is the input. Read-only and idempotent. Requires credentials on the MCP connection; anonymous calls are challenged with <code>401</code> + <code>WWW-Authenticate</code>.</td>
+        </tr>
+        <tr>
+            <td><code>get-trader-profile-summary</code></td>
+            <td>Returns the public profile of 1 to 100 eToro investors in one call — per trader the profile identity (name, country, avatar, AUM tier, industry/sector tags), performance for the requested ranking period (gain, annualized return, drawdowns, win ratio), risk score (current and max daily/monthly), copier statistics (copiers, copiers gain, copy investment share) and portfolio composition (exposure, leverage mix, top traded instrument, activity) — served from the public rankings surface. Batch-first: one username rides the single-investor lookup, several ride one batch call. Usernames the rankings surface will not answer for come back in <code>notFoundUsernames</code>; the upstream deliberately does not distinguish nonexistent, private and unranked. Read-only and idempotent. Requires credentials on the MCP connection; anonymous calls are challenged with <code>401</code> + <code>WWW-Authenticate</code>.</td>
+        </tr>
+        <tr>
+            <td><code>get-my-positions-and-orders</code></td>
+            <td>Returns the connected user's current positions and pending orders in one call — both directly opened (<code>direct</code>) and held via copy-trading (<code>mirrors</code>, one entry per mirror), kept structurally separate because the upstream API itself never mixes them. Each position carries live unrealized <code>pnl</code>/<code>pnlPercent</code> and its stop-loss/take-profit; each order carries its <code>status</code> and requested stop-loss/take-profit, plus an optional richer per-order <code>detail</code> object (fills, numeric status/error code) when <code>includeOrderDetail</code> is set, capped at 10 orders. All money amounts are in <code>accountCurrency</code>. Read-only and idempotent; optional arguments select the account (<code>real</code>/<code>demo</code>) and toggle order detail. Requires credentials on the MCP connection; anonymous calls are challenged with <code>401</code> + <code>WWW-Authenticate</code>.</td>
+        </tr>
+        <tr>
+            <td><code>get-my-trading-history</code></td>
+            <td>Returns the connected user's closed trades (trading history) in one call, paginated — each trade carries symbol/name, direction, leverage, open/close time and rate, units, investment, fees and <code>netProfit</code>, the REALIZED closed profit/loss (distinct from <code>get-my-positions-and-orders</code>' unrealized <code>pnl</code>). Stop-loss/take-profit are always present as numbers on this route — never null — so a near-zero value can mean "not really set". Optional arguments select the account (<code>real</code>/<code>demo</code>), the start date (<code>minDate</code>, defaults to 90 days ago) and the page (<code>page</code>/<code>pageSize</code>, default 50 capped at 200); the upstream API has no total count, so <code>hasMore</code> is a heuristic. Read-only and idempotent. Requires credentials on the MCP connection; anonymous calls are challenged with <code>401</code> + <code>WWW-Authenticate</code>.</td>
+        </tr>
+        <tr>
+            <td><code>prepare-trade</code></td>
+            <td>Validates a proposed open order against live eToro Public API data — the user's instrument eligibility (direction, leverage, order type, size and stop-loss/take-profit bounds), a live ask/bid quote, the full cost breakdown and whether the account's available balance covers amount plus costs — and returns a confirmation preview (market identity and logos, direction, sizing, leverage, estimated units, quote, costs, balance check, eligibility summary) together with a short-lived signed confirmation token when every hard check passes. Read-only and idempotent — nothing is placed; a hard failure returns verdict <code>rejected</code> with reasons and no token, while soft findings surface as warnings. Requires credentials on the MCP connection; anonymous calls are challenged with <code>401</code> + <code>WWW-Authenticate</code>. The token is the only way to place the trade — see <code>place-trade</code>.</td>
+        </tr>
+        <tr>
+            <td><code>place-trade</code></td>
+            <td>Executes the exact order sealed in a <code>prepare-trade</code> token — the single argument is the token itself, so what the user approved is what executes. The signed token is verified statelessly (any pod or region; bound to the connection's credentials — an expired, tampered or wrong-connection token is rejected before anything is sent), the prepared order is placed with the idempotency key sealed in the token, and the order is then polled server-side to a final outcome (<code>executed</code>, <code>partiallyFilled</code>, <code>rejected</code>, <code>pending</code>, …) with fills, <code>orderId</code>/<code>referenceId</code> and follow-up guidance — so agents never poll orders themselves. Retrying the same token after an <code>unknown</code> outcome is safe: placement is idempotent by construction.</td>
+        </tr>
+        <tr>
+            <td><code>prepare-close</code></td>
+            <td>Confirms a position belongs to the connected account and returns a confirmation preview (market identity, direction, leverage, units, open/current rate, invested amount, unrealized P&amp;L) together with a short-lived signed confirmation token when the position is found. Optional <code>unitsToDeduct</code> requests a partial close (validated against the position's own units and the instrument's partial-close eligibility); omitted, the close is full. Copied (copy-trading / mirror) positions can only be closed in full — a partial close of one is verdict <code>rejected</code> with no token. Read-only and idempotent — nothing is closed; an unknown or not-owned position returns verdict <code>rejected</code> with no token. Requires credentials on the MCP connection; anonymous calls are challenged with <code>401</code> + <code>WWW-Authenticate</code>. The token is the only way to place the close — see <code>place-close</code>.</td>
+        </tr>
+        <tr>
+            <td><code>place-close</code></td>
+            <td>Executes the exact close sealed in a <code>prepare-close</code> token — the single argument is the token itself. The signed token is verified statelessly and MUST carry the close-specific token kind (a <code>prepare-trade</code> token is rejected the same way a tampered token is), the close request is submitted, and the close order is then polled server-side to a final outcome (<code>executed</code>, <code>partiallyFilled</code>, <code>rejected</code>, <code>cancelled</code>, <code>expired</code>, <code>pending</code>) with <code>positionId</code>, <code>orderId</code>, <code>unitsClosed</code> and a decoded hint for known upstream error codes (already executed, already closed, already pending close, not owned, remaining amount too low). A close request that gets no HTTP response at all answers <code>unknown</code> rather than a false <code>rejected</code> — the same token is safe to retry.</td>
+        </tr>
+    </table>
+
+    <h2>Client configuration example</h2>
+    <pre>{
+  "mcpServers": {
+    "etoro-public-api": {
+      "url": "&lt;service-url&gt;/"
+    }
+  }
+}</pre>
+
+    <h2>Agent skill</h2>
+    <p>
+        Download a ready-to-use agent skill, pre-configured with this environment's MCP and eToro Public API URLs:
+        <a id="skill-download" href="https://mcp.public-api.etoro.com/skill" download="SKILL.md">Download SKILL.md</a>.
+    </p>
+    <p>Install it by placing the file at:</p>
+    <ul>
+        <li>Claude Code / Claude Desktop: <code>.claude/skills/etoro-public-api-operations/SKILL.md</code></li>
+        <li>Cursor: <code>~/.cursor/skills/etoro-public-api-operations/SKILL.md</code></li>
+    </ul>
+</div>
+<script>
+    // The server bakes in this environment's absolute skill-download URL (the SkillDownloadUrl config).
+    // If it is unset (the placeholder collapses to an empty href) or this page was served as a raw static
+    // file (placeholder left untouched), fall back to resolving "/skill" relative to wherever this page is
+    // served — including behind an API gateway sub-path (e.g. /mcp/etoro-public) — so the link targets
+    // "<this-page>/skill" rather than the origin root "/skill" (which 404s through the gateway).
+    (function () {
+        var el = document.getElementById('skill-download');
+        var href = el.getAttribute('href');
+        if (!href || href.indexOf('{{') !== -1) {
+            var base = location.pathname.replace(/\/+$/, '');
+            el.setAttribute('href', base + '/skill');
+        }
+    })();
+</script>
+</body>
+</html>

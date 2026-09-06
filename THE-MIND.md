@@ -43,6 +43,7 @@ Ligam direto aos 8 padrões meta em `memory/patterns.md` e às classes do `memor
 | Docs cloud têm entradas novas (memory e/ou portfólio) | `code 5` (drena os dois pro local: `memory/` + `portfolio.md`) |
 | Montar portfólio **fora do Mac** | `modo sábado à tarde` enfileira no doc cloud → `code 5` no Mac puxa |
 | Aprendi técnica nova numa caçada | `modo hunter` persiste em `memory/arsenal.md` |
+| Quero **estudar/aprender** (distilar write-ups no banco, com retenção) | `modo dojo` (recall ativo + aplicação + espaçamento; log em `memory/dojo-log.md`) |
 | Quero ser guiado passo a passo | `modo bicicleta com rodinhas` |
 | Quero que o Claude conduza os ataques (constrói + executa + simula + cruza com o banco) | `formação de lança` (dentro do `modo hunter`) |
 | Quero comparar o mesmo fluxo entre **navegadores** (diferencial de engine = P5 client-side) | `formação tridente` (Blink/Gecko/WebKit; **compatível com o escudo**; matriz em `tridente.md`) |
@@ -141,6 +142,16 @@ Cada decisão: **Data · Decisão · Por quê · Validação/Status**. Não apag
 - **Decisão:** adicionado `THE-MIND` §1.6 (os 4 pontos onde a caçada tende a parar cedo e como atravessar) + `memory/metodo-persistir-nos-pontos-de-desistencia.md`. Novo `protocolo descobrir a roda` (síntese: reconstrói o sistema → não-testado → cadeias narrativas).
 - **Por quê:** na NBA, um BAC real (escrita unauth `markContentRead`/`updateContentReadCount`) foi achado **3 pontos de desistência** depois de onde a caçada normal para: (A) `readContent []` = "morto"; (B) contra-prova `PADRÃO` + eu disse "NBA zero achado"; (C) R2 destrutivo/bloqueado. Cada um foi atravessado por re-enquadrar / probe não-destrutivo / `descobrir a roda`.
 - **Status:** registrado. R2 = `ACHADO` (Low→Medium), aguardando `protocolo report`.
+
+### 2026-09-05 — `postura escudo` ganha a regra de delegação ao operador
+- **Decisão:** a `postura escudo` passa a ter uma regra fixa de **"nunca só não posso"**: toda ação evitada (🔴 do escudo OU bloqueio do classifier de segurança do runtime) vem sempre com (1) o porquê em 1 linha, (2) o comando pronto pro Tiago rodar com a autorização/sessão dele, (3) o que o Claude vai interpretar no resultado. Execução volta pro operador; desenho do teste + interpretação ficam com o Claude.
+- **Por quê:** já era a prática de fato na caçada do eToro (sondas OAuth Azure AD, replay de bearer de sessão bloqueado pelo classifier) — formalizado como regra permanente pra não depender de eu lembrar caso a caso.
+- **Status:** `CODES.md` › `postura escudo` › "Delegação ao operador". Escudo levantado nesta sessão (lança baixa automático).
+
+### 2026-09-05 — `modo dojo` (sistema de estudo com retenção)
+- **Decisão:** novo **`modo dojo`** — o lado *entrada de conhecimento* do Sword (o `modo hunter` é a saída). Estudo **ativo**: cada write-up passa por leitura ativa (3 perguntas) → distilar a mecânica no banco (`arsenal`/`signals`/`patterns`/`_ingested`) → **recall** (reconstruir de memória, fonte fechada) → **aplicar** o sinal novo nas fichas vivas (`code 6` mental) → **agendar revisão espaçada** (1d→1sem→1mês). Log em `memory/dojo-log.md`.
+- **Por quê:** o Tiago pediu um sistema de estudo que se auto-alimenta em vez de depender de disciplina. Fundado nos 3 mecanismos que fixam aprendizado (recall ativo, aplicação, espaçamento), não em releitura. Fecha o ciclo: dojo (entrada) → hunter (saída) → dojo revisita.
+- **Status:** definido em `CODES.md` › Modos + roteado no §1.2 + `dojo-log.md` criado. Guardrail: 2-3 write-ups/sessão (qualidade > volume).
 
 ### 2026-09-05 — `formação tridente` (teste diferencial multi-navegador)
 - **Decisão:** nova formação **`formação tridente`** — roda todos os fluxos por **3 engines** (Blink/Gecko/WebKit) e diffa o comportamento; divergência entre navegadores = bug **P5 na camada do cliente** (CSP, SameSite, redirect/URL parsing, DOM/mutation-XSS, charset, WCD cache-key). **Compatível com a `postura escudo`** (dirigir navegador real por fluxo legítimo = tráfego de usuário, não dispara flag → ≠ da `formação de lança`, que o escudo baixa). Registra uma **matriz** por fluxo×engine em `targets/<alvo>/tridente.md` (múltiplas informações: status, headers, redirect chain, cookies, DOM, console, storage).

@@ -1,0 +1,1 @@
+{"error":"unauthorized","error_description":"eToro credentials are required for this connection. Authenticate the MCP connection - see the WWW-Authenticate header for where to obtain a token, or configure x-user-key and x-api-key headers."}
