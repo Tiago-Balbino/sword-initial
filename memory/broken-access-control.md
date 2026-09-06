@@ -129,3 +129,29 @@ Fonte-mãe: https://github.com/xdavidhu/awesome-google-vrp-writeups
 - **Padrão:** o dev assumiu que `email_verified: true` vindo do provedor OAuth basta pra linkar a identidade a uma conta local com o mesmo e-mail; deixou de checar o `emailVerified` da **linha local**. Quem já criou conta com o e-mail da vítima (não verificado) herda a identidade OAuth dela quando ela loga — e ainda ganha o flip pra "verificado" depois do link.
 - **Como acharam:** olharam o caminho de account-linking implícito e viram que a decisão de link só consulta a flag de verificação do lado externo; bastou pré-registrar o e-mail da vítima via `/sign-up/email` antes dela usar o "Sign in with…".
 - **Gatilho:** app que oferece e-mail+senha **e** OAuth/SSO no mesmo pool de contas, com linking implícito por e-mail. Testar: cadastrar (sem verificar) um e-mail que não é seu → logar por OAuth com aquele e-mail → ver se cai na mesma conta. Vale pra qualquer stack, não só better-auth.
+
+## Dojo — 2026-09-05
+
+### IDOR/BOLA em endpoint bancário de fundo — read→write→transfer
+- **Fonte:** https://www.webasha.com/blog/what-is-an-example-of-a-real-bug-bounty-report-where-idor-was-used-to-exploit-a-banking-application (mecânica; a do Medium @360Security 403-ou o fetch).
+- **Suposição do dev que caiu (P1):** identidade confirmada (JWT válido) ≡ permissão. O handler autentica o token mas **não valida dono do objeto** → "token válido pode acessar qualquer transaction id".
+- **Sinais observáveis:** id **sequencial/numérico no path** (`/api/v1/transactions/987654321`, sem UUID/hash) · **mesmo 200 + dado completo** pra id próprio e de terceiro (sem máscara/filtro/redaction) · estrutura de response idêntica entre users.
+- **Mecânica reusável (escala read→write):**
+  - **Read:** `GET /…/{id+1}` com o token da conta A retorna transação/saldo da B (200 com dado, não 403).
+  - **Write:** `POST /…/transfer` com `from_account` = conta da B (ou `recipient_id` alheio) → servidor executa porque nunca checa que A é dona da origem → **transferência de fundo alheio**.
+- **FP a antecipar (a régua):** 403 só p/ id **inválido** ≠ authz — testar sempre com **id válido de OUTRA conta sua**, esperando 200-com-dado; latência/timing não indica authz (olhar **conteúdo**); backend que recarrega o dono do token antes de escrever mata o mass-assignment (então priorizar o **read cross-account**, que é mais robusto). Provar em 2 contas próprias, nunca em conta de terceiro.
+- **Sinal no banco:** `S-FUND-01`. Chain com race: `C-08`.
+
+## Dojo — 2026-09-06
+
+### Taxonomia BOLA/IDOR de 100+ disclosures — 6 famílias por *mecânica de falha* (não por endpoint)
+- **Fonte:** "Broken Object Level Authorization in the Wild: An Empirical Taxonomy from 100+ Bug Bounty Disclosures" — https://arxiv.org/html/2605.25865
+- **Suposição do dev que cai (P1):** "autenticado ⇒ autorizado sobre este objeto". O paper classifica *como* essa checagem falha, com prevalência real:
+  1. **Direct Object Reference (36.9%)** — troca de id conhecido/previsível (int sequencial, UUID, e-mail, username) numa request de leitura/edição. `GET /invoices/1041→1042`.
+  2. **Action-Level (41.7% — a MAIOR)** — verbo mutante (`delete/modify/archive/trigger`) sobre objeto de outro dono. `POST /tasks/{id de terceiro}/archive`. **Insight de priorização:** o dano vive mais na *escrita cross-owner* que na leitura — mirar POST/PATCH/DELETE com id alheio primeiro.
+  3. **Tenant Isolation (8.3%)** — cruzar fronteira de org/workspace trocando `company_id`/`organization_id`. (= `S-MT-01`.)
+  4. **Workflow-Context / stale authz (6.0%)** — authz checada no estado *ativo*, **não re-checada** após mudança de ciclo de vida do objeto (arquivado/desativado/deletado/deprovisionado). Ex.: acessar dado de cliente removido após staff sair. → **sinal novo `S-BOLA-STALE-01`**.
+  5. **Chained Disclosure (4.8%)** — 2 passos: colher id/token num endpoint A → usá-lo num endpoint B **sem checagem de dono**. (= reforça `C-02`.)
+  6. **Object Rebinding (2.4%)** — mandar campo de dono no body (`owner_id/account_id/msg.Sender`) e o backend confia. (= `S-IDOR-02` mass-assignment.)
+- **Heurísticas de detecção (do paper):** int sequencial em API de produção (36.9% dos formatos conhecidos) · **GraphQL global id: base64-decode → incrementar o int do backend → re-encode** (9.6% combinado) · body contendo campo de dono · multi-tenant sem teste de fronteira · **mudança de estado de ciclo de vida sem re-validar authz**.
+- **Aplicação Sword:** as famílias 1/3/6 já têm sinal (`S-IDOR-01`/`S-MT-01`/`S-IDOR-02`); a **4 (stale) é nova** (`S-BOLA-STALE-01`); a 2 vira **regra de prioridade** (verbo mutante cross-owner antes de leitura); a técnica de **gid GraphQL** entra no arsenal.

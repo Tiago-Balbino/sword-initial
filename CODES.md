@@ -81,7 +81,7 @@ Casa o **corpus de recon** do alvo contra `memory/signals.md` e cospe leads `[UN
 | `protocolo casa-nova` | Pacote do coletor web → ficha de alvo em `targets/` |
 | `protocolo contra-prova` | Dupla verificação pessimista de um achado — matar falso positivo |
 | `protocolo report` | Rascunhar o report de um achado confirmado + rodar o checklist de submissão |
-| `protocolo ladrão de bancos` | Lista alvos → você escolhe → `code 0` recon massivo + OSINT → sintetiza/filtra/registra |
+| `protocolo ladrão de bancos` | Lista alvos → você escolhe → recon em 3 níveis (passivo → médio → completo, perguntando antes de escalar) → sintetiza/filtra/registra |
 | `protocolo One Piece` | Caçada da **camada de 1 conta só** — tudo que dá pra provar sem vítima (self-state, tampering, race, escopo, step-skip) |
 
 ### `protocolo casa-nova` — do coletor web à ficha de alvo
@@ -122,25 +122,36 @@ Só para achado que já passou no `contra-prova` como `ACHADO`.
 
 ---
 
-### `protocolo ladrão de bancos` — recon massivo de um alvo
-Objetivo: escolher um alvo do funil e fazer **recon massivo**, depois **sintetizar, filtrar e registrar** — deixando a ficha pronta pra caçada.
+### `protocolo ladrão de bancos` — recon em 3 níveis (passivo → médio → completo)
+Objetivo: escolher um alvo do funil e reconhecer em **profundidade crescente e opcional** — perguntando antes de escalar de nível — depois **sintetizar, filtrar e registrar**, deixando a ficha pronta pra caçada.
 
 1. **Listar alvos.** Ler `targets/*/README.md` e mostrar uma tabela: alvo · prioridade · constraints-chave · já tem `recon/`?
 2. **Tiago escolhe um.**
-3. **Checar as constraints pré-fixadas da ficha ANTES de tocar** (rate limit, manual-only, closed scope, escopo).
-   - ⚠️ **Se a ficha diz "IA proibida na busca" (ex.: Wallet on Telegram): PARAR.** Não rodar `code 0`/recon automatizado — avisar que o alvo é manual-only e encerrar o protocolo pra esse alvo.
-4. **`code 0 <alvo>` — recon massivo dos ativos** (recon.py `--all`: subfinder/amass/httpx/katana/gospider/gau/waybackurls + gf; usar o `--rate` da ficha, ex. NBA `--rate 3`) + `cors_headers_scan.py` nos hosts vivos.
+3. **Checar as constraints pré-fixadas da ficha ANTES de tocar** (rate limit, manual-only, closed scope, escopo wildcard vs. host-específico).
+   - ⚠️ **Se a ficha diz "IA proibida na busca" (ex.: Wallet on Telegram): PARAR.** Não rodar nenhum nível automatizado — avisar que o alvo é manual-only e encerrar o protocolo pra esse alvo.
+
+4. **Recon em 3 níveis — cada um mais fundo (e mais barulhento) que o anterior:**
+
+   **Nível 1 — Passivo** (sempre roda primeiro; **zero toque na infra do alvo**, só fontes públicas de terceiros): crt.sh/CT logs, Wayback/gau/waybackurls (arquivo histórico), urlscan.io, **GitHub/GitLab code search** (segredos/refs), Google dorks, Shodan, docs públicas de API/SDK/wrappers, índices de paste/leak. **Só OSINT público e legal** — nunca comprar/baixar dumps roubados, nunca dado de indivíduo privado; foco em segredos/superfície da **organização in-scope**. Nenhuma request vai direto pro host do alvo — só serviços terceiros que arquivam/indexam.
+
+   **Ao terminar o Nível 1, perguntar: "quer rodar tudo (médio + completo) ou ir nível a nível?"**
+   - **"Rodar tudo"** → segue direto pro Nível 2 e, ao terminar, direto pro Nível 3, **sem perguntar de novo**.
+   - **"Nível a nível"** → perguntar, antes de cada nível seguinte, **"rodar o Nível 2 (médio)?"** e depois **"rodar o Nível 3 (completo)?"**. Responder "não" a qualquer uma para nesse nível — a síntese roda sobre o que foi feito até ali. (No máximo 3 perguntas no total: a inicial + até 2 de escalada.)
+
+   **Nível 2 — Médio** (varre a **infra dos hosts explicitamente in-scope**, sem fan-out de subdomínio — ex.: Nexo, 2 hosts): `httpx` fingerprint direto nesses hosts (respeitando o `--rate` da ficha) + 1 GET com browser-UA (detecta challenge/bot-mgmt/CDN) · `curl` manual pra CORS/security headers (Origin malicioso, reflexão de ACAO) · `katana` crawl raso (profundidade 1–2) só nesses hosts · `cors_headers_scan.py`. **Ideal e suficiente pra escopo estreito/host-específico** (programa lista domínios exatos, não wildcard) — sinalizar isso ao Tiago antes de perguntar pelo Nível 3, mas a decisão de escalar é sempre dele.
+
+   **Nível 3 — Completo** (recon massivo — enumeração de subdomínio em escala; ideal pra **escopo wildcard amplo**, ex.: eToro `*.etoro.com`): `code 0` — `subfinder`+`amass` (fan-out) → `dnsx` pré-resolução → `httpx` em massa → `katana` profundo + `gospider` → `gau`/`waybackurls` em escala → `gf` buckets (idor/redirect/ssrf…); usar o `--rate` da ficha (ex. NBA `--rate 3`).
    - **⚡ Otimização de probe (aprendida no eToro 09/05 — recon pendurou 30 min):** o httpx **pendura** quando recebe centenas de hosts, muitos internos (`.int/.dev`) que **resolvem mas não respondem**. Pipeline rápido:
      1. **Pré-resolver com `dnsx`** e só probar quem tem DNS: `dnsx -l subs.txt -silent -t 100 -o resolved.txt` (574→430 em ~7s; dropa os que penduram).
      2. **httpx fast-fail + enxuto:** `cat resolved.txt | httpx -H "X-Bug-Bounty:<user>" -sc -title -location -ip -cname -server -t 60 -rl 30 -timeout 5 -retries 1 -json > probe.jsonl`. **Sem `-td`/tech-detect no 1º passo** (enriquece os vivos depois). `-timeout 5 -retries 1` = não pendura em host morto.
      3. **Usar pipe + `>` (stdout), NÃO `-l`/`-o`** — o `-l`/`-o` engasgou no background aqui; `cat | httpx > file` é confiável.
      4. **macOS não tem `timeout`** (coreutils) — não usar `timeout Nx httpx`; o httpx já tem `-timeout` interno. (Se precisar, `gtimeout` do `brew install coreutils`.)
      - Resultado eToro: 412/430 respondendo em ~1 min. Respeita "sem tooling de volume" (rate são, um passo).
-5. **Camada "todos os sites e fóruns" — OSINT passivo agregado.** Varrer fontes **públicas** por dados/menções/vazamentos do alvo: crt.sh, Wayback, **GitHub/GitLab code search** (segredos/refs), Google dorks, Shodan, índices públicos de paste/leak. **Só OSINT público e legal** — nunca comprar/baixar dumps roubados, nunca dados de indivíduos privados; foco em segredos/superfície da **organização in-scope**.
-6. **Sintetizar · filtrar · registrar.** Salvar o cru em `targets/<alvo>/recon/` e destilar um resumo na ficha (`README.md`): hosts vivos, buckets do gf (idor/redirect/ssrf…), subdomínios interessantes, segredos/vazamentos achados, e **leads priorizados** (o que cheira a bug) ligados ao `memory/arsenal.md` e `patterns.md`. Descartar ruído.
-7. **Atualizar as hipóteses `[UNTESTED]`** da ficha com os leads. Fim → pronto pro `modo hunter`.
 
-Guardrails: só alvos **autorizados**; respeitar SEMPRE escopo + constraints da ficha; OSINT só de fontes públicas/legais; alvos que proíbem IA na busca → não rodar (passo 3).
+5. **Sintetizar · filtrar · registrar** (sobre os níveis que efetivamente rodaram). Salvar o cru em `targets/<alvo>/recon/` e destilar um resumo na ficha (`README.md`): hosts vivos, buckets do gf (idor/redirect/ssrf…), subdomínios interessantes, segredos/vazamentos achados, e **leads priorizados** (o que cheira a bug) ligados ao `memory/arsenal.md` e `patterns.md`. Descartar ruído. Registrar **até que nível chegou** (ex.: "Nível 1+2, parou antes do 3 — escopo é host-específico").
+6. **Atualizar as hipóteses `[UNTESTED]`** da ficha com os leads. Fim → pronto pro `modo hunter`.
+
+Guardrails: só alvos **autorizados**; respeitar SEMPRE escopo + constraints da ficha; OSINT só de fontes públicas/legais; alvos que proíbem IA na busca → não rodar nenhum nível (passo 3). Cada nível herda os guardrails do anterior (Nível 2/3 nunca pulam a checagem de escopo/rate do passo 3).
 
 ---
 

@@ -1,0 +1,944 @@
+
+<!DOCTYPE html>
+<html class="" lang="en" dir="ltr" data-timezone="America/New_York">
+<head>
+
+<script>
+  window.Intellum = {
+    ...window.Intellum,
+    accountName: 'Host Success with Airbnb',
+    accountFullDomain: 'https://cohostsuccess.withairbnb.com/',
+    datepickerI18n: {
+      previousMonth: "Previous Month",
+      nextMonth: "Next Month",
+      weekdays: ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      weekdaysShort: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
+      months: ["January","February","March","April","May","June","July","August","September","October","November","December"],
+    },
+    i18nStrings: {
+      add_text_here: "Add text here",
+      in_days: "in {{COUNT}} days",
+      in_hours: "in {{COUNT}} hours",
+      in_minutes: "in {{COUNT}} minutes",
+      in_one_hour: "in 1 hour",
+      in_one_minute: "in 1 minute",
+      item_dropped: "\"{{ITEM NAME}}\" dropped at position {{POSITION}} of {{TOTAL ITEMS}}.",
+      item_grabbed: "\"{{ITEM NAME}}\" grabbed. Current position: {{POSITION}} of {{TOTAL ITEMS}}. Use up and down keys to move the item, space bar to drop it, Escape to cancel.",
+      item_move_canceled: "Move of \"{{ITEM NAME}}\" canceled.",
+      item_moved_to_position: "\"{{ITEM NAME}}\" moved to position {{POSITION}} of {{TOTAL ITEMS}}.",
+      item_moved_to_position_in_list: "\"{{ITEM NAME}}\" moved to position {{POSITION}} of {{TOTAL ITEMS}} in \"{{LIST NAME}}.\"",
+      live_now: "LIVE NOW",
+      loading: "Loading...",
+      processing_ellipsis: "Processing...",
+      remove: "Remove",
+      removing_ellipsis: "Removing...",
+      saving_ellipsis: "Saving...",
+      search_results: "Search Results",
+      showing_item_position_of_total: "Showing item {{POSITION}} of {{TOTAL ITEMS}}",
+      start_creating_content: "Start creating content",
+      there_was_a_problem_getting_your_updates: "There was a problem in getting your updates.",
+      tomorrow: "tomorrow",
+      topicsSuggestionEmpty: "Sorry. We've run out of suggested topics.",
+      topicsSelectionEmpty: "No topics have been assigned to this activity.",
+      topicsFollowedSelectionEmpty: "No topics have been followed yet.",
+      upload_canceled: "The upload was canceled.",
+      uploadfile_no_file_selected: "No file selected",
+      uploadfile_uploading_msg: "Uploading {{FILENAME}}",
+      uploadfile_error_format_msg: "{{FILENAME}} is not the correct file type. Please try again.",
+      uploadfile_error_size_coursefile_msg: "{{FILENAME}} is too large. Size limit: 10MB for images, 3GB for videos and audio.",
+      uploadfile_error_size_msg: "{{FILENAME}} is too big. Please try again.",
+      uploadfile_error_msg: "There was a problem uploading {{FILENAME}}. Please try again.",
+      uploading_ellipsis: "Uploading...",
+      use_menu_edit_html: "Use menu to edit HTML",
+      when_datepicket_widget_appears: "When the datepicker widget appears, use arrow keys to navigate dates and select a date.",
+    },
+    mediumEditorI18n: {
+      bold: "Bold",
+      italic: "Italic",
+      link: "Link",
+      title: "Title",
+      subtitle: "Subtitle",
+      unorderedList: "Unordered List",
+      orderedList: "Ordered List",
+      quote: "Quote",
+      linkPlaceholderText: "Paste or type a link...",
+      save: "Save",
+      close: "Close",
+    },
+    properties: {
+      courseContentFileSizeConstraintsInMB: {
+        image: 10485760,
+        video: 3221225472,
+        audio: 3221225472,
+      },
+    },
+    translation_paths: {
+        'ar': '/locales/ar.8a0d4db2a9e4f62abc1a0cdad75839bf.json',
+        'bg': '/locales/bg.738b232cec517c12e2a8a3af9d7211b5.json',
+        'bn': '/locales/bn.fe73f21846b2628e9fcf28327a8c4403.json',
+        'cs': '/locales/cs.0a13aa4e6cb8d1de05fb850d91b3fea7.json',
+        'da': '/locales/da.984fb2fd8ed2df740def5951e0559fe7.json',
+        'de': '/locales/de.dfffe007c3775a29bcb36adaf8b06c9a.json',
+        'el': '/locales/el.7ffb44418b5355a774e496ad80ddcf74.json',
+        'en-AU': '/locales/en-AU.747f4aee6655df8b81ba594c71e28346.json',
+        'en-CA': '/locales/en-CA.3aa160ebaafd8abc91beb578b8bd4218.json',
+        'en-GB': '/locales/en-GB.d408ce79a1e5dd41488fda9a337c62c9.json',
+        'en-IN': '/locales/en-IN.483129c17d1daa1640b52709b76fd13a.json',
+        'en-SG': '/locales/en-SG.4be6e9eede1f8e28d5de421fd21fb38b.json',
+        'en': '/locales/en.56475e0e1b8acccf7413544bf9e513ef.json',
+        'es-419': '/locales/es-419.8e4995e064bc537508df569a5e37ecf0.json',
+        'es-MX': '/locales/es-MX.0ca18d9a6d2f6cae25fed5222db56b40.json',
+        'es': '/locales/es.c4a344d542fb164e2598b20095a83296.json',
+        'et': '/locales/et.b044b2437c862e716909847ec980897d.json',
+        'fi': '/locales/fi.12a4cbf650a6045304edad778963a45b.json',
+        'fr-CA': '/locales/fr-CA.daecb99c609aa0accb992dc347b72908.json',
+        'fr': '/locales/fr.e48a05da1e1cbaf184a5f547a60647d7.json',
+        'he': '/locales/he.afa530f10239bb0b2a424829c9911782.json',
+        'hi': '/locales/hi.ef1992bfb1d4bc4b51260ea8ba36c72f.json',
+        'hr': '/locales/hr.8857c6284ec89d0d6eedbd9ff8ba9864.json',
+        'hu': '/locales/hu.3535bcb7f7140bf600bcb175549efe4f.json',
+        'id': '/locales/id.df28a3ce679a5df07abc8c848a09d66c.json',
+        'it': '/locales/it.5eef8719ec952939104a72cc7734d767.json',
+        'ja': '/locales/ja.8a30efdf0340561f4a21c1fca483a57c.json',
+        'kn': '/locales/kn.ff08cc13bc7c9d84dfe2ceb17ef1cfac.json',
+        'ko': '/locales/ko.91485fd131840b4ca325a1b0a4f47596.json',
+        'lt': '/locales/lt.31046a5bd7e806649219df7370955281.json',
+        'lv': '/locales/lv.71c4f0cad858cc59a4db125a777566af.json',
+        'mn': '/locales/mn.10e7f0e63cf8348adfb23a384ea87761.json',
+        'mr': '/locales/mr.e8337af173625580b31c218593b02fe6.json',
+        'ms': '/locales/ms.70464e44db412a3a98ff544779851469.json',
+        'my': '/locales/my.e34f2be9a5c9cd2a622510e14cca3dc8.json',
+        'nb': '/locales/nb.c659b7af5454bb3ae1cac56c03b04c8f.json',
+        'nl': '/locales/nl.c52ea24ddcf6c919bf5c59bfd19171fc.json',
+        'pl': '/locales/pl.e0bc946d3b1267666ff0eb5d96ebf9c7.json',
+        'pt-BR': '/locales/pt-BR.e8f776670e68e3ec309212674673a9ab.json',
+        'pt-PT': '/locales/pt-PT.ea4640480d040fd207c7c726e54b8ce5.json',
+        'ro': '/locales/ro.03cb9142e03c6c8b0976fec88fe3a984.json',
+        'ru': '/locales/ru.ed1d4b13be84cd13695cd06bad9aae3e.json',
+        'si': '/locales/si.f1220092ef9f23f35f6ac6e792759f1e.json',
+        'sk': '/locales/sk.a29ca4546c7ef6d6e4eb7430bab175d9.json',
+        'sl': '/locales/sl.01ff2ded92612d4d312e7fbb2a7b388b.json',
+        'sr-Cyrl': '/locales/sr-Cyrl.90989ec8ea8889103e7a1db39606206b.json',
+        'sr-Latn': '/locales/sr-Latn.3199a1cd9ed8e7b3f91e434fb40d9f66.json',
+        'sv': '/locales/sv.e8925004624e25c70b3947aea88bf11f.json',
+        'ta': '/locales/ta.3189399edf3c3cc2877f285d0c2b3ad8.json',
+        'te': '/locales/te.bec01d596959c8d6b10535cead73493e.json',
+        'th': '/locales/th.f0791a5a6cadc2f9f189a2f9607e5530.json',
+        'tr': '/locales/tr.4977416ca0dc1e2f79b5cc15558eae11.json',
+        'uk': '/locales/uk.0d8f5c67c427f5ceae28dc037a071ae0.json',
+        'vi': '/locales/vi.19cb0d90c475eaf126add5bb73ec1998.json',
+        'zh-CN': '/locales/zh-CN.2cd8c29aa9fa9d9a4eac3d7ccc2dc276.json',
+        'zh-TW': '/locales/zh-TW.61badef6230035073aa8c81902e735f9.json',
+    },
+  };
+</script>
+
+
+    <link rel="preconnect" href="https://cdn.exceedlms.com" crossorigin>
+
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="icon" type="image/png" href="https://cdn.exceedlms.com/uploads/organizations/favicons/5875/small/Airbnb-Belo-RGB-1000px-2025.png?1771423247&amp;Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uZXhjZWVkbG1zLmNvbS91cGxvYWRzL29yZ2FuaXphdGlvbnMvZmF2aWNvbnMvNTg3NS9zbWFsbC9BaXJibmItQmVsby1SR0ItMTAwMHB4LTIwMjUucG5nPzE3NzE0MjMyNDciLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3ODg3NjU2OTd9fX1dfQ__&amp;Signature=BycMPCK7joyroluICf5xZm8bG~Tzo7pgbpMKjl2LUYskHZ8hSyD4~enkAuns9jDA1jHvMsITkqFykhhsfr0v6Aw3cRly17OaD3oHPkecdj-178AA56iz7n4f9pFUb5B3Uoc5ahYTjz6YztwEkFbF5cMSJOGcriK2NtyyBqruDPaMngRzQJIiXs0PXab8jWw7~uSyswr57CNMOl~YS-O0uzCHUA0lZWhYcKcsJohUAo5wgYZP2EYbh0NvP4lM3MfgndxXO27fYiT3Z4mMKjN~obxFCUbo~XIEWTvdhiasc05XUtFD99iP~Wz4MtyOLh8nnx8oUScy-GmHfuvgrbLAwg__&amp;Key-Pair-Id=APKAJINUZDMKZJI5I6DA" sizes="16x16">
+  <link rel="icon" type="image/png" href="https://cdn.exceedlms.com/uploads/organizations/favicons/5875/medium/Airbnb-Belo-RGB-1000px-2025.png?1771423247&amp;Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uZXhjZWVkbG1zLmNvbS91cGxvYWRzL29yZ2FuaXphdGlvbnMvZmF2aWNvbnMvNTg3NS9tZWRpdW0vQWlyYm5iLUJlbG8tUkdCLTEwMDBweC0yMDI1LnBuZz8xNzcxNDIzMjQ3IiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzg4NzY1Njk3fX19XX0_&amp;Signature=a4gXpPh-xHowOI4e9BY-7dJF-LqNl41Afb0eB5pI8SIHV0fVsLe5V~qY3bLyr5WSAVGsvV44csN2yH0u8TTQmriDwJKFXX0vi1lzgGy3sbLB5H8b-fBZXTBYaGSG4dyQjum~Qz3nYrjN0xa-nfngSspmt7d~RGRMYOdYZ1WJ5U2WhrEx3bern9C54eTZiH~1u9S7rfU4hqtOmNIUhswJe-cskjJ~QEymh5LsxERloayWYblZ69~m1NSWGv5~24BcQyhNcmP4UbWkHKqmigplfGzvOGy5cK64~V9saVuSOCYGpvGguvdzp4KI0d6X9rcUddvzZcctPy77BW38kVxUug__&amp;Key-Pair-Id=APKAJINUZDMKZJI5I6DA" sizes="32x32">
+  <link rel="icon" type="image/png" href="https://cdn.exceedlms.com/uploads/organizations/favicons/5875/large/Airbnb-Belo-RGB-1000px-2025.png?1771423247&amp;Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uZXhjZWVkbG1zLmNvbS91cGxvYWRzL29yZ2FuaXphdGlvbnMvZmF2aWNvbnMvNTg3NS9sYXJnZS9BaXJibmItQmVsby1SR0ItMTAwMHB4LTIwMjUucG5nPzE3NzE0MjMyNDciLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3ODg3NjU2OTd9fX1dfQ__&amp;Signature=NaR8sgHOsE9SbwzmOxT-UuLV4szDeIBp6GO4A955yX4WaU5fYWaqo6sbgOpnkXA-G~ruHrnrBomfhBezpo6WaRO0pqpYOxnP~~cEBLky0v1jR8XTURf~7iyZGrhNukfxQk1qKo6NM-k6fwtWO4rd~8Hm42G~7BN2y71y4FJFqD60HYNFZhZUxD0cWgDag8i3y4ONV~-dpTW~Gd-XAhTnfoOpKJHBOtQWKwDlHaHzjVWv0PhMYOXvSQ0a3NCAj--sBvAcjswbcrVrtQLLFjWfja0xqmB8uBDCC56T8XV5rF8qtViaUeKsx-YwTXYGd4A7nb2h4s4knDkvmDQ17LB3KA__&amp;Key-Pair-Id=APKAJINUZDMKZJI5I6DA" sizes="96x96">
+
+  <meta charset="utf-8" />
+  
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+
+
+    <meta name="apple-itunes-app" content="app-id=1087150865, app-argument=https://hostsuccess.withairbnb.com/" />
+    <link rel="manifest" href="/manifest.json" />
+
+
+
+
+
+
+      <title>Login or Register : Host Success with Airbnb</title>
+
+
+
+    <meta content="https://exceed-primary-production-main.s3.amazonaws.com/uploads/organizations/branding_logos/5875/full/Airbnb-Belo-RGB-1000px-2025.png" property="og:image" />
+
+
+  <link rel="stylesheet" href="https://hostsuccess.withairbnb.com/custom_fonts/5875/font_faces-1768337966792159.css" media="all" />
+
+  <link rel="stylesheet" href="/assets/default/all-963208efde05d149fb9634a3de2896d9cb4e733b1e16f90fc93553690e371c67.css" media="all" />
+  <link rel="stylesheet" href="/theme/5875-professional-host/1788701401/styles.css" media="all" />
+  
+
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="9aBZ7SH5BPnmNg3OjCtKl6R-y2jlgh6OphMc_sn1wh0s5Uh5k32YG-kjPwsOK9IGroOgRQLxD5urLN-liA2ulQ" />
+  
+  
+
+  
+
+  
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(
+      {'user_id': null}
+    );
+    window.dataLayer.push({'cluster': "primary"});
+    window.dataLayer.push({'environment': "production"})
+</script>
+
+  <script>
+    window.IntellumDataLayer = window.IntellumDataLayer || {"account":{"id":2188,"name":"Host Success with Airbnb"},"organization":{"id":5875,"code":"Professional Host Organization","name":"Professional Host"},"user":null,"course":null,"course_session":null,"enrollment":null,"page_type":null,"search":null};
+</script>
+
+  
+  <script>
+//<![CDATA[
+window.gon={};
+//]]>
+</script>
+  <script type="text/javascript">
+
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+
+      function trackLinkClick(element) {
+        snowplow('trackSelfDescribingEvent' + trackersToUse, {
+          event: {
+            schema: "iglu:com.intellum/link_click/jsonschema/1-0-0",
+            data: {
+              link_name: element.dataset.objectName || 'unnamed_link',
+              link_title: element.dataset.objectTitle || (element.innerText || element.textContent).trim(),
+              link_href: element.href
+            }
+          }
+        })
+      }
+
+      function trackButtonClick(element) {
+        snowplow('trackSelfDescribingEvent' + trackersToUse, {
+          event: {
+            schema: "iglu:com.intellum/button_click/jsonschema/1-0-0",
+            data: {
+              button_name: element.dataset.objectName || 'unnamed_button',
+              button_title: element.dataset.objectTitle || (element.innerText || element.textContent || element.value || "").trim()
+            }
+          }
+        })
+      }
+
+      (function (p, l, o, w, i, n, g) {
+        if (!p[i]) {
+          p.GlobalSnowplowNamespace = p.GlobalSnowplowNamespace || [];
+          p.GlobalSnowplowNamespace.push(i);
+          p[i] = function () {
+            (p[i].q = p[i].q || []).push(arguments);
+          };
+          p[i].q = p[i].q || [];
+          n = l.createElement(o);
+          g = l.getElementsByTagName(o)[0];
+          n.async = 1;
+          n.src = w;
+          g.parentNode.insertBefore(n, g);
+        }
+      })(
+        window,
+        document,
+        "script",
+        "/assets/snowplow/sp-cc235223ae40fcc70e1f8f9bc6f3c2785790e0f550ae8ccaaa3b8c43caf40a20.js",
+        "snowplow"
+      )
+
+      snowplow("newTracker", "production-sp-production", "https://collector.intellumanalytics.com", {
+        appId: "Primary-2188",
+        platform: 'web',
+        cookieSameSite: 'Lax',
+        cookieSecure: true,
+        discoverRootDomain: true,
+        bufferSize: 1,
+        // Use navigator.sendBeacon so events queued at unload (browser
+        // close, refresh, nav away) survive page teardown. Default XHR
+        // transport is cancelled mid-flight.
+        eventMethod: 'beacon'
+      })
+
+      var context = [
+        {
+          schema: "iglu:com.intellum/page/jsonschema/1-0-7",
+          data: Object.assign({}, gon.page_entity, {"is_embedded": (window === window.parent) ? false : true})
+        },
+        {
+          schema: "iglu:com.intellum/account/jsonschema/1-0-1",
+          data: {
+            cluster_name: "Primary",
+            account_id: 2188
+          }
+        },
+        {
+          schema: "iglu:com.intellum/user/jsonschema/1-0-2",
+          data: {
+            tracking_id: getCookie("tid") || null,
+            user_id: null,
+            organization_id: null
+          }
+        },
+        {
+          schema: "iglu:com.intellum/application/jsonschema/1-0-1",
+          data: {
+            application: "exceed",
+            env: "production"
+          }
+        }
+      ]
+
+      snowplow('setUserId', null)
+      snowplow('addGlobalContexts', context)
+
+      var trackersToUse = ":production-sp-production"
+
+      function trackVideos() {
+        videos = document.querySelectorAll('video')
+        videos_arr = Array.from(videos)
+        percent_bucket_size = 10
+        videos_completed_percentage = {}
+
+        function trackVideoUsage(video, videos_completed_percentage, percent_bucket_size) {
+          totalLength = video.duration
+          percentageCompleted = (video.currentTime / totalLength) * 100
+          percentageCompletedRatio = Math.floor(percentageCompleted / percent_bucket_size)
+
+          if (!videos_completed_percentage[video.id].has(percentageCompletedRatio)) {
+            snowplow('trackSelfDescribingEvent' + trackersToUse, {
+              event: {
+                schema: "iglu:com.intellum/video_track/jsonschema/1-0-0",
+                data: {
+                  percentage_completed_bucket: percentageCompletedRatio * percent_bucket_size,
+                  video_id: video.id,
+                  percentage_completed: Math.floor(percentageCompleted),
+                  video_size_in_s: Math.floor(video.duration),
+                  video_current_time_in_s: Math.floor(video.currentTime)
+                }
+              }
+            })
+            videos_completed_percentage[video.id].add(percentageCompletedRatio)
+          }
+        }
+
+        videos_arr.forEach(video => {
+          if (video.id) {
+            video.ontimeupdate = function () {
+              if (!videos_completed_percentage[video.id]) {
+                videos_completed_percentage[video.id] = new Set()
+              }
+              trackVideoUsage(video, videos_completed_percentage, percent_bucket_size)
+            }
+          }
+        })
+      }
+
+      snowplow("enableActivityTracking" + trackersToUse, { // The enableActivityTracking method must be called before the trackPageView method (https://docs.snowplowanalytics.com/docs/collecting-data/collecting-from-own-applications/javascript-trackers/javascript-tracker/javascript-tracker-v3/tracking-events/#activity-tracking-page-pings)
+        minimumVisitLength: 10,
+        heartbeatDelay: 10
+      })
+
+      snowplow('trackPageView' + trackersToUse, {})
+      // NOTE: Snowplow client-side JS error auto-tracking (enableErrorTracking) is intentionally
+      // disabled. It installs a window.onerror handler that emits one `application_error` event per
+      // uncaught JS exception, so a single buggy page can flood the collector/enricher/BigQuery
+      // loader (see the 2026-06-08 incident on app_id Primary-1985). Do not re-enable without a
+      // per-app_id rate limit at the tracker/enricher. CORE-3628.
+      snowplow('enableFormTracking' + trackersToUse, {})
+
+      // Track clicks on buttons and links by delegating from the document, so
+      // that markup added after load (e.g. the AJAX-loaded purchase dialog) is
+      // tracked without having to rebind. Submit inputs are opt-in: they are
+      // only tracked when explicitly tagged with data-object-name, to avoid
+      // emitting an event for every form in the product.
+      var trackedClickSelector = 'a, button, input[type="submit"][data-object-name]'
+
+      function trackClick(e) {
+        var element = e.target.closest && e.target.closest(trackedClickSelector)
+        if (!element) return
+
+        // Double-click protection (student.js) neutralises a repeat click with
+        // preventDefault alone, so the event still reaches us even though the
+        // control did nothing, and counting those inflates the total. The guard
+        // attribute is set on the bubble phase — after this handler — so the
+        // click that actually does the work is still tracked.
+        if (element.hasAttribute("data-double-click-protected")) return
+
+        // An SVG <a> reports tagName "a" in lowercase and carries an
+        // SVGAnimatedString .href, which would serialise into link_href as an
+        // object — instanceof keeps it out of trackLinkClick.
+        if (element instanceof HTMLAnchorElement) {
+          trackLinkClick(element)
+        } else {
+          trackButtonClick(element)
+        }
+      }
+
+      // Capture phase, deliberately. On the bubble phase the document is the
+      // last node to see the event, so any handler in between calling
+      // stopPropagation() drops it silently — React onClick handlers do this in
+      // several places, e.g. the My Learning card menu.
+      document.addEventListener("click", trackClick, true)
+
+      // Aux (middle) clicks only ever open links, so links are the only thing
+      // worth tracking here.
+      document.addEventListener("auxclick", function (e) {
+        var link = e.target.closest && e.target.closest("a")
+        if (link instanceof HTMLAnchorElement) trackLinkClick(link)
+      }, true)
+
+      document.addEventListener('DOMContentLoaded', function() {
+        // Track video usage
+        trackVideos()
+
+        // Track catalog cards impressions
+        if (gon.page_entity && gon.page_entity["page_type"] == 'homepage') {
+          prevVisibleCatalogCards = new Set()
+          maxChecks = 20
+          checkInterval = 5000
+          currentCheck = 0
+
+          function checkNewCatalogCards(prevVisibleCatalogCards) {
+            catalogCards = Array.from(document.getElementsByClassName("catalogcards"))
+            catalogCards.forEach((el, index) => {
+              if (el.getElementsByTagName("h2")[0]) {
+                title = el.getElementsByTagName("h2")[0].innerText
+                courses = Array.from(el.getElementsByClassName("catalogcard"))
+                  .map(el => {
+                    return {
+                      course_id: parseInt(el.dataset.courseId, 10),
+                      course_type: el.dataset.courseType
+                    }
+                  })
+                  .filter(el => !isNaN(el["course_id"]))
+
+                if (courses.length != 0 && !prevVisibleCatalogCards.has(title)) {
+                  snowplow('trackSelfDescribingEvent' + trackersToUse, {
+                    event: {
+                      schema: "iglu:com.intellum/gallery_impression/jsonschema/1-0-0",
+                      data: {
+                        title: title,
+                        gallery_position: index,
+                        results: courses
+                      }
+                    }
+                  })
+                  prevVisibleCatalogCards.add(title)
+                }
+              }
+            })
+          }
+          checkNewCatalogCards(prevVisibleCatalogCards)
+          const catalogCheckInterval = setInterval(function() {
+            checkNewCatalogCards(prevVisibleCatalogCards)
+            if (currentCheck > maxChecks) {
+              clearInterval(catalogCheckInterval)
+            }
+            currentCheck += 1
+          }, checkInterval)
+        }
+
+        if (gon.page_entity && gon.page_entity["page_type"] == 'search_result_page') {
+          searchList = document.getElementsByTagName("exceed-filter-content")[0]
+          if (searchList != undefined) {
+            courses = Array.from(searchList.getElementsByTagName("article")).map(x => {
+              return {
+                course_id: parseInt(x.dataset.courseId, 10),
+                course_type: x.dataset.courseType
+              }
+            })
+            snowplow('trackSelfDescribingEvent' + trackersToUse, {
+              event: {
+                schema: "iglu:com.intellum/search_impression/jsonschema/1-0-2",
+                data: {
+                  search_query: gon.page_entity["search_query"],
+                  results: courses
+                }
+              }
+            })
+          }
+        }
+
+      }, false)
+  </script>
+
+
+
+  <!-- Intellum GA4 script -->
+  <script type="text/javascript" async src="https://www.googletagmanager.com/gtag/js?id=G-9QZZZPK0JH"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-9QZZZPK0JH');
+  </script>
+
+  <script type="text/javascript">
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+
+        ga('create', 'UA-45326746-3', 'auto', {'name': 'intellumTracker'});
+    ga('intellumTracker.set', 'anonymizeIp', true);
+    ga('intellumTracker.send', 'pageview');
+  </script>
+  <script type="text/javascript" async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+  
+
+  
+
+
+
+
+  
+</head>
+
+<body class="body--logged-out" data-controller="authentication" data-action="new">
+
+  
+
+  
+
+
+  <a href="#main" class="skip2content">
+    Skip to main content
+  </a>
+      
+  <div id="gdpr-consent" class="consent u-orgcolor--bg">
+  <div class="consent__content">
+    <span class="consent__text">This site uses cookies to provide you with a greater user experience. By using Exceed LMS, you accept our <a href='https://www.intellum.com/privacy-policy' target='_BLANK' class='whatsnew__link'>use of cookies</a>.</span>
+  </div>
+  <div class="consent__actions">
+    <button type="button" id="gdpr-consent__button" class="consent__close" aria-label="Close">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 35" aria-hidden="true" class="consent__icon btnicon" focusable="false">
+  <g fill="currentColor" aria-hidden="true">
+    <path d="M11.84,24.57 L24.57,11.84 L23.16,10.43 L10.43,23.16 z"></path>
+    <path d="M10.43,11.84 L23.16,24.57 L24.57,23.16 L11.84,10.43 z"></path>
+  </g>
+</svg>
+
+    </button>
+  </div>
+</div>
+
+
+
+
+<div class="appheader appheader--exceed u-org--header">
+
+    
+<div class="appheader__navigation">
+
+  <div class="appheader__section appheader__section--title u-org--header">
+
+
+      <a class="appheader__titlelink u-org--header" href="/"><img class="appheader__titleimage" alt="Host Success with Airbnb" src="https://cdn.exceedlms.com/uploads/organizations/branding_logos/5875/full/Airbnb-Belo-RGB-1000px-2025.png?1771423144&amp;Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uZXhjZWVkbG1zLmNvbS91cGxvYWRzL29yZ2FuaXphdGlvbnMvYnJhbmRpbmdfbG9nb3MvNTg3NS9mdWxsL0FpcmJuYi1CZWxvLVJHQi0xMDAwcHgtMjAyNS5wbmc~MTc3MTQyMzE0NCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc4ODc2NTY5N319fV19&amp;Signature=Bi7FQlN7WT8ILBWbUOaJZLp13Hkh0hgWfws699l6qfAusNfFA8EUIDx-h4eEcdaGqv2dVeF0q7ZJ8qq-8ucra26JCeJRIaQ9WVOevYu6Cx~e0KcYIjCZ2JxKqwP3sVVPPjf32z8hl4gxMKfSbtoT-rw1U3vwRBunzLFx7PszSH6On-NnHk6PYYyDgTGY02rhw6J3GHLTaE2gDNeIfUUttknKLOWsyeBa~PRd2i8YU6TCHRcuhw4PWqZmjOzfuQA3hPzqg4-ZQ-9Ehs64edTToeM1Gu2ydNWD~Sj5xlg~nExGQysL9mpWwBhd-F8AUmApfA0N9EQ3n4qHVXpfrUXVQw__&amp;Key-Pair-Id=APKAJINUZDMKZJI5I6DA" /></a>
+
+  </div>
+
+
+  <div class="appheader__section u-org--header">
+
+  </div>
+
+</div>
+
+
+    
+</div>
+
+
+
+  
+
+  <main class="main main--student" id="main" >
+
+
+      <div class="row login blankslate publiclogin publiclogin--page">
+  <div class="small-12 columns">
+    <h1 class="u-headingpage publiclogin__pageheading">Welcome</h1>
+    <p>
+        <img alt="" src="https://cdn.exceedlms.com/uploads/organizations/heading_logos/5875/full/Airbnb-Belo-RGB-1000px-2025.png?1771423150&amp;Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uZXhjZWVkbG1zLmNvbS91cGxvYWRzL29yZ2FuaXphdGlvbnMvaGVhZGluZ19sb2dvcy81ODc1L2Z1bGwvQWlyYm5iLUJlbG8tUkdCLTEwMDBweC0yMDI1LnBuZz8xNzcxNDIzMTUwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzg4NzY4OTIyfX19XX0_&amp;Signature=PhaAax7iV8LR0MWmf9y6d6lmpCNP7-uBvrswA45Am0aWKv-QFJyue4w6GT4lFWKC44IF6HeeBtx084ep8G~V0h8wGMAe0INyaHZPR-VOXs7V1H5IZ5jHGrr2OaJ5nALhQT4fANW2FVv1bse1154od9CFcrLBkMIr5Ijk1FahEksYkjqDw0R1t~MeVd~kjtJMt6dvRplJuFFKZV7J7uXooHjvtu6CliTVCl2KZ-Of2K8-mtdAcotEbfh1~B6RUjCJ8qjNBMgVseTzTOcw3jRyh~VzYGCKHgVvXFjAyl3sRwCZr4tNKmh1fxZF0DfUcvjY41dQ9OM3MHdLxQk3MhOXrg__&amp;Key-Pair-Id=APKAJINUZDMKZJI5I6DA" />
+    </p>
+
+
+    
+
+
+
+
+
+  
+
+<form data-neeman-class="login-form" class="studentform login__form" novalidate="novalidate" action="/student/authentication" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="U5TWYbgncu1I88pA8Om2uj86M1kWfeeTBlTF47oq8l09uo6LOadTQaw40RyA1HVgxmDsKnUxF_MgnatZ8i-Ktg" autocomplete="off" />
+  <input type="hidden" name="custom_login_url" id="custom_login_url" autocomplete="off" />
+  <input type="text" name="login_to" id="login_to" value="" style="display:none" autocomplete="off" class="hidden" />
+
+  <label for="login" class="studentform__label">Username</label>
+
+  <input type="email" name="login" id="login" autofocus="autofocus" autocorrect="off" autocapitalize="off" autocomplete="username" class="login__input" data-neeman-class="login" />
+
+  <label for="password" class="studentform__label">Password</label>
+  <input type="password" name="password" id="password" value="" autocomplete="current-password" class="login__input" data-neeman-class="password" />
+
+  <div class="login__options">
+    <label class="checkbox login__rememberme" for="remember_me"><input type="hidden" name="remember_me" value="0" autocomplete="off" /><input type="checkbox" name="remember_me" id="remember_me" value="1" class="checkbox__input" /><span class="checkbox__ui"></span><span class="checkbox__label">Remember Me</span></label>
+
+      <a target="_top" class="login__forgotpassword" href="/student/authentication/request_password_reset">Forgot Password?</a>
+  </div>
+
+
+  <div class="login__actions">
+    <button class="button button--primary login-submit-button login__actionbtn" type="submit">Log In</button>
+
+    <div>
+    </div>
+
+  </div>
+</form>
+
+
+  </div>
+</div>
+<script type="text/javascript">
+  // Adds basic compatibility for the back button between different applications (tribe and level)
+  history.pushState(null, null, '/');
+</script>
+
+
+
+
+    <div class="dialog dialog--award" id="award-dialog"
+         role="dialog"
+         aria-hidden="true">
+      <div class="dialog__content award dialog__content--removedefaults" role="document"></div>
+    </div>
+
+      <div class="dialog dialog--publiclogin" id="public-login-dialog"
+           role="dialog"
+           aria-hidden="true">
+        <div class="dialog__content publiclogin " role="document"></div>
+      </div>
+
+
+
+
+
+
+
+    
+
+    <exceed-modal-helper aria-live="polite"></exceed-modal-helper>
+
+
+  </main>
+
+  <script src="/assets/student/application-d0e8ff00e28c3dc82794315c8719a48a2d17a570c710cac106a0f6aab50db106.js"></script>
+
+
+  
+
+  
+
+  
+
+    <footer id="page-footer" class="appfooter footer">
+  <div class="appfooter__content footer__content">
+
+        <div class="appfooter__item appfooter__customcontent footer__item footer__customcontent">
+            <footer style="padding: 16px 0; border-top: 1px solid #e0e0e0; font-size: 14px; color: #222222;">
+  <div style="max-width: 1080px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
+    
+    <!-- Left side: copyright or brand -->
+    <div style="margin-bottom: 8px;">
+      © <span id="footer-year"></span> Airbnb, Inc. 
+    </div>
+
+    <!-- Right side: legal links -->
+    <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+      <a 
+        href="https://www.airbnb.com/terms" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        style="color: #222222; text-decoration: underline;"
+      >
+        Terms 
+      </a>
+      <span aria-hidden="true">•</span>
+      <a 
+        href="https://www.airbnb.com/terms/privacy_policy" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        style="color: #222222; text-decoration: underline;"
+      >
+        Privacy 
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Optional: auto-update year
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+  </script>
+</footer>
+        </div>
+
+      <div class="menulist menulist--footer appfooter__item appfooter__item--locale">
+  <div id="app-locale-label" class="menulist__title">
+    Locale:
+    <span class="a11y-atonly">English selected</span>
+  </div>
+  <div class="menulist__wrapper">
+    <exceed-simple-select is-menu-only="true" trigger-content-selector="#app-locale-trigger span">
+      <button
+      id="app-locale-trigger"
+      class="menulist__trigger"
+      type="button"
+      aria-haspopup="listbox"
+      aria-expanded="false"
+       aria-labelledby="app-locale-label"><span
+      class="menulist__optionname">English</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" aria-hidden="true" class="menulist__triggericon" focusable="false">
+  <g fill="currentColor" aria-hidden="true">
+    <path d="M6,8.9c-0.1,0-0.3,0-0.4-0.1L2.1,5.3c-0.2-0.2-0.2-0.5,0.2,-0.7l6.8,0       c0.2,0,0.5,0,0.7,0.1s0.2,0.5,0,0.7L6.4,8.8C6.3,8.9,6.1,8.9,6,8.9z"></path>
+  </g>
+</svg>
+</button>
+
+      <ul id="app-locale-menu" class="menulist__listbox menulist__listbox--footer menulist__listbox--top" role="listbox" aria-labelledby="app-locale-label">
+          <li id="app-locale-menu-option-en-AU"
+            class="menulist__option"
+            role="option"
+            data-href="/?locale=en-AU"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <span class="menulist__optionname">Australian English</span>
+          </li>
+          <li id="app-locale-menu-option-en-CA"
+            class="menulist__option"
+            role="option"
+            data-href="/?locale=en-CA"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <span class="menulist__optionname">Canadian English</span>
+          </li>
+          <li id="app-locale-menu-option-de"
+            class="menulist__option"
+            role="option"
+            data-href="/?locale=de"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <span class="menulist__optionname">Deutsch</span>
+          </li>
+          <li id="app-locale-menu-option-en"
+            class="menulist__option"
+            role="option"
+            data-href="/?locale=en"
+            aria-selected="true"
+            tabindex="-1"
+          >
+            <span class="menulist__optionname">English</span>
+          </li>
+          <li id="app-locale-menu-option-es"
+            class="menulist__option"
+            role="option"
+            data-href="/?locale=es"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <span class="menulist__optionname">español</span>
+          </li>
+          <li id="app-locale-menu-option-es-MX"
+            class="menulist__option"
+            role="option"
+            data-href="/?locale=es-MX"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <span class="menulist__optionname">español de México</span>
+          </li>
+          <li id="app-locale-menu-option-fr"
+            class="menulist__option"
+            role="option"
+            data-href="/?locale=fr"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <span class="menulist__optionname">français</span>
+          </li>
+          <li id="app-locale-menu-option-fr-CA"
+            class="menulist__option"
+            role="option"
+            data-href="/?locale=fr-CA"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <span class="menulist__optionname">français canadien</span>
+          </li>
+          <li id="app-locale-menu-option-it"
+            class="menulist__option"
+            role="option"
+            data-href="/?locale=it"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <span class="menulist__optionname">italiano</span>
+          </li>
+          <li id="app-locale-menu-option-pt-BR"
+            class="menulist__option"
+            role="option"
+            data-href="/?locale=pt-BR"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <span class="menulist__optionname">Português (Brasil)</span>
+          </li>
+          <li id="app-locale-menu-option-pt-PT"
+            class="menulist__option"
+            role="option"
+            data-href="/?locale=pt-PT"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <span class="menulist__optionname">Português (Portugal)</span>
+          </li>
+          <li id="app-locale-menu-option-fi"
+            class="menulist__option"
+            role="option"
+            data-href="/?locale=fi"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <span class="menulist__optionname">suomi</span>
+          </li>
+          <li id="app-locale-menu-option-sv"
+            class="menulist__option"
+            role="option"
+            data-href="/?locale=sv"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <span class="menulist__optionname">svenska</span>
+          </li>
+          <li id="app-locale-menu-option-tr"
+            class="menulist__option"
+            role="option"
+            data-href="/?locale=tr"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <span class="menulist__optionname">Türkçe</span>
+          </li>
+          <li id="app-locale-menu-option-en-GB"
+            class="menulist__option"
+            role="option"
+            data-href="/?locale=en-GB"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <span class="menulist__optionname">UK English</span>
+          </li>
+          <li id="app-locale-menu-option-el"
+            class="menulist__option"
+            role="option"
+            data-href="/?locale=el"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <span class="menulist__optionname">Ελληνικά</span>
+          </li>
+          <li id="app-locale-menu-option-ja"
+            class="menulist__option"
+            role="option"
+            data-href="/?locale=ja"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <span class="menulist__optionname">日本語</span>
+          </li>
+          <li id="app-locale-menu-option-ko"
+            class="menulist__option"
+            role="option"
+            data-href="/?locale=ko"
+            aria-selected="false"
+            tabindex="-1"
+          >
+            <span class="menulist__optionname">한국어</span>
+          </li>
+      </ul>
+    </exceed-simple-select>
+  </div>
+</div>
+
+
+      <p class="appfooter__item footer__item">
+        <a target="_blank" rel="noopener noreferrer" class="appfooter__link appfooter__link--poweredby" href="https://www.intellum.com/platform/powered-by-intellum/?utm_source=Host Success with Airbnb&amp;utm_medium=referral&amp;utm_campaign=powered-by">
+          Powered by:
+          <span class="appfooter__logo footer__logo">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75 21" title="Intellum">
+  <g fill="currentColor">
+    <path class="st0" d="M8.8 13.9H7V7.1h1.8v6.8zM11.9 7.1h1.8l3.2 4.2V7.1h1.8v6.8H17l-3.2-4.2v4.2H12V7.1zM25 13.9h-1.8V8.6h-1.5V7.1h4.7v1.5H25v5.3zM31.6 8.6v1.1h2v1.5h-2v1.2h2.1v1.5h-3.9V7.1h3.9v1.5h-2.1zM39.3 12.4h2.1v1.5h-3.9V7.1h1.8v5.3zM46.5 12.4h2.1v1.5h-3.9V7.1h1.8v5.3zM57.1 7.1v3.8c0 .9 0 1.7-.7 2.4-.6.6-1.5.8-2.3.8-.8 0-1.7-.2-2.3-.8-.7-.7-.7-1.5-.7-2.4V7.1h1.8v3.6c0 .9.1 1.9 1.2 1.9 1.1 0 1.2-1 1.2-1.9V7.1h1.8zM60.6 7.1h1.7l1.4 3.6 1.5-3.6H67l1 6.8h-1.8l-.4-3.9-1.6 3.9h-.7L61.8 10l-.6 3.9h-1.8l1.2-6.8z"/>
+    <g>
+      <path d="M70.4 1.5h3.2v3.2L75 6.1v-6h-6zM73.6 8.6v10.9H1.4v-18h65.1L65.1.1H0v20.8h75V10z"/>
+    </g>
+  </g>
+</svg>
+          </span>
+</a>      </p>
+  </div>
+
+</footer>
+
+
+  
+
+    <script src="/assets/jstz.min-37ad96aacf8f700e90554cbb6594de8435d1102ca1f075bedc18ce3975b6089c.js"></script>
+<script type="text/javascript">
+  var tz = jstz.determine();
+  document.cookie = "jstztimezone=" + tz.name();
+</script>
+
+
+
+  <script src="/vite/assets/packs/components.js-CN-IRVNS.js" crossorigin="" type="module"></script><link rel="modulepreload" href="/vite/assets/rolldown-runtime-DAXXjFlN.js" as="script" crossorigin="">
+<link rel="modulepreload" href="/vite/assets/dist-Bnj2Qb5M.js" as="script" crossorigin="">
+<link rel="modulepreload" href="/vite/assets/esm-PQyfgXxY.js" as="script" crossorigin="">
+<link rel="modulepreload" href="/vite/assets/push.min-_Qijl4mg.js" as="script" crossorigin="">
+<link rel="modulepreload" href="/vite/assets/dist-COolxJAW.js" as="script" crossorigin="">
+<link rel="modulepreload" href="/vite/assets/dist-u5p_KAIj.js" as="script" crossorigin="">
+<link rel="modulepreload" href="/vite/assets/axios-BndJUu-c.js" as="script" crossorigin="">
+<link rel="modulepreload" href="/vite/assets/axios-D_54lv5D.js" as="script" crossorigin="">
+<link rel="modulepreload" href="/vite/assets/defineProperty-BRAO5bv8.js" as="script" crossorigin="">
+<link rel="modulepreload" href="/vite/assets/react-Bb3IsNbi.js" as="script" crossorigin="">
+<link rel="modulepreload" href="/vite/assets/react-dom-BrvQIjYZ.js" as="script" crossorigin="">
+<link rel="modulepreload" href="/vite/assets/jsx-runtime-CtMZ-PAS.js" as="script" crossorigin="">
+<link rel="modulepreload" href="/vite/assets/cute-md-editor-CmIoFXvn.js" as="script" crossorigin="">
+<link rel="modulepreload" href="/vite/assets/markdownEditor-CE1ksPtA.js" as="script" crossorigin="">
+<link rel="modulepreload" href="/vite/assets/query-string-UQcpApSg.js" as="script" crossorigin="">
+<link rel="modulepreload" href="/vite/assets/exceed-searchable-select-Cr7-wHVc.js" as="script" crossorigin="">
+<link rel="modulepreload" href="/vite/assets/build-B35CWvLd.js" as="script" crossorigin="">
+<link rel="modulepreload" href="/vite/assets/centrifugo-CjHr0NSV.js" as="script" crossorigin="">
+
+  
+  
+
+  <style>
+  :root {
+    --ids-color-brand-rgb: 255, 56, 92;
+  }
+</style>
+
+</body></html>

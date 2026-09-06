@@ -48,3 +48,11 @@ Toda URL já distilada no banco fica listada aqui. A tarefa diária lê este arq
 - https://github.com/advisories/GHSA-g38m-r43w-p2q7
 - https://zhero-web-sec.github.io/research-and-things/eclipse-on-nextjs-conditioned-exploitation-of-an-intended-race-condition
 - https://slcyber.io/research-center/novel-ssrf-technique-involving-http-redirect-loops/
+
+## Dojo 2026-09-05 (recall + aplicação → Nexo)
+- https://www.josipfranjkovic.com/blog/race-conditions-on-web
+- https://www.webasha.com/blog/what-is-an-example-of-a-real-bug-bounty-report-where-idor-was-used-to-exploit-a-banking-application
+
+## Dojo 2026-09-06 (recall + aplicação → Airbnb)
+- https://arxiv.org/html/2605.25865  (taxonomia BOLA — 6 famílias, dojo 2026-09-06)
+- https://portswigger.net/web-security/logic-flaws/examples  (5 famílias canônicas de lógica, dojo 2026-09-06)

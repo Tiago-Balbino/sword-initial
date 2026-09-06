@@ -1,0 +1,25 @@
+HTTP/2 302 
+date: Sun, 06 Sep 2026 15:45:50 GMT
+content-type: text/plain; charset=utf-8
+location: https://oauth.readme.io/p/airbnb-group/oauth?redirect=%2Fhomes%2Fdocs%2Fgetting-started
+cache-control: s-maxage=1800, stale-if-error=900
+set-cookie: __cf_bm=SJ_U.1BxadXLD05jYOAQsw.XujYWS0lfJ9gdCYDnbaI-1788709550.6335917-1.0.1.1-QzMUHdn1TtA43TgRS09l1BwHFzIapQEmtCkwCFSg3Fk6LpZQ1gAwlpUYgpQE966uNZv.HTG1Du3SeMj_1jEbGPiqULt9VraDADgo2qRopjTY05oXkgKPQkztMb1ghlvX; HttpOnly; SameSite=None; Secure; Path=/; Domain=developer.withairbnb.com; Expires=Sun, 06 Sep 2026 16:15:50 GMT
+content-language: en
+rndr-id: 3ebc9e76-c8e8-4598
+server: cloudflare
+strict-transport-security: max-age=31536000
+vary: Accept, Accept-Encoding
+vary: Accept-Encoding
+x-content-type-options: nosniff
+x-dns-prefetch-control: off
+x-download-options: noopen
+x-frame-options: Deny
+x-ratelimit-limit: 100
+x-ratelimit-remaining: 99
+x-ratelimit-reset: 1788709552
+x-render-origin-server: Render
+x-xss-protection: 1; mode=block
+cf-cache-status: BYPASS
+cf-ray: a36e9a637ba9da0c-GIG
+alt-svc: h3=":443"; ma=86400
+

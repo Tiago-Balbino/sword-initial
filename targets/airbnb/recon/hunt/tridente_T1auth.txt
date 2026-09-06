@@ -1,0 +1,37 @@
+
+=== Blink (chromium) ===
+  final URL:    https://www.airbnb.com.br/
+  logado?       true  (cookie sessão: true)
+  sessão SameSite: _aat=None/HttpOnly, _airbed_session_id=None/HttpOnly, hli=None
+  token na URL: (nenhum)
+  redirects:    0
+  CSP:          child-src blob:; connect-src 'self' https: wss://ws.airbnb.com wss://ws.airbnb.com.br http…
+  CSP violations: 0
+  cookies (19): _aat [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br  ·  _airbed_session_id [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br  ·  _aaj [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br  ·  _user_attributes [SameSite=Lax,Secure] dom=.airbnb.com.br  ·  _pt [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br  ·  hli [SameSite=None,Secure] dom=.airbnb.com.br  ·  rclu [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br  ·  _gtmeec [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br  ·  _iidt [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br  ·  _vid_t [SameSite=Lax] dom=.airbnb.com.br
+
+=== Gecko (firefox) ===
+  final URL:    https://www.airbnb.com.br/
+  logado?       true  (cookie sessão: true)
+  sessão SameSite: _aat=None/HttpOnly, _airbed_session_id=None/HttpOnly, hli=None
+  token na URL: (nenhum)
+  redirects:    0
+  CSP:          child-src blob:; connect-src 'self' https: wss://ws.airbnb.com wss://ws.airbnb.com.br http…
+  CSP violations: 0
+  cookies (22): _aat [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br  ·  _airbed_session_id [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br  ·  _aaj [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br  ·  _pt [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br  ·  hli [SameSite=None,Secure] dom=.airbnb.com.br  ·  li [SameSite=None] dom=.airbnb.com.br  ·  rclu [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br  ·  _gtmeec [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br  ·  _iidt [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br  ·  _vid_t [SameSite=Lax] dom=.airbnb.com.br
+
+=== WebKit (webkit) ===
+  final URL:    https://www.airbnb.com.br/
+  logado?       true  (cookie sessão: true)
+  sessão SameSite: _aat=None/HttpOnly, _airbed_session_id=None/HttpOnly, hli=None
+  token na URL: (nenhum)
+  redirects:    0
+  CSP:          child-src blob:; connect-src 'self' https: wss://ws.airbnb.com wss://ws.airbnb.com.br http…
+  CSP violations: 0
+  cookies (21): _aat [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br  ·  _airbed_session_id [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br  ·  _aaj [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br  ·  _user_attributes [SameSite=None,Secure] dom=.airbnb.com.br  ·  _pt [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br  ·  hli [SameSite=None,Secure] dom=.airbnb.com.br  ·  li [SameSite=None] dom=.airbnb.com.br  ·  rclu [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br  ·  _gtmeec [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br  ·  _iidt [SameSite=None,HttpOnly,Secure] dom=.airbnb.com.br
+
+=== DIFF (divergência = P5 candidato) ===
+  finalURL: igual
+  loggedIn: igual
+  token-na-URL count: igual (0)
+  #redirects: igual (0)
+  #CSP-violations: igual (0)

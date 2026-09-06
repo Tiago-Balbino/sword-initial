@@ -1,0 +1,34 @@
+
+=== Blink (chromium) ===
+  final URL:    https://www.airbnb.com.br/
+  logado?       true
+  token na URL: (nenhum)
+  redirects:    0
+  CSP:          child-src blob:; connect-src 'self' https: wss://ws.airbnb.com wss://ws.airbnb.com https:/…
+  CSP violations: 0
+  cookies (18): _user_attributes [SameSite=Lax,Secure] dom=.airbnb.com  ·  bev [SameSite=Lax,Secure] dom=.airbnb.com  ·  datadome [SameSite=Lax,Secure] dom=.airbnb.com  ·  everest_cookie [SameSite=Lax,Secure] dom=.airbnb.com  ·  country [SameSite=Lax,Secure] dom=.airbnb.com  ·  previousTab [SameSite=Lax,Secure] dom=.www.airbnb.com  ·  _user_attributes [SameSite=Lax,Secure] dom=.airbnb.com.br  ·  bev [SameSite=Lax,Secure] dom=.airbnb.com.br  ·  everest_cookie [SameSite=Lax,Secure] dom=.airbnb.com.br  ·  jitney_client_session_id [SameSite=Lax,Secure] dom=.www.airbnb.com
+
+=== Gecko (firefox) ===
+  final URL:    https://www.airbnb.com.br/
+  logado?       true
+  token na URL: (nenhum)
+  redirects:    0
+  CSP:          child-src blob:; connect-src 'self' https: wss://ws.airbnb.com wss://ws.airbnb.com https:/…
+  CSP violations: 0
+  cookies (14): _user_attributes [SameSite=None,Secure] dom=.airbnb.com.br  ·  everest_cookie [SameSite=None,Secure] dom=.airbnb.com.br  ·  ak_bmsc [SameSite=None,HttpOnly] dom=.airbnb.com.br  ·  cfrmfctr [SameSite=None,Secure] dom=.airbnb.com.br  ·  frmfctr [SameSite=None,Secure] dom=.airbnb.com.br  ·  bev [SameSite=None,Secure] dom=.airbnb.com.br  ·  datadome [SameSite=Lax,Secure] dom=.airbnb.com.br  ·  _user_attributes [SameSite=None,Secure] dom=.airbnb.com  ·  bev [SameSite=None,Secure] dom=.airbnb.com  ·  everest_cookie [SameSite=None,Secure] dom=.airbnb.com
+
+=== WebKit (webkit) ===
+  final URL:    https://www.airbnb.com.br/
+  logado?       true
+  token na URL: (nenhum)
+  redirects:    0
+  CSP:          (nenhuma)…
+  CSP violations: 0
+  cookies (13): _user_attributes [SameSite=None,Secure] dom=.airbnb.com  ·  bev [SameSite=None,Secure] dom=.airbnb.com  ·  everest_cookie [SameSite=None,Secure] dom=.airbnb.com  ·  country [SameSite=None,Secure] dom=.airbnb.com  ·  ak_bmsc [SameSite=None,HttpOnly] dom=.airbnb.com  ·  _user_attributes [SameSite=None,Secure] dom=.airbnb.com.br  ·  bev [SameSite=None,Secure] dom=.airbnb.com.br  ·  everest_cookie [SameSite=None,Secure] dom=.airbnb.com.br  ·  ak_bmsc [SameSite=None,HttpOnly] dom=.airbnb.com.br  ·  cfrmfctr [SameSite=None,Secure] dom=.airbnb.com.br
+
+=== DIFF (divergência = P5 candidato) ===
+  finalURL: igual
+  loggedIn: igual
+  token-na-URL count: igual (0)
+  #redirects: igual (0)
+  #CSP-violations: igual (0)

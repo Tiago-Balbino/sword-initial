@@ -191,6 +191,41 @@ linha aqui (como o `_ingested.md` faz pra URLs). Arsenal = o *como*; signals = o
 - **Probe:** ⚠️ 🔴 **pare-e-confirme sempre** — afeta terceiros; ambiente/rate controlado, nunca em massa.
 - **FP:** front normaliza; origin H2 puro.
 
+### S-RACE-01 — check-then-act sobre saldo/limite/quota (TOCTOU)
+- **Sinal:** endpoint que **lê um contador e depois escreve** — saque, transfer, resgate de cupom/voucher, "convite restante", compra com débito de saldo, cancel-after-fill de ordem. Verbos: `withdraw`, `transfer`, `redeem`, `capture`, `order`, `booster`, `deposit`. (Nexo: `request_crypto_withdrawal`, `request_pay_to_card`, `exchange_order`, `term/deposits/user/create`.)
+- **Pattern:** P4 (ordem das etapas assumida) · **Arsenal:** Business Logic › Race / limit-overrun
+- **Hipótese:** N requests paralelas passam **todas** no check de saldo/limite antes de qualquer débito commitar → saque/resgate múltiplo do mesmo saldo (double-spend), saldo negativo, cupom N× (fonte: Josip Franjković — Cobalt BTC withdraw, Mega saldo negativo, FB coupon/invite).
+- **Probe:** 🔴 (**pare-e-confirme; só na própria conta, valores mínimos**) disparar 5–20 requests idênticas **single-packet / last-byte-sync** (mesma conexão H2, ou Turbo Intruder `race-single-packet`); comparar saldo esperado vs real. Baseline serial primeiro (1 request = 1 débito).
+- **FP:** lock/transação atômica no banco (débito condicional) → só 1 passa; idempotency-key real; "sucesso random após 5000 tentativas" que não muda estado global = ruído (isolar o gatilho antes de reportar). Rate-limit ≠ defesa contra race (não confundir).
+
+### S-FUND-01 — endpoint de movimentação de dinheiro com id/campo de origem no request
+- **Sinal:** request de **transfer/withdraw/deposit/pay** que carrega `from_account`/`accountId`/`recipient_id`/`amount`/`sourceWallet` e **o cliente controla a origem**. id sequencial/numérico no path (`/transactions/9876543`) = agravante.
+- **Pattern:** P1 (identidade≠permissão) + P2 (cliente controla) · **Arsenal:** IDOR/BOLA + Business Logic
+- **Hipótese:** authz confirma **quem você é** (token/JWT válido) mas não **que você é dono da conta de origem** → trocar `from_account`/`recipient_id` move fundo alheio (worst-case do Nexo: *transação fraudulenta*). Escala **read→write**: GET no id vizinho vaza saldo/transação (200 idêntico, sem máscara) → POST de transfer com aquele id executa.
+- **Probe:** 🔴 (**pare-e-confirme**) 2 contas próprias: GET `/…/{id+1}` (dado da B com token da A?) → depois POST transfer com `from_account` da B. **Nunca** tocar conta que não seja sua.
+- **FP:** 403 só p/ id inválido (não p/ id de outro dono) mascara authz — testar sempre com id **válido de outra conta sua**, esperar 200-com-dado, não 403; backend recarrega dono do token antes de escrever (mass-assignment morre); timing/latência não indica authz — olhar **conteúdo** da response.
+
+### S-BOLA-STALE-01 — authz checada no estado ativo, não re-checada após mudança de ciclo de vida
+- **Sinal:** objeto com **transição de estado** (reserva cancelada/expirada, listing desativado, convite revogado, co-host/agente/membro **removido**, assinatura cancelada, conta deprovisionada) + endpoint que ainda o serve. Verbos de ciclo: `cancel/archive/deactivate/revoke/remove/expire/offboard`.
+- **Pattern:** P1 + P4 (a ordem/estado é assumida) · **Arsenal:** IDOR/BOLA (família *Workflow-Context*, 6% dos casos)
+- **Hipótese:** o dono **perdeu** o acesso pela UI, mas a authz do backend só foi imposta no momento *ativo* e **não re-valida** após o estado mudar → o principal removido/revogado ainda lê/escreve o objeto (token/sessão/URL antiga continua válida).
+- **Probe:** 🔴 2 contas: A dá acesso a B (co-host/convidado/membro) → captura request de B → A **revoga** B → **replaya** o request de B. 200-com-dado após revogação = achado. Variante 🟢: só mapear onde a UI some mas a rota/token persiste.
+- **FP:** backend invalida sessão/token no offboarding; re-checa dono a cada request (estado atual, não cacheado). Público-por-design (objeto arquivado que é público mesmo).
+
+### S-LOGIC-THRESHOLD-01 — critério de elegibilidade checado uma vez e revogável depois
+- **Sinal:** benefício condicionado a um **limiar/critério** (desconto por valor mínimo de carrinho, frete grátis acima de X, tier por volume, cashback por quantidade, cupom "1 item específico") aplicado num passo e **não re-validado no commit**.
+- **Pattern:** P4 (ordem/estado assumido) + P2 (cliente controla) · **Arsenal:** Business Logic (domain-specific)
+- **Hipótese:** satisfazer o critério → disparar o benefício → **reverter o critério** antes de finalizar (adicionar itens p/ cruzar o limite → aplicar desconto → remover itens → checkout mantém o desconto). O sistema confia que a condição do passo N-1 ainda vale no passo N.
+- **Probe:** 🔴 aplicar benefício com o critério satisfeito → editar o carrinho/pedido/estado p/ desfazer o critério → finalizar → conferir se o benefício sobreviveu. Baseline: fluxo honesto primeiro.
+- **FP:** re-validação atômica no commit (recalcula elegibilidade no submit final); benefício travado ao snapshot do pedido. Diferenciar de cupom-reuso puro (`S-PAY-01`).
+
+### S-CRYPTO-ORACLE-01 — mesma função cifra input do atacante e o ciphertext é aceito em contexto sensível
+- **Sinal:** valor **cifrado/assinado** que circula no cliente (param de iframe assinado, URL de imagem/asset assinada, token opaco reversível, cookie cifrado, `state`/`data` blob) **e** um endpoint que **gera** esse ciphertext a partir de input controlável (preview, "criptografar isto", export, share-link).
+- **Pattern:** P5 (dado muda de formato entre camadas) + P2 · **Arsenal:** Business Logic (encryption oracle) / cripto
+- **Hipótese:** usar a função pública de cifra pra **cifrar dado arbitrário** → passar o ciphertext resultante numa função sensível que assume "veio cifrado ⇒ confiável/íntegro" (ex.: forjar um blob de preço/identidade/permissão que o backend decifra e confia).
+- **Probe:** 🔴 achar o par (gerador de ciphertext ↔ consumidor de ciphertext); cifrar um payload escolhido no gerador; injetar no consumidor; ver se o backend confia. 🟢: mapear onde os dois lados existem.
+- **FP:** cifra com contexto/AAD amarrado (o ciphertext de um contexto não vale noutro); assinatura por-usuário; MAC que cobre o campo. Raro, mas altíssimo impacto quando existe.
+
 ---
 
 # Gatilhos de chain (Pass 2 — composição)
@@ -239,6 +274,12 @@ Quando **dois ou mais** sinais únicos acendem no mesmo alvo, checar se casam um
 - **Hipótese:** ler fatura alheia → extrair payment-token → executar pagamento/postpone alheio. Info → High/Critical.
 - **Probe:** 🔴 (pare-e-confirme) confirmar que o token da fatura A opera na conta A a partir da B.
 - **Arsenal:** E-commerce Checkout / BNPL/Invoice.
+
+### C-08 — IDOR de saldo + race de saque → transação fraudulenta
+- **Composição:** `S-FUND-01` + `S-RACE-01` (a arapuca de fintech)
+- **Hipótese:** o `S-FUND-01` prova que dá pra ler/mirar a conta/saldo; o `S-RACE-01` transforma um débito legítimo em N débitos do mesmo saldo. Juntos: mover/duplicar fundo = **worst-case do Nexo (transação fraudulenta)**, mesmo que cada elo isolado seja Medium.
+- **Probe:** 🔴 (**pare-e-confirme sempre; só contas próprias, valores mínimos**) provar os dois componentes separados primeiro; só então a composição, com baseline serial.
+- **Arsenal:** IDOR/BOLA + Business Logic › Race.
 
 ---
 _Manter em sincronia com `arsenal.md` (toda entrada com "Sinais" espelha aqui). Liga com [[patterns]] e alimenta o `code 6`._

@@ -1,0 +1,21 @@
+HTTP/2 200 
+date: Sun, 06 Sep 2026 15:46:49 GMT
+content-type: text/html; charset=utf-8
+vary: Accept-Encoding
+status: 200 OK
+cache-control: max-age=0, private, must-revalidate
+vary: Accept
+referrer-policy: strict-origin-when-cross-origin
+x-permitted-cross-domain-policies: none
+x-xss-protection: 1; mode=block
+x-request-id: f4a7d96c-0db3-4200-aae8-b33495182da1
+link: <https://hostsuccess.withairbnb.com/custom_fonts/5875/font_faces-1768337966792159.css>; rel=preload; as=style; nopush,</assets/default/all-963208efde05d149fb9634a3de2896d9cb4e733b1e16f90fc93553690e371c67.css>; rel=preload; as=style; nopush,</theme/5875-professional-host/1788701401/styles.css>; rel=preload; as=style; nopush,</assets/student/application-d0e8ff00e28c3dc82794315c8719a48a2d17a570c710cac106a0f6aab50db106.js>; rel=preload; as=script; nopush,</assets/jstz.min-37ad96aacf8f700e90554cbb6594de8435d1102ca1f075bedc18ce3975b6089c.js>; rel=preload; as=script; nopush,</vite/assets/packs/components.js-CN-IRVNS.js>; rel=modulepreload; as=script; crossorigin=; nopush
+x-download-options: noopen
+etag: W/"2a20026a316de523a8c27a70c07ec478"
+x-frame-options: SAMEORIGIN
+x-content-type-options: nosniff
+content-security-policy: default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: *.intellumlevel.com *.amazonaws.com *.googleapis.com *.google-analytics.com *.jquery.com *.googleusercontent.com *.githubusercontent.com *.snplow.net *.intellumanalytics.com *.userpilot.io ws://analytex.userpilot.io *.intellumsocial.com *.tribesocial.com *.intellum.com *.youtube.com *.vhall.com *.youtube-nocookie.com *.embedly.com *.embed.ly vimeo.com *.vimeo.com livestream.com *.livestream.com *.brightcove.net *.facebook.com zoom.us *.zoom.us wss://*.zoom.us cdnjs.cloudflare.com *.newrelic.com bam.nr-data.net *.evolveauthoring.com *.feathery.io *.cloudfront.net *.workato.com js.live.net graph.microsoft.com *.svc.ms *.1drv.com *.microsoftpersonalcontent.com *.engine.scorm.com *.nest.com *.demandbase.com *.company-target.com *.zscaler.net *.widencdn.net *.ytimg.com *.tealiumiq.com *.atdmt.com *.tiqcdn.com *.facebook.net *.gstatic.com *.google.com *.doubleclick.net *.googleadservices.com *.stripe.com *.googletagmanager.com *.googleplex.com *.aptrinsic.com wss://websockets-v5.intellum.com cdn.exceedlms.com https://app.evolveauthoring.com *.copilotkit.ai ai-agents-staging-internal.intellum.com ai-agents-production-internal.intellum.com ai-agents-copilotkit-production-790238308340.us-central1.run.app ai-agents-copilotkit-staging-790238308340.us-central1.run.app ai-agents-copilotkit-production-vnvdcqb2sq-uc.a.run.app ai-agents-copilotkit-staging-vnvdcqb2sq-uc.a.run.app ai-agents-copilotkit-production-a65sv37sga-uc.a.run.app ai-agents-copilotkit-staging-a65sv37sga-uc.a.run.app; img-src * data: blob:; media-src * blob: mediastream: data:; frame-ancestors 'self' *.exceedlms.com *.intellumsocial.com *.tribesocial.com *.intellum.com *.youtube.com *.vhall.com *.youtube-nocookie.com *.embedly.com *.embed.ly vimeo.com *.vimeo.com livestream.com *.livestream.com *.brightcove.net *.facebook.com zoom.us *.zoom.us wss://*.zoom.us cdnjs.cloudflare.com *.newrelic.com *.userpilot.io bam.nr-data.net *.evolveauthoring.com *.feathery.io *.cloudfront.net *.workato.com js.live.net graph.microsoft.com *.svc.ms *.1drv.com *.microsoftpersonalcontent.com *.engine.scorm.com ws://analytex.userpilot.io *.nest.com *.demandbase.com *.company-target.com *.zscaler.net *.widencdn.net *.ytimg.com *.tealiumiq.com *.atdmt.com *.tiqcdn.com *.facebook.net *.gstatic.com *.doubleclick.net *.googleadservices.com *.stripe.com *.googletagmanager.com *.googleplex.com *.aptrinsic.com;
+set-cookie: tid=4d5f63b0-9022-4e9f-81e6-12c1b6f3a0e8; path=/; expires=Mon, 06 Sep 2027 15:46:49 GMT; SameSite=Lax; Secure
+set-cookie: _base_session=d75593e7860119cbdc9d1f9613a904dd; path=/; expires=Wed, 07 Oct 2026 02:15:55 GMT; secure; HttpOnly; SameSite=None
+strict-transport-security: max-age=31536000; includeSubDomains
+

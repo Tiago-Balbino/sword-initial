@@ -1,0 +1,34 @@
+HTTP/2 200 
+content-type: text/html; charset=utf-8
+server: nginx
+x-frame-options: SAMEORIGIN
+x-xss-protection: 0
+x-content-type-options: nosniff
+x-download-options: noopen
+x-permitted-cross-domain-policies: none
+referrer-policy: strict-origin-when-cross-origin
+x-app-version: 68c61d6
+content-security-policy-report-only: default-src *; script-src * 'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline'; img-src * data: blob:; font-src * data:; media-src * blob:; worker-src * blob:; frame-src * data: blob:; connect-src *; frame-ancestors 'self'; report-uri /csp-violation-report
+link: </assets/api_docs/application-27a9bea27679289a92104bffde2e63344ed39efff69cf0786637a1c2a53b14c1.css>; rel=preload; as=style; nopush,</assets/api_docs/application-2f8402041842cf184ef3d1bb34370e881e3282bc854dba7d659bc6297b91229b.js>; rel=preload; as=script; nopush
+etag: W/"d615c1d8602c0cb60eac2c69d302bcd6"
+cache-control: max-age=0, private, must-revalidate
+set-cookie: _hoteltonight_session=r7By2OBMGMHaLGH0%2BEMKMPB08rJtNMDeub9n%2Baz%2BdiT378dfPY9NmLrwhfh0cQEQn4joXNKJPm5KrIJEcdMa0pwwiJtzwannD1av2jLWbPwgYC4bRcyGTjEJahQPBw2GLclL7Pl%2By0Ot%2Bj%2F0oKHJQi7UzN7dKiCGfxhSR8JJRuedzIKn2hxf1%2Btr%2Bl4058NnBOuc3CCswDETGppQI9Ujdd7ArwXTv6OoFMYklMpBIPYtGF1Sm1jd5LalZIawm4dfMi2NoF6XY1XbfsIlz3YwpJmITNR2cdDFXyyZqUHGWb4EObeiMwnu63y4bGzxQtEOc9mi--goqwl45ZtWlnBSAH--kdwCChnHFyLU%2Fos9P7bx%2BA%3D%3D; domain=.hoteltonight.com; path=/; expires=Sun, 20 Sep 2026 15:45:38 GMT; secure; HttpOnly; SameSite=Lax
+x-request-id: 85dea425-cb46-4e23-9849-ec945f271c2b
+x-runtime: 0.010431
+strict-transport-security: max-age=63072000; includeSubDomains
+access-control-allow-origin: 
+access-control-allow-methods: DELETE, GET, OPTIONS, PUT
+access-control-allow-headers: Accept,Authorization,Content-Type,Origin,Token,X-App-CXID,X-App-Country,X-App-Currency,X-App-Debug,X-App-Device,X-App-Experiments,X-App-Meta-Partner,X-App-Platform,X-App-SessionId,X-App-Time-Zone,X-App-Version,X-Requested-With,X-Segment-Anonymous-Id
+access-control-allow-credentials: true
+access-control-expose-headers: X-App-CXID,X-Trace-Id
+access-control-max-age: 1728000
+x-trace-id: 65f7f258de6109b3b8cb64285a06818d
+accept-ranges: bytes
+date: Sun, 06 Sep 2026 15:45:38 GMT
+via: 1.1 varnish
+x-served-by: cache-bsb500027-BSB
+x-cache: MISS
+x-cache-hits: 0
+x-timer: S1788709538.737170,VS0,VE583
+vary: Accept
+

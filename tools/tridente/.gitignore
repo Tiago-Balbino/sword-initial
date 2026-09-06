@@ -1,0 +1,4 @@
+profile-chromium/
+STOP_LOGIN
+cookies*.json
+node_modules/

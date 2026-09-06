@@ -51,3 +51,25 @@ Fonte: https://portswigger.net/web-security/logic-flaws
 - **Padrão:** o patch do CVE-2024-46982 assumiu que validar o header `x-now-route-matches` fechava o caso; mas a deduplicação de promises do batcher continua compartilhando chave de cache. Combinando aquele header com `__nextDataReq`, duas requests simultâneas colidem na mesma chave (`/_error-0`) e uma sequestra a promise da outra — a resposta de um usuário vaza/envenena a do outro.
 - **Como acharam:** ao procurar alvos ainda vulneráveis ao CVE antigo, acharam um app já patchado com comportamento estranho; ao depurar, viram a função interna sendo disparada várias vezes sobre a mesma chave de cache.
 - **Gatilho:** alvo Next.js cujas páginas de erro carregam `pageProps` enriquecidos (típico com Sentry) atrás de CDN que sobrescreve o `cache-control` da origem. Lição transferível: **um patch que só valida entrada não elimina a race** — vale re-testar CVEs "corrigidos" com concorrência.
+
+## Dojo — 2026-09-05
+
+### Race na camada financeira (check-then-act / limit-overrun) — Josip Franjković
+- **Fonte:** https://www.josipfranjkovic.com/blog/race-conditions-on-web (casos: Cobalt BTC withdraw, Mega saldo negativo, FB coupon/invite, FB email-confirm).
+- **Suposição do dev que caiu (P4):** "o processamento é serial dentro da sessão do user" — cada request lê o saldo/limite/quota e **depois** escreve o débito, assumindo que o débito anterior já commitou.
+- **Mecânica reusável:** N requests **simultâneas** ao MESMO endpoint de dinheiro passam TODAS no check antes de qualquer commit → saque múltiplo do mesmo saldo (Cobalt: 1 bounty sacado N×), saldo negativo aceito como estado válido (Mega), cupom/convite N× (FB). Sinal observável: a operação **só falha em serial**; em paralelo "passa" e o estado global diverge do esperado.
+- **Como disparar:** rajada single-packet / last-byte-sync (mesma conexão H2 ou Turbo Intruder `race-single-packet`), 5–20 requests idênticas. **Baseline serial primeiro** (1 req = 1 débito) pra ter o delta.
+- **FP a antecipar:** débito atômico/condicional no banco (só 1 passa) · idempotency-key real · "sucesso random após 5000 tentativas" que NÃO muda estado global = ruído (isolar o gatilho antes de reportar — no caso FB email-confirm levou meses pra achar que era a *alternância de param* entre 2 e-mails). **Rate-limit não é defesa contra race.**
+- **Sinal no banco:** `S-RACE-01`. Chain com IDOR de fundo: `C-08`.
+
+## Dojo — 2026-09-06
+
+### As 5 famílias canônicas de lógica (PortSwigger) — o mapa de suposições
+- **Fonte:** https://portswigger.net/web-security/logic-flaws/examples
+- **Suposição-mãe (P2/P4):** o servidor confia que o cliente joga pelas regras do negócio. Cinco quebras reusáveis:
+  1. **Confiança excessiva no client-side** — validação só no browser; tamper via proxy contorna. Testar toda regra "bloqueada na UI" no request cru.
+  2. **Input não-convencional** — negativo/gigante/decimal/tipo inesperado. `amount = -1000` num transfer → "-1000 < saldo" passa e **inverte o fluxo** (recebo da vítima). Sempre testar valor negativo, 0, overflow, string onde espera número.
+  3. **Suposições sobre comportamento do user** — 3 subtipos: (A) *"user validado continua confiável"* → controles relaxam depois do 1º check; (B) *"campo obrigatório sempre vem"* → **remover o param inteiro** (não esvaziar) abre code-path fora de alcance / pula 2FA; (C) *"a sequência é seguida"* → forced-browsing pula/repete/reordena etapa (acessar passo 3 sem o 2). (= reforça `S-IDV-01`/step-skip.)
+  4. **Domain-specific / critério revogável** — satisfazer a condição no momento do check e **reverter depois**: adicionar itens p/ cruzar o limite de desconto de $1000 → aplicar desconto → **remover itens** → fica com o desconto. → **sinal novo `S-LOGIC-THRESHOLD-01`**.
+  5. **Oráculo de cifra** — a mesma função que cifra input do user pode ser usada pra **cifrar dado arbitrário**, e o ciphertext é aceito noutra função sensível que espera "input cifrado (⇒ confiável)". → **sinal novo `S-CRYPTO-ORACLE-01`**.
+- **Aplicação Sword:** 1/2/3 já vivem nos probes de tampering/step-skip; a **4 (critério revogável)** e a **5 (oráculo de cifra)** são sinais novos. A 3B ("remover o param") vira lembrete fixo: *deletar o nome do param ≠ mandar vazio* — abrem caminhos diferentes.

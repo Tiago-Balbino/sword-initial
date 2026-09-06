@@ -84,13 +84,15 @@ _(complementa `broken-access-control.md`)_
 - **Primeiro tiro — introspection:** `{__schema{queryType{name} mutationType{name} types{name kind}}}`. Se 200 → introspection ON (foothold pra mapear tudo). Aprofundar: `queryType{fields{name args{name}}}`, `types{...inputFields{...}}`, campos de retorno (caçar sensível).
 - **Pegadinha de header:** muitos gateways exigem contexto via header (`ag-language-id`, etc.); sem eles dá 400 e parece "morto" — adicione e a introspection volta.
 - **Vetores:** **BOLA via id no input** (`memberId/userId/bookingId` em INPUT_OBJECT — se o resolver usa o id do body, troca = dado alheio); **batching/aliasing** (burlar rate-limit/authz por-request → brute-force OTP/login); **field-level BOLA** (pai autorizado, campo filho `user.paymentMethods` sem authz); field suggestion com introspection off; mutations sensíveis expostas.
-- **Fontes:** hacktricks graphql · PortSwigger GraphQL API vulnerabilities.
+- **gid previsível (dojo 2026-09-06, taxonomia BOLA):** o "global id" opaco costuma ser `base64("Type:12345")`. Técnica: **decodar → incrementar o int do backend → re-encodar** e replayar. 9.6% dos BOLA de API vêm daí — um id que "parece opaco/UUID" pode esconder int sequencial. Sempre base64-decode todo gid antes de dar por "não-enumerável".
+- **Fontes:** hacktricks graphql · PortSwigger GraphQL API vulnerabilities · arxiv 2605.25865 (taxonomia BOLA).
 
 ## Identity Verification / Anti-abuse Bypass (signup, phone/CC/captcha)
 - **Sinais:** onboarding com etapas (email→phone→cartão→captcha/Arkose) pra liberar recurso caro (CI free, trial). Estado = flags + checagens lazy (sem state machine).
 - **Bypasses:** **fail-open do provedor** (SMS/risk indisponível → ramo marca `verified`); **ordem só na UI** (chamar POST da etapa final fora de ordem); **token captcha reuse/omissão**; **exemption por contexto** (virar membro de namespace pago → `*_exempt?`); **risk-tier downgrade** por domínio de e-mail corporativo; **email-verification bypass** (OAuth ROPC, SCIM provisioning cria user "verificado").
 - **FP:** `/users/<u>/exists` público por design; auto-confirm por domínio verificado = documentado.
-- **Fontes:** H1 #2676025 · #922456 · #565883 · docs.gitlab.com identity_verification.
+- **Armadilha de triagem — "basic KYC" auto-declarado ≠ verificação de identidade:** fintechs muitas vezes têm 2 fluxos distintos atrás de nomes parecidos: um **questionário AML self-attested** (ocupação/PEP/source-of-funds/wealth, sem doc, validação só de formato) e uma **verificação de identidade real** separada (documento/liveness, outro microserviço). Completar o questionário 100% e ver o gate de dinheiro continuar fechado (ex.: endpoint "journey" ainda 422) é o **sinal de que são fluxos diferentes** — não gaste o probe de mass-assignment no questionário; mire o serviço que emite o status de identidade. (Caso real: Nexo — `kyc/vc/v1/verifications/basic` é auto-declarado; `account/ac/v1/journeys/current/summary` segue 422 depois dele.)
+- **Fontes:** H1 #2676025 · #922456 · #565883 · docs.gitlab.com identity_verification · Nexo (Sword, 2026-09-06).
 
 ## E-commerce Checkout / Payment Business Logic
 - **Sinais:** carrinho/checkout com `amount/price/quantity/currency`, `voucher/coupon/gift-card apply`, `order/place`, `refund`, múltiplos gateways. A falha vive no **fluxo**, não no input.
