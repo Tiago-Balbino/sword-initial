@@ -91,3 +91,14 @@ _(primeira sessão real entra abaixo)_
   - *Hidden OAuth (consent poisoning):* redirect_uri validado no `/authorize` mas o `/confirm_access` re-lê `redirectUri` do cliente (mass-assignment) → sessão envenenada emite code pro atacante. Régua: procurar OAuth multi-etapa onde o consent aceita params crus.
 - **Aplicado em alvo:** **NBA** — (1) `S-OAUTH-LEAK-01` acendeu **L4/H9 novo** (dirty-dancing nos SSO **web**: `identity.nba.com`, PingFederate `identity-server-ping-*`, `login-uat`) — chain direto com o achado próprio "sem CSP nas properties" = error page sem backstop de script; (2) `S-OAUTH-REDIR-02` virou matriz de quirks a rodar no lead #1 (`teamone://oauth/`, Entra provável exact-match mas probe barato). Ambos gravados em `targets/nba/README.md`.
 - **Revisão agendada:** `S-OAUTH-REDIR-02` · `S-OAUTH-LEAK-01` · `S-OAUTH-CARRYOVER-01` em **2026-09-07** (estágio 1d) → 2026-09-13 (1sem) → 2026-10-06 (1mês).
+
+### 2026-09-07 — sessão dojo (foco: SSRF routing + cache poisoning pro Yahoo L7)
+- **Write-ups distilados:** portswigger.net "Cracking the Lens" (Kettle — routing-based SSRF via Host header, explorou Yahoo ATS `ats-vm.lorax.bf1.yahoo.com` por $20k) · portswigger.net "Practical Web Cache Poisoning" (Kettle — unkeyed inputs).
+- **Técnicas novas:**
+  - `S-SSRF-ROUTE-01` "reverse-proxy/CDN que roteia por Host → fetch a backend arbitrário. Primitivas: Host inválido→callback, absolute-URI na request line, @-notation, porta/host ambíguo. Prova via SSRF testbed" → signals + arsenal.
+  - `S-WCP-01` "cache poisoning via unkeyed input (X-Forwarded-Host/Scheme/Original-URL) refletido → resposta envenenada servida a todos; cache-buster obrigatório" → signals + arsenal (≠ WCD).
+- **Recall (fonte fechada):**
+  - *Routing-SSRF:* o edge/CDN confia no Host/URL do cliente pra escolher backend. Mando `Host: id.collab` (ou `GET http://interno/ HTTP/1.1`, ou `GET @collab/`) → se pinga meu Collaborator, o proxy roteia p/ destino arbitrário. Aponto pro metadata 169.254.169.254 ou, na Yahoo, pro bananastand (prova paga). Sinal: callback OOB, latência anômala, banner ATS.
+  - *Cache poisoning:* input fora da cache-key (X-Forwarded-Host) reflete no corpo e é cacheado sob a key normal → todos recebem. Confirmo: `?cb` + header canário → reflete? reenvio sem header, mesmo `?cb` → persistiu = poison. Cache-buster sempre, senão contamino usuário real.
+- **Aplicado em alvo:** **Yahoo L7** (achado do Nível 1 hoje) — os hosts `*.cdn.production.omega.gq1.yahoo.com` são a família exata do "Cracking the Lens". L7 ganhou Probe A (routing-SSRF apontando pro bananastand = prova paga) + Probe B (cache poisoning com cache-buster). Ciclo distilar→recall→aplicar fechado no mesmo dia do recon.
+- **Revisão agendada:** `S-SSRF-ROUTE-01` + `S-WCP-01` em **2026-09-08** (1d) → 09-14 (1sem) → 10-07 (1mês).

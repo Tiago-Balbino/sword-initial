@@ -60,3 +60,7 @@ Toda URL já distilada no banco fica listada aqui. A tarefa diária lê este arq
 ## Dojo 2026-09-06 (2ª sessão — OAuth redirect_uri, recall + aplicação → NBA)
 - https://portswigger.net/research/hidden-oauth-attack-vectors  (session poisoning no consent / SSRF request_uri — dojo)
 - https://labs.detectify.com/writeups/account-hijacking-using-dirty-dancing-in-sign-in-oauth-flows/  (dirty dancing: leak de code no non-happy-path — dojo)
+
+## Dojo 2026-09-07 (3ª sessão — SSRF routing + cache poisoning, aplicação → Yahoo L7)
+- https://portswigger.net/research/cracking-the-lens-targeting-https-hidden-attack-surface  (routing-based SSRF via Host header; hit Yahoo ATS bf1 — dojo)
+- https://portswigger.net/research/practical-web-cache-poisoning  (cache poisoning via unkeyed inputs — dojo)

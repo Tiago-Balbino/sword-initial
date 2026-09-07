@@ -206,3 +206,23 @@ _(complementa `broken-access-control.md`)_
 
 ## Sementes (preencher ao pesquisar)
 SSRF (direto e 2ª ordem: webhook/PDF/importador de URL) · SSTI · SQLi/NoSQLi · XSS (refletido/DOM/stored cross-tenant) · Auth/JWT (alg confusion, `kid`/`jku`/`x5u`, reset poisoning via Host) · CORS misconfig · path traversal · file upload → RCE · subdomain takeover → ATO · dependency confusion.
+
+## SSRF routing-based (reverse-proxy / CDN) — `S-SSRF-ROUTE-01`
+- **Sinais:** edge que roteia pelo **Host header**; CDN cujo hostname **embute uma origem externa** (`<ext>.cdn.<...>.yahoo.com`); banner de proxy (Apache Traffic Server/ATS "Traffic Server Overseer", Envoy, Incapsula). Yahoo `omega`/`lorax`/`bf1`/`gq1` = infra citada no próprio "Cracking the Lens".
+- **Primitivas (Kettle, Cracking the Lens):**
+  1. **Host inválido** → `Host: <id>.collab` (o proxy tenta rotear → callback DNS/HTTP).
+  2. **Override por absolute-URI** na request line → `GET http://interno.alvo/ HTTP/1.1` + `Host: qualquer` (alguns backends priorizam a URL da linha).
+  3. **`@`-notation** → `GET @collab/ HTTP/1.1` + `Host: legit` → parser vira `http://legit@collab/` (roteia pro atacante).
+  4. **Ambiguidade porta/host** → `Host: legit:80@collab` (parser tolerante do edge ≠ do backend).
+- **Confirmação:** callback out-of-band (Collaborator/DNS); latência anômala (resposta rápida demais p/ o destino alegado); hostname interno vazado na resposta/banner. **Se há SSRF testbed (Yahoo bananastand) → apontar o fetch pra `banana.stand.*.yahoo.com` e ler o arquivo = prova aceita e paga.**
+- **Escalada:** SSRF cego → refletido → **metadata cloud `169.254.169.254`** → credencial IAM; ou falar o protocolo do proxy (ATS Overseer: `HELP`, `GET/SET proxy.config.*`) → reconfigurar (SOCKS/cache) = foothold interno (rendeu $20k×2 na Yahoo).
+- **FP:** allowlist estrita de Host; sem callback nem diff.
+- **Fonte:** portswigger.net/research/cracking-the-lens-targeting-https-hidden-attack-surface
+
+## Web Cache Poisoning — `S-WCP-01` (≠ Web Cache Deception)
+- **Sinais:** resposta cacheada (`Age`, `X-Served-By`, `Via: varnish`, `CF-Cache-Status: HIT/MISS`, `Vary`) que **reflete** um input **fora da cache-key**.
+- **Inputs unkeyed clássicos:** `X-Forwarded-Host`, `X-Forwarded-Scheme`, `X-Host`, `X-Original-URL`/`X-Rewrite-URL` (override de path em PHP), `X-Forwarded-Server`.
+- **Método:** (1) achar unkeyed (Param Miner / fuzz de headers); (2) confirmar reflexão `X-Forwarded-Host: canary` → `https://canary/...` no og:image/redirect/script-src; (3) **verificar que cacheou** — reenviar SEM o header (mesmo `?cb`) e ver se a resposta envenenada volta; (4) escalar: XSS armazenado, redirect hijack (+ open redirect), poison aninhado (cache interno → externo).
+- **Guardrail anti-dano:** SEMPRE cache-buster (`?dontpoisoneveryone=rand`) no teste — nunca envenenar a URL real de usuário.
+- **FP:** header está na cache-key; reflexão sanitizada; `no-store`.
+- **Fonte:** portswigger.net/research/practical-web-cache-poisoning

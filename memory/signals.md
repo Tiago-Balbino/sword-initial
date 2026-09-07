@@ -246,6 +246,20 @@ linha aqui (como o `_ingested.md` faz pra URLs). Arsenal = o *como*; signals = o
 - **Hipótese:** `redirect_uri` checado no `/authorize` mas **sobrescrito** por param no consent → sessão envenenada emite o `code` pro atacante (o check do passo N confia no N-1 — Q4 do The Mind).
 - **Probe:** 🔴 (autenticado) mandar `redirect_uri`/`redirectUri` no POST do consent e ver se o `Location` final honra o valor injetado. FP: consent ignora params do cliente / re-valida contra o registrado.
 
+### S-SSRF-ROUTE-01 — reverse-proxy/CDN que roteia por Host (routing-based SSRF)
+- **Sinal:** edge/CDN/reverse-proxy que decide o backend pelo **Host header** ou por um **hostname embutido no próprio nome do host** (ex.: `<origem-externa>.cdn.<...>.yahoo.com`); banners de proxy (ATS/Traffic Server, Envoy, Incapsula).
+- **Pattern:** P3, P5 · **Arsenal:** SSRF (routing-based)
+- **Hipótese:** o proxy confia no Host/URL do cliente pra escolher o destino → forçar fetch a backend interno arbitrário (metadata `169.254.169.254`, serviços DMZ) = **SSRF**, às vezes → RCE (reconfigurar o proxy).
+- **Probe (🔴 precisa header do programa):** `Host: <id>.collab` (callback) · absolute-URI na request line `GET http://interno/ HTTP/1.1` · `@`-notation `GET @collab/ HTTP/1.1` c/ `Host: legit` · ambiguidade porta/host `Host: legit:80@collab`. Sinais: callback DNS/HTTP, latência anômala (~50ms p/ "outro continente"), hostname interno vazado na resposta. **Se o programa tem SSRF testbed (Yahoo bananastand), apontar o fetch pra lá = prova paga.**
+- **FP:** proxy valida Host contra allowlist estrita; sem callback e sem diff de resposta.
+
+### S-WCP-01 — web cache poisoning via unkeyed input
+- **Sinal:** resposta cacheada (headers `Age`/`X-Served-By`/`Via`/`CF-Cache-Status`) que **reflete** um header **fora da cache-key** (`X-Forwarded-Host`, `X-Forwarded-Scheme`, `X-Original-URL`, `X-Rewrite-URL`) em meta/redirect/script-src.
+- **Pattern:** P5, P3 · **Arsenal:** Web Cache Poisoning (≠ WCD `S-WCD-01`)
+- **Hipótese:** input unkeyed reflete no corpo → cache guarda a resposta envenenada sob a key normal → **todo mundo** recebe (XSS armazenado / redirect / import malicioso).
+- **Probe (🟢 com cache-buster p/ não atingir usuários):** `?cb=rand` + `X-Forwarded-Host: canary` → ver reflexão `https://canary/...`; reenviar sem o header (mesmo `?cb`) → se a resposta envenenada persiste = unkeyed confirmado. **Nunca** sem cache-buster (não contaminar prod).
+- **FP:** header entra na cache-key (não compartilha); reflexão sanitizada; `Cache-Control: no-store`.
+
 # Gatilhos de chain (Pass 2 — composição)
 
 Quando **dois ou mais** sinais únicos acendem no mesmo alvo, checar se casam um gatilho de chain.
