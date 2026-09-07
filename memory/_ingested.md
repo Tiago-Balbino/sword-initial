@@ -56,3 +56,7 @@ Toda URL já distilada no banco fica listada aqui. A tarefa diária lê este arq
 ## Dojo 2026-09-06 (recall + aplicação → Airbnb)
 - https://arxiv.org/html/2605.25865  (taxonomia BOLA — 6 famílias, dojo 2026-09-06)
 - https://portswigger.net/web-security/logic-flaws/examples  (5 famílias canônicas de lógica, dojo 2026-09-06)
+
+## Dojo 2026-09-06 (2ª sessão — OAuth redirect_uri, recall + aplicação → NBA)
+- https://portswigger.net/research/hidden-oauth-attack-vectors  (session poisoning no consent / SSRF request_uri — dojo)
+- https://labs.detectify.com/writeups/account-hijacking-using-dirty-dancing-in-sign-in-oauth-flows/  (dirty dancing: leak de code no non-happy-path — dojo)

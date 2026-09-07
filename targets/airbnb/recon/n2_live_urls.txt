@@ -1,0 +1,9 @@
+https://cohostsuccess.withairbnb.com
+https://developer.withairbnb.com
+https://hostsuccess.withairbnb.com
+https://iframes-dev.airbnbpayments.com
+https://iframes.airbnbpayments.com
+https://partners-desktop.hoteltonight.com
+https://partners.hoteltonight.com
+https://protools.withairbnb.com
+https://wpadmin.withairbnb.com

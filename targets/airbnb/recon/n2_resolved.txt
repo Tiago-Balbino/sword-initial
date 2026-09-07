@@ -1,0 +1,11 @@
+hostsuccess.withairbnb.com
+partners.hoteltonight.com
+partners-desktop.hoteltonight.com
+auth.musta.ch
+developer.withairbnb.com
+iframes-dev.airbnbpayments.com
+auth.us-east-1.prod.musta.ch
+wpadmin.withairbnb.com
+cohostsuccess.withairbnb.com
+iframes.airbnbpayments.com
+protools.withairbnb.com

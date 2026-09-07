@@ -1,0 +1,30 @@
+FINGERPRINT (httpx, ≤5req/s, header X-Intigriti-Username):
+  nexo.com          [200] Cloudflare + Bot Management + HSTS · Next.js (turbopack)
+  platform.nexo.com [200 p/ httpx; 403 cf-mitigated:challenge p/ browser-UA] Cloudflare + CloudFront + Apple Sign-in + Bootstrap5 + GeeTest + Datadog RUM + Segment + Salesforce
+
+CORS: nexo.com NÃO reflete Origin malicioso (safe). Sem ACAO em nenhum host.
+
+CSP (report-only no marketing; enforce = challenge no platform) revelou superfície conectada:
+  wss://platform.nexo.com (WebSocket API real-time) · security-logging.nexo.com (report-uri)
+  miaw.nexo.com (Salesforce MIAW chat = OOS) · *.salesforce-scrt.com / force.com / my.site.com (support = OOS)
+  *.geetest.com (captcha) · browser-intake-datadoghq.eu (Datadog RUM) · events.eu1.segmentapis.com (Segment)
+  appleid.cdn-apple.com (Apple Sign-in) · accounts.google.com (Google Sign-in)
+
+URLSCAN (passivo): rota real no host in-scope → platform.nexo.com/transactions/{id opaco: nxt+22chars}
+  nexo.com/ref/{code} = programa de referral/afiliado
+  + dezenas de domínios de PHISHING imitando Nexo (xn--nex-una.com homográfico, nexofinance.ar,
+    nexwealthmanagement.info, nexo-4ke.pages.dev...) = abuso de marca, OOS.
+
+CRT.SH (40 nomes): só nexo.com + platform.nexo.com in-scope. OOS: api.wallet.nexo.com, beta.nexo.com,
+  cloud.nexo.com, mt5.nexo.com, kyb-institution/kyb-trust.platform.nexo.com, *.cross.nexo.com.
+
+WAYBACK/GAU: +/api/1/biometry_signin, /api/1/check_session (auth/sessão).
+
+OSINT API (docs públicas — pro.nexo.com é OOS, lido só como referência do modelo):
+  Nexo Pro API = HMAC-SHA256 (API-Key + API-Secret) + nonce/timestamp; POST /api/v1/orders (pair,quantity,side),
+  /orders/trigger (trigger_price,side,amount), /orders/advanced (stop_loss_price,take_profit_price),
+  /futures/order, GET /accountSummary, /trades. → os in-scope trading/advanced/facade/... provavelmente
+  espelham esse modelo de params + assinatura.
+
+TETO DO RECON AUTOMATIZADO: platform.nexo.com barra cliente automatizado (CF challenge) → mapeamento
+  da API in-scope exige SESSÃO AUTENTICADA em browser real (conta @intigriti.me do Tiago, ou claude-in-chrome logado).

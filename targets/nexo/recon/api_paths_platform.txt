@@ -1,0 +1,2 @@
+https://platform.nexo.com/api/1/biometry_signin
+https://platform.nexo.com/api/1/check_session

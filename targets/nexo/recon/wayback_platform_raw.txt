@@ -1,0 +1,12 @@
+
+https://platform.nexo.com/
+https://platform.nexo.com/360
+https://platform.nexo.com/account-management/360
+https://platform.nexo.com/api/1/biometry_signin
+https://platform.nexo.com/api/1/check_session
+https://platform.nexo.com/profile/verification
+https://platform.nexo.com/repayment
+https://platform.nexo.com/transactions/nxt4ff55ku6xlnavthvf8bii7
+https://platform.nexo.com/uni/dashboard?j=944081&sfmc_sub=59622970&l=26_HTML&u=16511945&mid=500009431&jb=187
+https://platform.nexo.com/uni/security/360
+https://platform.nexo.com/uni/verification/360

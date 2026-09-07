@@ -228,6 +228,24 @@ linha aqui (como o `_ingested.md` faz pra URLs). Arsenal = o *como*; signals = o
 
 ---
 
+### S-OAUTH-REDIR-02 — redirect_uri com matching frouxo (não-exato)
+- **Sinal:** provider OAuth/OIDC cujo `redirect_uri` aceita variações da URI registrada (não faz exact-match).
+- **Pattern:** P5, P3 · **Arsenal:** OAuth2 / OIDC
+- **Hipótese:** allowlist casa por prefixo/substring/normalização → atacante desvia o `code` pro seu domínio.
+- **Probe (matriz de quirks — Detectify "dirty dancing"):** contra o registrado `.../callback`, testar 🟢 **case-shift** (`/CaLlBaCk`) · **path-append** (`/callbackxxx`, `/callback/..`) · **param-injection** (`/callback%3fcode=x%26`) · **subdomain/www** (`www.` vs apex) · **@-trick/backslash**. Qualquer um que **não** seja rejeitado = matching frouxo. FP: exact-match rejeita tudo (Entra padrão faz exact-match).
+
+### S-OAUTH-LEAK-01 — code/token vaza no non-happy-path (dirty dancing)
+- **Sinal:** fluxo OAuth cujo `code`/`token` sobrevive na URL de uma **página de erro** que carrega 3rd-party JS / tem listener `postMessage` sem check de origin / expõe `window.name`.
+- **Pattern:** P5, P3 · **Arsenal:** OAuth2 / OIDC (+ Open Redirect)
+- **Hipótese:** mesmo com allowlist **estrita**, quebrar a dança (state inválido, `response_type=code,id_token` → move pro fragment, redirect_uri malformado) faz o `code` parar numa error page com sink → exfil cross-origin = **ATO**.
+- **Probe:** 🟢 forçar erro no `/authorize` e ver se `code`/`token` fica na URL da landing + se a página carrega script terceiro / responde a `postMessage('*')` / seta `window.name`. 🔴 montar o gadget de exfil (browser real). FP: error page limpa a URL antes de renderizar / sem sink.
+
+### S-OAUTH-CARRYOVER-01 — redirect_uri revalidado no passo de consent (session poisoning)
+- **Sinal:** OAuth multi-etapa (`/authorize` → `/confirm_access`/consent) onde o passo de consent re-lê params do cliente (Spring `@ModelAttribute`, mass-assignment).
+- **Pattern:** P5, P4 · **Arsenal:** OAuth2 / OIDC (+ mass-assignment)
+- **Hipótese:** `redirect_uri` checado no `/authorize` mas **sobrescrito** por param no consent → sessão envenenada emite o `code` pro atacante (o check do passo N confia no N-1 — Q4 do The Mind).
+- **Probe:** 🔴 (autenticado) mandar `redirect_uri`/`redirectUri` no POST do consent e ver se o `Location` final honra o valor injetado. FP: consent ignora params do cliente / re-valida contra o registrado.
+
 # Gatilhos de chain (Pass 2 — composição)
 
 Quando **dois ou mais** sinais únicos acendem no mesmo alvo, checar se casam um gatilho de chain.
