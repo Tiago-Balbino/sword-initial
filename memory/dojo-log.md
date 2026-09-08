@@ -102,3 +102,18 @@ _(primeira sessão real entra abaixo)_
   - *Cache poisoning:* input fora da cache-key (X-Forwarded-Host) reflete no corpo e é cacheado sob a key normal → todos recebem. Confirmo: `?cb` + header canário → reflete? reenvio sem header, mesmo `?cb` → persistiu = poison. Cache-buster sempre, senão contamino usuário real.
 - **Aplicado em alvo:** **Yahoo L7** (achado do Nível 1 hoje) — os hosts `*.cdn.production.omega.gq1.yahoo.com` são a família exata do "Cracking the Lens". L7 ganhou Probe A (routing-SSRF apontando pro bananastand = prova paga) + Probe B (cache poisoning com cache-buster). Ciclo distilar→recall→aplicar fechado no mesmo dia do recon.
 - **Revisão agendada:** `S-SSRF-ROUTE-01` + `S-WCP-01` em **2026-09-08** (1d) → 09-14 (1sem) → 10-07 (1mês).
+
+### 2026-09-07 — sessão dojo (2ª · foco: a stack do Yahoo Lightyear CMS — JWT + Next.js + AWS API GW)
+- **Material:** o próprio alvo (caçada de hoje mapeou a stack); 3 técnicas que **encaixam no CMS e faltavam no banco**, cada uma armando uma CHAIN pendente.
+- **Leitura ativa (3 perguntas) → técnicas novas:** `S-JWT-01` (Bearer aud/alg/kid) · `S-NEXT-01` (Next.js App Router: middleware/image/server-actions) · `S-APIGW-01` (AWS API GW authorizer/method mismatch) · `S-BOLA-TENANT-CLIENT-01` (tenant no cliente).
+- **Recall (de memória, fonte fechada):**
+  - *JWT:* base64-decodo os 3 campos; a suposição frágil é "a lib valida tudo". Ataco na ordem: **aud/iss confusion** (o token do serviço A vale no B? = carryover) → `alg:none` → **RS256→HS256** (assino com a pubkey virando segredo HMAC quando o verify não pina alg) → `kid`/`jku` (aponto JWKS meu = forjo qualquer token, ou SSRF). Se papel/time for claim, forjar exige quebrar assinatura; se for valor solto do cliente, nem precisa (vira S-BOLA-TENANT-CLIENT-01). FP: alg+aud+exp+sig estritos.
+  - *Next.js App Router:* 4 superfícies de framework. `x-middleware-subrequest` pula o middleware (CVE-2025-29927) — **só vale se a auth estiver NO middleware**; se for no edge, não aplica. `/_next/image?url=` fetcha server-side = SSRF se `remotePatterns` frouxo. **Server Actions** (`Next-Action: <id>` POST) = função server invocável por id, menos batida = SSRF/IDOR/deser. Maps `.js.map` vazam fonte.
+  - *AWS API GW:* "Missing Authentication Token" = rota não-mapeada (oráculo). O authorizer é por-rota/método → tento **verbo alternativo** (GET-auth → POST/OPTIONS), path-variant (slash/case), greedy `{proxy+}`, e se só valida token vs **posse**. Endpoint cru `*.execute-api.<region>.amazonaws.com` pula custom-domain/WAF.
+- **Aplicado em alvo vivo — Yahoo (passo 5):**
+  - **`_next/image` SSRF (S-NEXT-01) TESTADO ao vivo no cm-ui → NEGATIVO** (`"url" parameter is not allowed`; allowlist estrita, nem s.yimg passa). Middleware-bypass já era negativo (auth no edge). → **Next.js: sobra só Server Actions como vetor vivo** (untested, precisa cuidado/mutação).
+  - `S-JWT-01` → arma **CHAIN-F**: no momento do token, decodar aud/iss/scope/team + replay cross-service + `/validate-token` como oráculo.
+  - `S-APIGW-01` → arma **CHAIN-G**: content-service (API GW) = testar method-mismatch + posse vs token; procurar o execute-api cru.
+  - `S-BOLA-TENANT-CLIENT-01` → **formaliza CHAIN-E** (activeTeam no localStorage = o caso-escola dessa família).
+- **Revisão agendada:** `S-JWT-01` · `S-NEXT-01` · `S-APIGW-01` · `S-BOLA-TENANT-CLIENT-01` em **2026-09-08** (1d) → 2026-09-14 (1sem) → 2026-10-07 (1mês).
+- **Revisão espaçada vencida hoje (recall SEM fonte):** `S-SSRF-ROUTE-01` (ontem, 1d) — reconstruído: edge roteia por Host/URL → Collaborator/bananastand; **NOTA de campo:** testei hoje e o ATS do Yahoo tem `remap_required` → primitiva Host-based morre in-band (ver FP no arsenal). Empurrado p/ 1 semana (2026-09-14).

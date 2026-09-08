@@ -42,6 +42,9 @@ grep -iE '<tokens abaixo>' all_subs.txt      # superfície
 ## Split de infra = costura pra testar
 Capturar o `tech`/`server` do httpx e agrupar: onde o stack MUDA entre hosts irmãos (ATS ↔ Google Cloud CDN ↔ AWS ELB/CloudFront) mora a quebra de suposição de confiança (Q3/Q5 do The Mind). Ex. Yahoo: edge ATS, `authnapi`=GCP, `origin.checkout`=AWS ELB.
 
+## 4ª causa de gap (aprendida no Yahoo 09/07): dissecar TODOS os headers, não só Location/Content-Type
+Um probe autenticado ficou 5 rodadas checando só `status`/`Location`/`Content-Type` de um 404 e quase deixou passar `x-amzn-mtls-clientcert-*` (certificado mTLS interno + identidade Athenz do serviço vazando na resposta). **Regra:** todo probe relevante (autenticado, ou qualquer resposta "estranha" — mesmo um 404 comum) precisa imprimir **o header dump completo**, não só os 3-4 campos óbvios. Custa nada e às vezes é o achado. Ferramenta: `tools/yahoo_auth_probe.py --headers` (ou `httpx -include-response-header` / `curl -i` em geral). Ver `targets/yahoo/arapuca.md` peça Y16.
+
 ## Como treinar contra benchmark
 `recon-benchmarks/<alvo>/` = gold standard. Rodar o nosso e diffar:
 ```
@@ -50,4 +53,4 @@ comm -23 <(sort ext_inscope.txt) <(sort nosso_inscope.txt)   # o que perdemos
 Meta: gap → 0. Todo alvo novo com benchmark alimenta este doc.
 
 ## Checklist rápido (não esquecer)
-- [ ] subfinder com keys · [ ] crt.sh+certspotter+retry · [ ] DoH resolve · [ ] httpx COM header do programa · [ ] grep dos tokens · [ ] split de infra · [ ] diff vs benchmark se houver.
+- [ ] subfinder com keys · [ ] crt.sh+certspotter+retry · [ ] DoH resolve · [ ] httpx COM header do programa · [ ] grep dos tokens · [ ] split de infra · [ ] **dissecar TODOS os headers de toda resposta relevante (não só status/Location/Content-Type)** · [ ] diff vs benchmark se houver.

@@ -64,3 +64,7 @@ Toda URL já distilada no banco fica listada aqui. A tarefa diária lê este arq
 ## Dojo 2026-09-07 (3ª sessão — SSRF routing + cache poisoning, aplicação → Yahoo L7)
 - https://portswigger.net/research/cracking-the-lens-targeting-https-hidden-attack-surface  (routing-based SSRF via Host header; hit Yahoo ATS bf1 — dojo)
 - https://portswigger.net/research/practical-web-cache-poisoning  (cache poisoning via unkeyed inputs — dojo)
+
+- portswigger.net/web-security/jwt — JWT attacks (dojo 2026-09-07)
+- zhero-web-sec / CVE-2025-29927 — Next.js middleware bypass (dojo 2026-09-07)
+- AWS API Gateway authorizer bypass patterns (dojo 2026-09-07)

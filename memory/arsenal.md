@@ -218,6 +218,7 @@ SSRF (direto e 2ª ordem: webhook/PDF/importador de URL) · SSTI · SQLi/NoSQLi 
 - **Escalada:** SSRF cego → refletido → **metadata cloud `169.254.169.254`** → credencial IAM; ou falar o protocolo do proxy (ATS Overseer: `HELP`, `GET/SET proxy.config.*`) → reconfigurar (SOCKS/cache) = foothold interno (rendeu $20k×2 na Yahoo).
 - **FP:** allowlist estrita de Host; sem callback nem diff.
 - **Fonte:** portswigger.net/research/cracking-the-lens-targeting-https-hidden-attack-surface
+- **🆕 FP/oráculo `remap_required` (ATS — Yahoo 09/07):** se o edge Apache Traffic Server responde **`404 Not Found on Accelerator`** pra um `Host` header, é `proxy.config.url_remap.remap_required=1` → **só Hosts allowlistados são proxeados**; Host arbitrário (bananastand, metadata, localhost) NÃO roteia = routing-SSRF in-band **bloqueado**. Distinguir de `404 Not Found` normal (= Host válido, path inexistente → remap EXISTE). Oráculo barato: mandar `Host: <control-self>` (espera `Not Found`) vs `Host: <alvo>` (se `Not Found on Accelerator` = miss). Só resta detecção cega via Collaborator OOB. **Não confundir "no bananas for you!" (sucesso real do bananastand) com o path ecoado na página 404 do Yahoo** (FP de detector).
 
 ## Web Cache Poisoning — `S-WCP-01` (≠ Web Cache Deception)
 - **Sinais:** resposta cacheada (`Age`, `X-Served-By`, `Via: varnish`, `CF-Cache-Status: HIT/MISS`, `Vary`) que **reflete** um input **fora da cache-key**.
@@ -226,3 +227,16 @@ SSRF (direto e 2ª ordem: webhook/PDF/importador de URL) · SSTI · SQLi/NoSQLi 
 - **Guardrail anti-dano:** SEMPRE cache-buster (`?dontpoisoneveryone=rand`) no teste — nunca envenenar a URL real de usuário.
 - **FP:** header está na cache-key; reflexão sanitizada; `no-store`.
 - **Fonte:** portswigger.net/research/practical-web-cache-poisoning
+
+
+## Oráculo de existência de endpoint (mapear API autenticada SEM token) — `S-ORACLE-01`
+- **Ideia:** GET unauth em cada path candidato (do JS/bundle) e classificar a resposta pra separar "endpoint real que só falta auth" de "rota inexistente" — mapeia a superfície autenticada ANTES de ter credencial.
+- **Estados (Yahoo Lightyear CMS, 09/07):** FastAPI `403 {"detail":"Not authenticated"}`/`307` trailing-slash = existe; `404 {"detail":"Not Found"}` = rota falsa. AWS API GW `403 {"message":"Missing Authentication Token"}` = rota não-mapeada. `404` HTML da marca = edge (ATS) nem roteou (fora do remap).
+- **Anti-FP:** serviços com blanket-401/403 (auth-first, ex. `feed-api`) não são oráculo — validar com path-lixo (`/xyzzy123`). Non-prod atrás de gate de rede (`Access Denied` HTML) = inalcançável.
+- **Valor:** monta o plano de ataque exato (endpoints + collections com id p/ IDOR) que dispara quando o token chega. Barato, unauth, silencioso.
+
+
+## JWT / Next.js / AWS API GW — trio da stack Lightyear CMS (dojo 2026-09-07)
+- **JWT (`S-JWT-01`):** decodar sempre (aud/iss/scope/team/exp); ordem de teste: aud/iss confusion (replay cross-service) → alg:none → RS256↔HS256 → kid/jku SSRF. `/validate-token` = oráculo do que o token carrega.
+- **Next.js (`S-NEXT-01`):** CVE-2025-29927 (`x-middleware-subrequest`) só vale se auth for no middleware (não no edge); `_next/image?url=` SSRF só se allowlist frouxa; **Server Actions (`Next-Action`) = superfície viva menos batida** (função server por id). No Yahoo cm-ui: middleware-bypass e image-SSRF = **negativos testados** (auth no edge + allowlist estrita).
+- **AWS API GW (`S-APIGW-01`):** o authorizer costuma ser por-rota/método → testar verbo alternativo, path-variant e se checa **posse** (não só token). content-service do Yahoo = API GW → CHAIN-G.

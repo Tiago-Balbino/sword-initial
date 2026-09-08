@@ -48,6 +48,7 @@ linha aqui (como o `_ingested.md` faz pra URLs). Arsenal = o *como*; signals = o
 - **Hipótese:** edge não strippa a versão client-supplied → forjar identidade/IP/role.
 - **Probe:** 🟢 ler o erro e catalogar os nomes/valores · 🔴 reenviar o header forjado e ver se o comportamento muda.
 - **FP:** edge bem configurado strippa tudo; api-key de serviço inútil se o gateway é interno (`*.cluster.local`).
+- **🆕 Sub-caso `x-amzn-mtls-clientcert-*` (Yahoo, 09/07):** AWS API Gateway/ALB **mTLS pass-through** — quando o edge se autentica no origin via mTLS, o AWS injeta `x-amzn-mtls-clientcert-{issuer,subject,leaf,serial-number,validity}` como headers pro backend. Se o backend não os strippa antes de responder (mesmo num **404 catch-all**), eles vazam pro caller externo: **CA emissora + identidade Athenz do serviço interno + certificado PEM completo**. Sozinho = Info/Low (cert é público). Valor real = recon de topologia (nome de serviço, domínio Athenz, cadência de rotação) + abre a pergunta do `C-03`: algum backend trata esse header como identidade **sem re-verificar o mTLS real**? Testar em qualquer 200/4xx/5xx — não só em erro verboso clássico.
 
 ### S-RL-01 — endpoint de OTP/login/reset/exists
 - **Sinal:** `/login`, `/otp`, `/verify`, `/reset`, `/exists`, `/2fa`, código de verificação.
@@ -282,6 +283,7 @@ Quando **dois ou mais** sinais únicos acendem no mesmo alvo, checar se casam um
 - **Hipótese:** com o nome do header de confiança em mãos, forjar `x-user-id` = BOLA/ATO; `x-forwarded-for` = bypass de allowlist/rate.
 - **Probe:** 🔴 reenviar com o header forjado (requer autorização — faz barulho).
 - **Arsenal:** Header Injection.
+- **Instância real (Yahoo, 09/07):** `x-amzn-mtls-clientcert-subject: CN=ycpi.egress.ycpi-remap,OU=sys.openstack.provider-ybiip,...` vazado em `subscriptions.payments.yahoo.com` num 404 comum. Próximo elo (🔴 não-destrutivo, GET): mandar o MESMO valor como header numa request pra um endpoint interno-suspeito (ex. os hosts `omega.corp`/`credstore`/`cloudboot-auth-api` da arapuca do Yahoo — `Y10`/`Y11`) e ver se muda o comportamento (200 vs 403/404 idêntico = sem efeito). Ver `targets/yahoo/arapuca.md` peça Y16.
 
 ### C-04 — open redirect + OAuth → roubo de token
 - **Composição:** `S-REDIR-01` + `S-OAUTH-01`
@@ -315,3 +317,32 @@ Quando **dois ou mais** sinais únicos acendem no mesmo alvo, checar se casam um
 
 ---
 _Manter em sincronia com `arsenal.md` (toda entrada com "Sinais" espelha aqui). Liga com [[patterns]] e alimenta o `code 6`._
+
+
+### S-JWT-01 — Bearer JWT com validação frouxa (aud/alg/kid)
+- **Sinal:** `Authorization: Bearer <jwt>` (3 partes base64); token guardado client-side (localStorage); **o MESMO token aceito por múltiplos serviços** (aud reuse); endpoint `/validate-token`.
+- **Hipótese:** o servidor confia no token sem checar `alg`+`aud`+`iss`+assinatura+`exp` estritos → forjar/reusar. O papel/time pode ser **claim** (server-authoritative) ou valor **separado do cliente** (ver S-BOLA-TENANT-CLIENT-01).
+- **Probe:** 🟢 decodar header/payload (aud/iss/scopes/team/exp) · 🔴 `alg:none`/unsigned · RS256→HS256 (assinar c/ pubkey como HMAC) · `kid` traversal/SQLi · `jku`/`x5u` → JWKS do atacante (SSRF) · **aud/iss confusion: replay do token do serviço A no serviço B**.
+- **FP:** lib valida alg+aud+sig+exp; JWKS pinado; aud por-serviço estrito.
+- **Arsenal:** JWT attacks. **Fonte:** portswigger.net/web-security/jwt.
+
+### S-NEXT-01 — Next.js App Router: superfície de framework atacável
+- **Sinal:** `/_next/static`, `main-app`/`app/page` chunks (App Router), headers `Next-Action`/`Next-Router-State-Tree`, `__NEXT_DATA__`.
+- **Hipótese:** internals do framework (middleware, image optimizer, server actions, RSC) são alcançáveis/controláveis pelo atacante.
+- **Probe:** 🟢 `x-middleware-subrequest: middleware` (CVE-2025-29927 — pula middleware=auth bypass) · `/_next/image?url=<interno/externo>&w=64&q=75` (SSRF se `remotePatterns` frouxo) · source maps `.js.map` · `_buildManifest` · 🔴 **Server Actions**: `Next-Action: <id>` POST → função server-side por id (SSRF/IDOR/deser se sem authz) · RSC `?_rsc=` cache.
+- **FP:** versão patchada; allowlist de imagem estrita; auth no **edge** (não no middleware) → CVE não aplica; maps não enviados.
+- **Arsenal:** Next.js attack family. **Fonte:** zhero-web-sec (CVE-2025-29927) · assetnote Next.js research.
+
+### S-APIGW-01 — AWS API Gateway: bypass de authorizer / route-method mismatch
+- **Sinal:** corpo `{"message":"Missing Authentication Token"}` (rota não-mapeada) ou `Forbidden`/`Unauthorized`; headers `x-amzn-RequestId`/`x-amz-apigw-id`; `Server: awselb`.
+- **Hipótese:** o authorizer (Lambda/JWT) escopa por-método/rota mas **não cobre toda variante**, ou só valida token (não posse do recurso).
+- **Probe:** 🔴 **method mismatch** (rota autorizada em GET → tentar POST/PUT/OPTIONS/HEAD) · trailing-slash/case/normalização de path · greedy `{proxy+}` que pula authz fino · **cache do authorizer por identity-source** (mesmo header → resultado reusado) · endpoint cru `<id>.execute-api.<region>.amazonaws.com` (bypass de custom-domain/WAF).
+- **FP:** authorizer no nível da API (todas as rotas+métodos); cache keyed corretamente/off; resource policy fecha execute-api.
+- **Arsenal:** API Gateway authz. **Fonte:** docs AWS API GW + writeups H1.
+
+### S-BOLA-TENANT-CLIENT-01 — estado do tenant/contexto mora no CLIENTE
+- **Sinal:** o "time/org/workspace ativo" vem de `localStorage`/cookie/param controlado pelo cliente (`getActiveTeamLS`, `?team=`, `X-Org-Id`) e é **enviado ao backend** a cada request.
+- **Hipótese:** o backend resolve o dado **pelo tenant que o cliente manda**, assumindo que ele só mandaria um que é seu → trocar por tenant alheio = **cross-tenant BOLA** (Pergunta #2 do The Mind).
+- **Probe:** 🔴 autenticar como membro do time X → trocar o valor do tenant (localStorage/param/header) pro id do time Y → `GET /assignments/me/team/{Y}` / recursos → volta dado do Y? (200 c/ conteúdo alheio, não 403).
+- **FP:** backend deriva o tenant do JWT/sessão (server-authoritative) e ignora o valor do cliente; checa membership por request.
+- **Arsenal:** Broken Access Control (multi-tenant). Liga com S-JWT-01 (o time é claim ou valor solto?).

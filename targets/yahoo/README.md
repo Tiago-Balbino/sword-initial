@@ -32,8 +32,14 @@ Pra provar SSRF, ler/escrever arquivo num destes (Prod **e** Corp), anexar arqui
 - Arquivos: `<ext>_###.<ext>` (ex. `txt_001.txt`, `zip_001.zip`) + `noext_01`; 404 = "no bananas for you!". Dica deles: também buscar `http://<host>/intigriti-<username>` pra marcar nos logs.
 - ⚠️ **SSRF que NÃO toca o bananastand → risco de $0.** Todo param de fetch de URL (image proxy, `onepush`, webhooks, importadores) é candidato.
 
+## ⚰️ Veredito L7 (2026-09-07): routing-SSRF in-band MORTO — ATS `remap_required` Yahoo-wide
+Testado via socket cru contra 6 edges: Host não-allowlistado → `404 Not Found on Accelerator` (não roteia); absolute-URI/@/porta → `400 Invalid`. Bananastand in-band inalcançável. Resíduo só via Collaborator OOB (manual). **Lead #0/CHAIN-A rebaixados.** Novo top lead = **L11 Lightyear CMS** (abaixo).
+
+## 🆕 L11 — Lightyear CMS / Yahoo Creators (`cm-ui.yahoo.com`) ⭐⭐ NOVO TOP LEAD (fit BAC/IDOR #1)
+Next.js 200 unauth (sem CSP). Backend vazado no bundle: `cm-auth-service`(FastAPI) · `content-service`(AWS API GW) · `api.creators`(Spring OAuth2) · `api.yahoo.com`(interno). Auth = `Bearer` JWT do `localStorage.access_token`; **`activeTeam` vem do localStorage (cliente controla)** → BOLA/cross-tenant em `/assignments/me/team/{id}`, `/admin/user/{id}`, `/earnings`. **Bloqueio:** access_token de conta CMS/creator (Tiago onboarda em Creators → DevTools localStorage). Detalhe em `a-cacada-ate-aqui.md` + `arapuca.md` (Y22-Y27, CHAIN-E).
+
 ## 🎯 Leads priorizados [UNTESTED] (fit → memory/arsenal)
-0. **[L7 · CDN-proxy] SSRF/host-confusion** — `*.cdn.production.omega.gq1.yahoo.com` embute origem externa → fetch arbitrário → **provar no bananastand** = SSRF pago. **Achado do Nível 1, top prioridade.**
+0. **[L7 · CDN-proxy] SSRF/host-confusion** — ⚰️ **MORTO in-band (ver Veredito L7 no topo)** — ATS `remap_required` bloqueia; rebaixado. Resíduo só via Collaborator OOB.
 1. **[Fantasy Wallet] money/lógica** — hosts: `checkout.fantasysports.yahoo.com` (307/Envoy) + dev/qa/stage, `api.fantasysports.yahoo.com`, `wallet.secure.yahoo.com`. `S-FUND-01`/`S-RACE-01`/business-logic: IDOR/authz em saldo/entry-fee/checkout; race em depósito/saque. **Precisa conta + mapear API autenticado. Fit máximo.**
 2. **[Mail/Calendar] IDOR/authz** — `apis.mail.yahoo.com` + **`caldav.calendar.yahoo.com` (401 — CalDAV auth-gated)**: `S-IDOR-01` (id de mensagem/pasta/evento/conta) → ler dado alheio.
 3. **[SSRF] bananastand** — qualquer fetch-de-URL nos produtos → CWE-918 estruturado (alvos dados). Baixo atrito, paga.
@@ -53,7 +59,7 @@ Pra provar SSRF, ler/escrever arquivo num destes (Prod **e** Corp), anexar arqui
   - 🔥 **non-prod / envs fracos** (`recon/hot_nonprod.txt`): `admin.stg-blk01.omega.bf2.yahoo.com` (admin em staging!), `boot-api-{dev,pr,staging}.media-edge-k8s`, `aud-gca.{development,canary,pullrequest,staging}.omega.bf1`, `bjn-canary1-*`, `alpha1/beta1`. Non-prod = authz mais fraca / reuso prod↔dev.
   - 🔥 **API/money** (`recon/hot_api_money.txt`): `boot-api.media-edge-k8s.omega.yahoo.com`, `apple.finance-yql-production.finance-k8s.omega.yahoo.com`, `billing-tw-k8s.omega.yahoo.com`, `auctions-tw-desktop-k8s.omega.yahoo.com`.
 
-### 🆕 L7 — CDN-proxy `*.cdn.production.omega.gq1.yahoo.com` (SSRF/host-confusion) — TOP ⭐
+### ⚰️ L7 — CDN-proxy `*.cdn.production.omega.gq1.yahoo.com` (SSRF/host-confusion) — MORTO in-band (histórico; ver Veredito L7 no topo)
 Hosts que embutem origem externa como label. **Precedente forte:** o "Cracking the Lens" (Kettle) explorou **routing-SSRF na própria Yahoo** (`ats-vm.lorax.bf1.yahoo.com`, Apache Traffic Server) por $20k×2 — mesma família `omega`/`bf1`/`gq1`.
 - **Probe A — routing-SSRF (`S-SSRF-ROUTE-01`, 🔴 precisa header):** contra os 6 hosts `hot_cdn_proxy.txt`:
   1. `Host: <id>.<collab>` → callback? (o proxy roteia por Host).
